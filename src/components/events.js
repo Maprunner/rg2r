@@ -24,7 +24,7 @@ class Events extends Component {
       <div>
         <span>
           <InputText />
-          <label htmlFor="in">Search</label>
+          <label htmlFor="in"> Search</label>
         </span>
         <div className="rg2-ul">
           <EventList events={this.props.events} onClick={this.props.setEvent} ></EventList>

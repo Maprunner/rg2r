@@ -38,3 +38,9 @@
   border-bottom: 1px solid rgb(221,221,221);
   padding: 6px;
 }
+
+.rg2-title {
+  margin: 0 5px;
+  font-size: 1.5em;
+  float: right;
+}

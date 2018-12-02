@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Checkbox } from 'primereact/checkbox';
+import RG2 from '../rg2Constants';
 
-function CourseItem({ course, onSelectCourse, id }) {
+function CourseItem({ name, checked, onSelectCourse, value }) {
   return (
     <>
       <li>
-        <Checkbox value={id} onChange={onSelectCourse} checked={course.display}></Checkbox>
-        {" " + course.name}
+        <Checkbox value={value} onChange={onSelectCourse} checked={checked}></Checkbox>
+        {" " + name}
       </li>
     </>
   )
@@ -14,8 +15,16 @@ function CourseItem({ course, onSelectCourse, id }) {
 
 function CourseList({ courses, onSelectCourse }) {
   const courseItems = courses.map((course, i) =>
-    <CourseItem key={course.courseid.toString()} course={course} onSelectCourse={onSelectCourse} id={i} />
+    <CourseItem key={i.toString()} name={course.name} checked={course.display} onSelectCourse={onSelectCourse} value={i} />
   );
+  let allChecked = true;
+  for (let i = 0; i < courses.length; i += 1) {
+    if (!courses[i].display) {
+      allChecked = false;
+      break;
+    }
+  }
+  courseItems.push(<CourseItem key={courses.length.toString()} name={"All"} onSelectCourse={onSelectCourse} checked={allChecked} value={RG2.DISPLAY_ALL_COURSES} />);
   return (
     <ul>
       {courseItems}

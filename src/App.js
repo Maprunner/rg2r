@@ -6,20 +6,23 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './App.css';
+import Event from './utils/eventutils.js';
 import RG2 from './rg2Constants.js';
 import Course from './utils/courseutils.js';
 import Result from './utils/resultutils.js';
 
 class App extends Component {
   constructor() {
-    super();
+    super()
+    let activeEvent = { id: null };
     this.state = {
+      title: "Routegadget 2",
       events: [],
       courses: [],
       results: [],
       controls: [],
       mapImage: null,
-      activeEventId: null,
+      activeEvent: activeEvent,
       activeTabIndex: 0
     }
   }
@@ -33,26 +36,23 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.activeEventId !== this.state.activeEventId) {
-      console.log("Loading event " + this.state.activeEventId);
-      fetch('/rg2/rg2api.php?type=event&id=' + this.state.activeEventId)
+    if (prevState.activeEvent.id !== this.state.activeEvent.id) {
+      console.log("Loading event " + this.state.activeEvent.id);
+      fetch('/rg2/rg2api.php?type=event&id=' + this.state.activeEvent.id)
         .then(response => response.json())
         .then(json => this.saveEvent(json))
-      const id = this.state.events.findIndex(event => event.id === this.state.activeEventId);
-      this.getMap(this.state.events[id].mapid);
+      this.getMap(this.state.activeEvent.mapfilename);
     }
   }
 
-  saveEvents(events) {
-    events.sort(function (a, b) {
-      return b.id - a.id;
-    })
+  saveEvents(eventsData) {
+    let events = Event.processEvents(eventsData)
     this.setState({ events: events })
   }
 
   setEvent = (id) => {
     this.setState({
-      activeEventId: id
+      activeEvent: this.state.events[id]
     });
   }
 
@@ -92,11 +92,12 @@ class App extends Component {
   }
 
   saveEvent(json) {
-    const isScoreEvent = this.state.events[this.state.activeEventId].format === RG2.SCORE_EVENT;
-    let controls = Course.extractControls(json.data.courses);
+    const isScoreEvent = this.state.activeEvent.format === RG2.SCORE_EVENT;
     let courses = Course.processCourses(json.data.courses, isScoreEvent);
+    let controls = Course.extractControls(courses);
     let results = Result.processResults(json.data.results, isScoreEvent);
     this.setState({
+      title: this.state.activeEvent.name + ' ' + this.state.activeEvent.date,
       courses: courses,
       results: results,
       controls: controls,
@@ -104,11 +105,11 @@ class App extends Component {
     })
   }
 
-  getMap(id) {
+  getMap(mapfilename) {
     const image = new window.Image();
-    image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + id + '.jpg';
+    image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + mapfilename;
     image.onload = () => {
-      // setState will redraw layer because "image" property is changed
+      // setState will trigger map load
       this.setState({
         mapImage: image
       });
@@ -119,7 +120,9 @@ class App extends Component {
     return (
       <div>
         <div id="rg2-header-container">
-          <RG2Toolbar></RG2Toolbar>
+          <RG2Toolbar
+            title={this.state.title}
+          />
         </div>
         <div id="rg2-body-container">
           <RG2Sidebar

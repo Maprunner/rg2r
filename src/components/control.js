@@ -1,21 +1,21 @@
 import React from 'react';
 import { Circle } from 'react-konva';
 
-const Control = ({ x, y, radius, color, width }) => (
+const Control = ({ x, y, opt }) => (
   <>
     <Circle
       x={x}
       y={y}
-      radius={radius}
+      radius={opt.radius}
       stroke={"white"}
-      strokeWidth={width + 2}
+      strokeWidth={opt.width + 2}
     />
     <Circle
       x={x}
       y={y}
-      radius={radius}
-      stroke={color}
-      strokeWidth={width}
+      radius={opt.radius}
+      stroke={opt.color}
+      strokeWidth={opt.width}
     />
   </>
 )

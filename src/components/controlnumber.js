@@ -1,23 +1,19 @@
 import React from 'react';
 import { Text } from 'react-konva';
 
-const ControlNumber = ({ x, y, color, width, text, fontSize }) => (
+const ControlNumber = ({ x, y, opt, text }) => (
   <>
     <Text
       text={text}
-      fontSize={fontSize}
-      x={x + 20}
+      fontSize={opt.fontSize}
+      fontStyle={"bold"}
+      x={x}
       y={y}
       stroke={"white"}
-      strokeWidth={width + 2}
-    />
-    <Text
-      text={text}
-      fontSize={fontSize}
-      x={x + 20}
-      y={y}
-      stroke={color}
-      strokeWidth={width}
+      fill={opt.color}
+      strokeWidth={0.5}
+      align={"center"}
+      textAlign={"middle"}
     />
   </>
 )

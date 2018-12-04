@@ -1,25 +1,25 @@
 import React from 'react';
 import { RegularPolygon } from 'react-konva';
 
-const Start = ({ x, y, radius, rotation, color, width }) => (
+const Start = ({ x, y, opt, rotation }) => (
   <>
     <RegularPolygon
       x={x}
       y={y}
       sides={3}
-      radius={radius}
+      radius={opt.radius}
       rotation={rotation}
       stroke={"white"}
-      strokeWidth={width + 2}
+      strokeWidth={opt.width + 2}
     />
     <RegularPolygon
       x={x}
       y={y}
       sides={3}
-      radius={radius}
+      radius={opt.radius}
       rotation={rotation}
-      stroke={color}
-      strokeWidth={width}
+      stroke={opt.color}
+      strokeWidth={opt.width}
     />
   </>
 )

@@ -2,35 +2,35 @@ import React from 'react';
 import { Circle } from 'react-konva';
 
 
-const Finish = ({ x, y, radius, color, width }) => (
+const Finish = ({ x, y, opt }) => (
   <>
     <Circle
-      y={y}
       x={x}
-      radius={radius + 5}
+      y={y}
+      radius={opt.finishInnerRadius}
       stroke={"white"}
-      strokeWidth={width + 2}
+      strokeWidth={opt.width + 2}
     />
     <Circle
       x={x}
       y={y}
-      radius={radius}
+      radius={opt.finishOuterRadius}
       stroke={"white"}
-      strokeWidth={width + 2}
-    />
-    <Circle
-      y={y}
-      x={x}
-      radius={radius + 5}
-      stroke={color}
-      strokeWidth={width}
+      strokeWidth={opt.width + 2}
     />
     <Circle
       x={x}
       y={y}
-      radius={radius}
-      stroke={color}
-      strokeWidth={width}
+      radius={opt.finishInnerRadius}
+      stroke={opt.color}
+      strokeWidth={opt.width}
+    />
+    <Circle
+      x={x}
+      y={y}
+      radius={opt.finishOuterRadius}
+      stroke={opt.color}
+      strokeWidth={opt.width}
     />
   </>
 )

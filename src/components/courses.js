@@ -24,7 +24,11 @@ function CourseList({ courses, onSelectCourse }) {
       break;
     }
   }
-  courseItems.push(<CourseItem key={courses.length.toString()} name={"All"} onSelectCourse={onSelectCourse} checked={allChecked} value={RG2.DISPLAY_ALL_COURSES} />);
+  // don't need a summary line if there is only one course
+  if (courses.length > 1) {
+    courseItems.push(<CourseItem key={courses.length.toString()} name={"All"} onSelectCourse={onSelectCourse} checked={allChecked} value={RG2.DISPLAY_ALL_COURSES} />);
+  }
+
   return (
     <ul>
       {courseItems}

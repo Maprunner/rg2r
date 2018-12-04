@@ -18,14 +18,14 @@ class AllCoursesOverprint extends Component {
     //circleSize = Math.round(rg2.options.circleSize * scaleFact);
     circleSize = Math.round(20 * scaleFact);
     // ratios based on IOF ISOM overprint specification
-    opt.controlRadius = circleSize;
+    //opt.overprintWidth = this.options.courseWidth;
+    opt.width = 3;
+    opt.radius = circleSize;
     opt.finishInnerRadius = circleSize * (5 / 6);
     opt.finishOuterRadius = circleSize * (7 / 6);
     opt.startTriangleLength = circleSize * (7 / 6);
-    //opt.overprintWidth = this.options.courseWidth;
-    opt.overprintWidth = 3;
-    opt.purple = RG2.PURPLE;
-    opt.fontSize = circleSize;
+    opt.color = RG2.PURPLE;
+    opt.fontSize = circleSize * 1.5;
     return opt;
   }
 

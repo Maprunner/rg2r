@@ -3,7 +3,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import RG2 from '../rg2Constants';
 
-function ResultItem({ result, i, onSelect }) {
+function ResultItem({ result, i, onSelect, onReplay }) {
   // allow for result being filtered out
   if (result.showResult) {
     let displayRoute;
@@ -19,6 +19,7 @@ function ResultItem({ result, i, onSelect }) {
           <td>{result.name}</td>
           <td>{result.time}</td>
           <td>{displayRoute}</td>
+          <td><Checkbox value={i} name={result.coursename} onChange={onReplay} checked={result.replay} /></td>
         </tr>
       </>
     )
@@ -27,43 +28,58 @@ function ResultItem({ result, i, onSelect }) {
   }
 }
 
-const SummaryRow = ({ courseName, onSelect, checked }) => (
-  <>
-    <tr><td></td><td>All</td><td></td><td>
-      <Checkbox value={RG2.DISPLAY_ALL_ROUTES_FOR_COURSE} name={courseName} onChange={onSelect} checked={checked} />
-    </td></tr>
-  </>
-)
+function SummaryRow({ courseName, onSelect, onReplay, routesChecked, replayChecked, hasRoutes }) {
+  let routes;
+  if (hasRoutes) {
+    routes = <Checkbox
+      value={RG2.DISPLAY_ALL_ROUTES_FOR_COURSE}
+      name={courseName}
+      onChange={onSelect}
+      checked={routesChecked} />;
+  } else {
+    routes = null;
+  }
+  return (
+    <>
+      <tr><td></td><td>All</td><td></td><td>{routes}</td><td>
+        <Checkbox value={RG2.REPLAY_ALL_ROUTES_FOR_COURSE} name={courseName} onChange={onReplay} checked={replayChecked} />
+      </td></tr>
+    </>
+  );
+}
 
-function ResultListForCourse({ results, name, onSelect, startAt }) {
-  const resultsList = results.map((result, i) => <ResultItem key={i.toString()} onSelect={onSelect} result={result} i={i + startAt} />);
-  let allChecked = true;
-  let hasTracks = false;
-  let summaryRow;
+function ResultListForCourse({ results, name, onSelect, onReplay, startAt }) {
+  const resultsList = results.map((result, i) => <ResultItem key={i.toString()} onSelect={onSelect} onReplay={onReplay} result={result} i={i + startAt} />);
+  let allReplayChecked = true;
+  let allRoutesChecked = true;
+  let hasRoutes = false;
   for (let i = 0; i < results.length; i += 1) {
+    if (!results[i].replay) {
+      allReplayChecked = false;
+    }
     if (results[i].x.length > 0) {
-      hasTracks = true;
+      hasRoutes = true;
       if (!results[i].displayTrack) {
-        allChecked = false;
-        break;
+        allRoutesChecked = false;
       }
     }
-  }
-  if (hasTracks) {
-    summaryRow = <SummaryRow courseName={name} onSelect={onSelect} checked={allChecked} />
-  } else {
-    summaryRow = null;
   }
 
   return (
     <>
       <table>
         <thead>
-          <tr><th></th><th>Name</th><th>Time</th><th></th></tr>
+          <tr><th></th><th>Name</th><th>Time</th><th></th><th></th></tr>
         </thead>
         <tbody>
           {resultsList}
-          {summaryRow}
+          <SummaryRow
+            courseName={name}
+            onSelect={onSelect}
+            onReplay={onReplay}
+            routesChecked={allRoutesChecked}
+            replayChecked={allReplayChecked}
+            hasRoutes={hasRoutes} />
         </tbody>
       </table>
     </>
@@ -83,8 +99,18 @@ class Results extends Component {
     // assume for now that results are sorted by course and in required order within course
     for (let i = 0; i < results.length; i += 1) {
       if (results[i].coursename !== oldCourseName) {
-        resultListForCourse = <ResultListForCourse startAt={startAt} key={key} name={oldCourseName} results={courseResults.slice()} onSelect={this.props.onSelectResult} />;
-        fullResultList.push(<AccordionTab key={i} header={oldCourseName}>{resultListForCourse}</AccordionTab>);
+        resultListForCourse = <ResultListForCourse
+          startAt={startAt}
+          key={key}
+          name={oldCourseName}
+          results={courseResults.slice()}
+          onSelect={this.props.onSelectResult}
+          onReplay={this.props.onReplay} />;
+        fullResultList.push(<AccordionTab
+          key={i}
+          header={oldCourseName}>
+          {resultListForCourse}
+        </AccordionTab>);
         key = key + 1;
         courseResults.length = 0;
         oldCourseName = results[i].coursename;
@@ -92,7 +118,13 @@ class Results extends Component {
       }
       courseResults.push(results[i]);
     }
-    resultListForCourse = <ResultListForCourse key={key} name={oldCourseName} startAt={startAt} results={courseResults} onSelect={this.props.onSelectResult} />;
+    resultListForCourse = <ResultListForCourse
+      key={key}
+      name={oldCourseName}
+      startAt={startAt}
+      results={courseResults}
+      onSelect={this.props.onSelectResult}
+      onReplay={this.props.onReplay} />;
     fullResultList.push(<AccordionTab key={courses.length} header={oldCourseName} >{resultListForCourse}</AccordionTab>);
 
     return (

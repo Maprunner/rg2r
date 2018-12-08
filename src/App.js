@@ -3,7 +3,9 @@ import RG2Toolbar from './components/rg2toolbar.js';
 import RG2Sidebar from './components/rg2sidebar.js';
 import RG2Map from './components/rg2map.js';
 import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.min.css';
+//import 'primereact/resources/primereact.min.css';
+// import non-minified css so we can edit it for now
+import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
 import './App.css';
 import Event from './utils/eventutils.js';
@@ -87,6 +89,23 @@ class App extends Component {
     });
   }
 
+  onReplayResult = (e) => {
+    let results = this.state.results;
+    if (e.value === RG2.REPLAY_ALL_ROUTES_FOR_COURSE) {
+      for (let i = 0; i < results.length; i += 1) {
+        // using name field on input to store course name
+        if (results[i].coursename === e.target.name) {
+          results[i].replay = e.checked;
+        }
+      }
+    } else {
+      results[e.value].replay = e.checked;
+    }
+    this.setState({
+      results: results
+    });
+  }
+
   onTabChange = (e) => {
     this.setState({ activeTabIndex: e.index })
   }
@@ -133,8 +152,13 @@ class App extends Component {
             activeTabIndex={this.state.activeTabIndex}
             onTabChange={this.onTabChange}
             onSelectCourse={this.onSelectCourse}
-            onSelectResult={this.onSelectResult} />
-          <RG2Map map={this.state.mapImage} courses={this.state.courses} controls={this.state.controls} results={this.state.results} />
+            onSelectResult={this.onSelectResult}
+            onReplay={this.onReplayResult} />
+          <RG2Map
+            map={this.state.mapImage}
+            courses={this.state.courses}
+            controls={this.state.controls}
+            results={this.state.results} />
         </div>
       </div>
     );

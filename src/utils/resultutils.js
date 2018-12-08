@@ -22,6 +22,7 @@ import Course from './courseutils.js';
 // rawid: 1                      resultid mod GPS value (50000)
 // rawx: []                      x values for route from API: deleted once expanded into x
 // rawy: []                      y values for route from API: deleted once expanded into y
+// replay: false                 route is selected for animation
 // resultid: 1                   original result id
 // showResult: true              result present on results tab (not filtered out)
 // speedColour: []               used when displaying GPS speed colouring
@@ -87,6 +88,7 @@ export default class {
       results[i].legpos = [];
       results[i].racepos = [];
       results[i].rawid = results[i].resultid % RG2.GPS_RESULT_OFFSET;
+      results[i].replay = false;
       results[i].showResult = true;
       results[i].token = 0;
       results[i].x = this.expandAPITrack(results[i].rawx);

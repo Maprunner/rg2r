@@ -23,7 +23,12 @@ class RG2Sidebar extends Component {
             <Courses courses={this.props.courses} onSelectCourse={this.props.onSelectCourse} />
           </TabPanel>
           <TabPanel header="Results" disabled={this.props.results.length === 0}>
-            <Results courses={this.props.courses} results={this.props.results} onSelectCourse={this.props.onSelectCourse} onSelectResult={this.props.onSelectResult} />
+            <Results
+              courses={this.props.courses}
+              results={this.props.results}
+              onSelectCourse={this.props.onSelectCourse}
+              onSelectResult={this.props.onSelectResult}
+              onReplay={this.props.onReplay} />
           </TabPanel>
           <TabPanel header="Draw" disabled={!this.state.drawEnabled}>
             Draw

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Stage, Layer } from 'react-konva';
+import Portal from './portal.js';
 import MapImage from './mapimage.js';
+import MapButtons from './mapbuttons.js';
 import AllCoursesOverprint from './allcoursesoverprint.js';
 import AllRoutes from './allroutes.js';
 
@@ -20,15 +22,27 @@ class RG2Map extends Component {
 
   resizeBody = e => {
     let body = document.querySelector('#rg2-body-container');
-    body.style.height = (window.innerHeight - 50) + 'px';
+    body.style.height = (window.innerHeight - 56) + 'px';
     this.setState({
       zoom: { x: 1, y: 1 },
       width: window.innerWidth,
       // allow for header
-      height: window.innerHeight - 36
+      height: window.innerHeight - 56
     });
-
   }
+
+  zoomIn = e => {
+    this.setState({
+      zoom: { x: this.state.zoom.x * 1.2, y: this.state.zoom.y * 1.2 }
+    });
+  }
+
+  zoomOut = e => {
+    this.setState({
+      zoom: { x: this.state.zoom.x / 1.2, y: this.state.zoom.y / 1.2 }
+    });
+  }
+
 
   handleScroll = e => {
     e.evt.stopPropagation();
@@ -54,7 +68,8 @@ class RG2Map extends Component {
         });
       }
     }
-  };
+  }
+
 
   render() {
     return (
@@ -71,6 +86,7 @@ class RG2Map extends Component {
         >
           <Layer>
             <MapImage map={this.props.map} />
+            <Portal><MapButtons onZoomOut={this.zoomOut} onZoomIn={this.zoomIn} mapLoaded={this.props.map === null} /></Portal>
           </Layer>
           <Layer>
             <AllCoursesOverprint courses={this.props.courses} controls={this.state.controls} map={this.props.map} />

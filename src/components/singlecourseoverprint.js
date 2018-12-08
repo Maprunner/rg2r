@@ -72,8 +72,8 @@ class CourseOverprint extends Component {
         controlOverprint.push(<ControlNumber key={i + 2000} opt={opt} text={i} x={offSet.x} y={offSet.y} />);
       }
     }
-    // draw connecting line
-    if (!course.isScoreCourse) {
+    // draw connecting line if not a score course and we have more than a start and finish
+    if ((!course.isScoreCourse) && (course.x.length > 2)) {
       const points = this.getPointsForLines(course.x, course.y, course.angle, opt);
       for (let i = 0; i < course.codes.length - 1; i += 1) {
         controlOverprint.push(<Line key={i + 1000} points={points.slice((4 * i), (4 * i) + 4)} stroke={opt.color} strokeWidth={opt.width} />);

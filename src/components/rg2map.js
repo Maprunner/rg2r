@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Stage, Layer } from 'react-konva';
 import MapImage from './mapimage.js';
 import AllCoursesOverprint from './allcoursesoverprint.js';
+import AllRoutes from './allroutes.js';
 
 class RG2Map extends Component {
   state = {
@@ -14,12 +15,12 @@ class RG2Map extends Component {
 
   constructor() {
     super();
-    window.addEventListener('resize', this.resizeCanvas, false);
+    window.addEventListener('resize', this.resizeBody, false);
   }
 
-  resizeCanvas = e => {
-    let canvas = document.querySelector('#rg2-body-container');
-    canvas.style.height = window.innerHeight - 36;
+  resizeBody = e => {
+    let body = document.querySelector('#rg2-body-container');
+    body.style.height = (window.innerHeight - 50) + 'px';
     this.setState({
       zoom: { x: 1, y: 1 },
       width: window.innerWidth,
@@ -73,6 +74,9 @@ class RG2Map extends Component {
           </Layer>
           <Layer>
             <AllCoursesOverprint courses={this.props.courses} controls={this.state.controls} map={this.props.map} />
+          </Layer>
+          <Layer>
+            <AllRoutes results={this.props.results} map={this.props.map} />
           </Layer>
         </Stage>
       </div >

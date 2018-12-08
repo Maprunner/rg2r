@@ -4,7 +4,7 @@ import Finish from './finish.js';
 import Start from './start.js';
 import ControlNumber from './controlnumber.js';
 import { Line } from 'react-konva';
-import Utils from '../utils//rg2utils.js';
+import Utils from '../utils/rg2utils.js';
 
 class CourseOverprint extends Component {
 
@@ -79,14 +79,14 @@ class CourseOverprint extends Component {
         controlOverprint.push(<Line key={i + 1000} points={points.slice((4 * i), (4 * i) + 4)} stroke={opt.color} strokeWidth={opt.width} />);
       }
     }
-    for (let i = 1; i < 12; i += 1) {
-      let x = 400 + (50 * i);
-      let y = 50;
-      let offSet = this.offsetControlText(x, y, (Math.PI * 2 / 12 * i), opt, i.toString());
-      controlOverprint.push(<Control key={i + 5000} x={x} y={y} opt={opt} />);
-      controlOverprint.push(<ControlNumber key={i + 3000} opt={opt} text={i} x={offSet.x} y={offSet.y} />);
-      console.log(x, y, offSet);
-    }
+    //for (let i = 1; i < 12; i += 1) {
+    //  let x = 400 + (50 * i);
+    //  let y = 50;
+    //  let offSet = this.offsetControlText(x, y, (Math.PI * 2 / 12 * i), opt, i.toString());
+    //  controlOverprint.push(<Control key={i + 5000} x={x} y={y} opt={opt} />);
+    //  controlOverprint.push(<ControlNumber key={i + 3000} opt={opt} text={i} x={offSet.x} y={offSet.y} />);
+    //  console.log(x, y, offSet);
+    //}
     return (
       <>
         {controlOverprint}

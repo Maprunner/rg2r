@@ -14,7 +14,9 @@ const RG2 = {
   TAB_MAP: 7,
   GPS_RESULT_OFFSET: 50000,
   DISPLAY_ALL_COURSES: 99999,
-  DISPLAY_ALL_ROUTES_FOR_COURSE: 99999
+  DISPLAY_ALL_ROUTES_FOR_COURSE: 99999,
+  TIME_NOT_FOUND: 9999,
+  COLOURS: ["#ff0000", "#00ff00", "#0000ff", "#800000", "#008000", "#000080", "#ffff00", "#ff00ff", "#00ffff", "#808000", "#800080", "#008080"]
   /*
   INVALID_MAP_ID: 9999,
   // translated when output so leave as English here
@@ -45,7 +47,6 @@ const RG2 = {
   FULL_INTENSITY : 1.0,
   // version gets set automatically by grunt file during build process
   RG2VERSION: '1.5.4',
-  TIME_NOT_FOUND : 9999,
   // values for evt.which
   RIGHT_CLICK : 3,
   DO_NOT_SAVE_COURSE: 9999,

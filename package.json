@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
+    "he": "^1.2.0",
     "konva": "^2.5.1",
     "primeicons": "^1.0.0",
     "primereact": "^2.0.0-rc.1",

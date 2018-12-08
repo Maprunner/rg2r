@@ -4,27 +4,57 @@ import { Accordion, AccordionTab } from 'primereact/accordion';
 import RG2 from '../rg2Constants';
 
 function ResultItem({ result, i, onSelect }) {
-  return (
-    <>
-      <tr>
-        <td>{result.position}</td>
-        <td>{result.name}</td>
-        <td>{result.time}</td>
-        <td><Checkbox value={i} name={result.coursename} onChange={onSelect} checked={result.onDisplay} /></td>
-      </tr>
-    </>
-  )
+  // allow for result being filtered out
+  if (result.showResult) {
+    let displayRoute;
+    if (result.x.length > 0) {
+      displayRoute = <Checkbox value={i} name={result.coursename} onChange={onSelect} checked={result.displayTrack} />;
+    } else {
+      displayRoute = <></>
+    }
+    return (
+      <>
+        <tr>
+          <td>{result.position}</td>
+          <td>{result.name}</td>
+          <td>{result.time}</td>
+          <td>{displayRoute}</td>
+        </tr>
+      </>
+    )
+  } else {
+    return null;
+  }
 }
 
-function ResultListForCourse({ results, onSelect }) {
-  const resultsList = results.map((result, i) => <ResultItem key={i.toString()} onSelect={onSelect} result={result} i={i} />);
+const SummaryRow = ({ courseName, onSelect, checked }) => (
+  <>
+    <tr><td></td><td>All</td><td></td><td>
+      <Checkbox value={RG2.DISPLAY_ALL_ROUTES_FOR_COURSE} name={courseName} onChange={onSelect} checked={checked} />
+    </td></tr>
+  </>
+)
+
+function ResultListForCourse({ results, name, onSelect, startAt }) {
+  const resultsList = results.map((result, i) => <ResultItem key={i.toString()} onSelect={onSelect} result={result} i={i + startAt} />);
   let allChecked = true;
+  let hasTracks = false;
+  let summaryRow;
   for (let i = 0; i < results.length; i += 1) {
-    if (!results[i].onDisplay) {
-      allChecked = false;
-      break;
+    if (results[i].x.length > 0) {
+      hasTracks = true;
+      if (!results[i].displayTrack) {
+        allChecked = false;
+        break;
+      }
     }
   }
+  if (hasTracks) {
+    summaryRow = <SummaryRow courseName={name} onSelect={onSelect} checked={allChecked} />
+  } else {
+    summaryRow = null;
+  }
+
   return (
     <>
       <table>
@@ -33,9 +63,7 @@ function ResultListForCourse({ results, onSelect }) {
         </thead>
         <tbody>
           {resultsList}
-          <tr><td></td><td>All</td><td></td><td>
-            <Checkbox value={RG2.DISPLAY_ALL_ROUTES_FOR_COURSE} name={results[0].coursename} onChange={onSelect} checked={allChecked} />
-          </td></tr>
+          {summaryRow}
         </tbody>
       </table>
     </>
@@ -51,19 +79,20 @@ class Results extends Component {
     let courseResults = [];
     let key = 0;
     let oldCourseName = results[0].coursename;
+    let startAt = 0;
     // assume for now that results are sorted by course and in required order within course
     for (let i = 0; i < results.length; i += 1) {
       if (results[i].coursename !== oldCourseName) {
-        resultListForCourse = <ResultListForCourse header={i} key={key} name={oldCourseName} results={courseResults.slice()} onSelect={this.props.onSelectResult} />;
+        resultListForCourse = <ResultListForCourse startAt={startAt} key={key} name={oldCourseName} results={courseResults.slice()} onSelect={this.props.onSelectResult} />;
         fullResultList.push(<AccordionTab key={i} header={oldCourseName}>{resultListForCourse}</AccordionTab>);
         key = key + 1;
         courseResults.length = 0;
         oldCourseName = results[i].coursename;
-      } else {
-        courseResults.push(results[i]);
+        startAt = i;
       }
+      courseResults.push(results[i]);
     }
-    resultListForCourse = <ResultListForCourse key={key} name={oldCourseName} results={courseResults} onSelect={this.props.onSelectResult} />;
+    resultListForCourse = <ResultListForCourse key={key} name={oldCourseName} startAt={startAt} results={courseResults} onSelect={this.props.onSelectResult} />;
     fullResultList.push(<AccordionTab key={courses.length} header={oldCourseName} >{resultListForCourse}</AccordionTab>);
 
     return (

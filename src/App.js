@@ -76,11 +76,11 @@ class App extends Component {
       for (let i = 0; i < results.length; i += 1) {
         // using name field on input to store course name
         if (results[i].coursename === e.target.name) {
-          results[i].onDisplay = e.checked;
+          results[i].displayTrack = e.checked;
         }
       }
     } else {
-      results[e.value].onDisplay = e.checked;
+      results[e.value].displayTrack = e.checked;
     }
     this.setState({
       results: results
@@ -95,7 +95,7 @@ class App extends Component {
     const isScoreEvent = this.state.activeEvent.format === RG2.SCORE_EVENT;
     let courses = Course.processCourses(json.data.courses, isScoreEvent);
     let controls = Course.extractControls(courses);
-    let results = Result.processResults(json.data.results, isScoreEvent);
+    let results = Result.processResults(json.data.results, json.data.routes, courses, this.state.activeEvent.format);
     this.setState({
       title: this.state.activeEvent.name + ' ' + this.state.activeEvent.date,
       courses: courses,
@@ -134,7 +134,7 @@ class App extends Component {
             onTabChange={this.onTabChange}
             onSelectCourse={this.onSelectCourse}
             onSelectResult={this.onSelectResult} />
-          <RG2Map map={this.state.mapImage} courses={this.state.courses} controls={this.state.controls} />
+          <RG2Map map={this.state.mapImage} courses={this.state.courses} controls={this.state.controls} results={this.state.results} />
         </div>
       </div>
     );

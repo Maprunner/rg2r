@@ -5,6 +5,7 @@ import MapImage from './mapimage.js';
 import MapButtons from './mapbuttons.js';
 import AllCoursesOverprint from './allcoursesoverprint.js';
 import AllRoutes from './allroutes.js';
+import Replay from './replay.js';
 
 class RG2Map extends Component {
   state = {
@@ -43,7 +44,6 @@ class RG2Map extends Component {
     });
   }
 
-
   handleScroll = e => {
     e.evt.stopPropagation();
     e.evt.preventDefault();
@@ -70,7 +70,6 @@ class RG2Map extends Component {
     }
   }
 
-
   render() {
     return (
       <div>
@@ -86,13 +85,22 @@ class RG2Map extends Component {
         >
           <Layer>
             <MapImage map={this.props.map} />
-            <Portal><MapButtons onZoomOut={this.zoomOut} onZoomIn={this.zoomIn} mapLoaded={this.props.map === null} /></Portal>
+            <Portal>
+              <MapButtons
+                onZoomOut={this.zoomOut}
+                onZoomIn={this.zoomIn}
+                mapLoaded={this.props.map === null ? "" : "disabled"}
+                onStartStop={this.props.onStartStop} />
+            </Portal>
           </Layer>
           <Layer>
             <AllCoursesOverprint courses={this.props.courses} controls={this.state.controls} map={this.props.map} />
           </Layer>
           <Layer>
             <AllRoutes results={this.props.results} map={this.props.map} />
+          </Layer>
+          <Layer>
+            <Replay runners={this.props.runners} map={this.props.map} />
           </Layer>
         </Stage>
       </div >

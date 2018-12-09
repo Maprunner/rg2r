@@ -40,6 +40,11 @@
   top: 105px;
 }
 
+#replay {
+  position: absolute;
+  right: 10px;
+  top: 140px;
+}
 
 .rg2-ul ul {
   list-style-type: none;

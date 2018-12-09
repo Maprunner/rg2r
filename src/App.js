@@ -3,15 +3,14 @@ import RG2Toolbar from './components/rg2toolbar.js';
 import RG2Sidebar from './components/rg2sidebar.js';
 import RG2Map from './components/rg2map.js';
 import 'primereact/resources/themes/nova-light/theme.css';
-//import 'primereact/resources/primereact.min.css';
-// import non-minified css so we can edit it for now
-import 'primereact/resources/primereact.css';
+import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './App.css';
 import Event from './utils/eventutils.js';
 import RG2 from './rg2Constants.js';
 import Course from './utils/courseutils.js';
 import Result from './utils/resultutils.js';
+import Runner from './utils/runnerutils.js';
 
 class App extends Component {
   constructor() {
@@ -23,15 +22,17 @@ class App extends Component {
       courses: [],
       results: [],
       controls: [],
+      runners: [],
       mapImage: null,
       activeEvent: activeEvent,
-      activeTabIndex: 0
+      activeTabIndex: 0,
+      timerRunning: false
     }
   }
 
   componentDidMount() {
     // load events as part of starting up app
-    // assumes serevr running on port 80 to deal with api calls: see package.json
+    // assumes server running on port 80 to deal with api calls: see package.json
     fetch('/rg2/rg2api.php?type=events')
       .then(response => response.json())
       .then(json => this.saveEvents(json.data.events));
@@ -91,23 +92,45 @@ class App extends Component {
 
   onReplayResult = (e) => {
     let results = this.state.results;
+    let runners = this.state.runners;
+    let course;
     if (e.value === RG2.REPLAY_ALL_ROUTES_FOR_COURSE) {
       for (let i = 0; i < results.length; i += 1) {
         // using name field on input to store course name
         if (results[i].coursename === e.target.name) {
           results[i].replay = e.checked;
+          course = Course.getCourseDetailsByID(this.state.courses, results[i].courseid);
+          runners = Runner.toggleRunner(e.checked, runners, results[i], course, i);
         }
       }
     } else {
       results[e.value].replay = e.checked;
+      course = Course.getCourseDetailsByID(this.state.courses, results[e.value].courseid);
+      runners = Runner.toggleRunner(e.checked, runners, results[e.value], course, e.value);
     }
     this.setState({
-      results: results
+      results: results,
+      runners: runners
     });
   }
 
   onTabChange = (e) => {
     this.setState({ activeTabIndex: e.index })
+  }
+
+  onStartStop = () => {
+    if (this.state.timerRunning) {
+      clearInterval(this.timer);
+    } else {
+      this.timer = setInterval(this.timerExpired, 1000);
+    }
+    this.setState({
+      timerRunning: !this.state.timerRunning
+    });
+  }
+
+  timerExpired = () => {
+    console.log("Timer");
   }
 
   saveEvent(json) {
@@ -158,7 +181,8 @@ class App extends Component {
             map={this.state.mapImage}
             courses={this.state.courses}
             controls={this.state.controls}
-            results={this.state.results} />
+            results={this.state.results}
+            onStartStop={this.onStartStop} />
         </div>
       </div>
     );

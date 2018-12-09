@@ -58,14 +58,13 @@ export default class {
     }
     for (let i = 0; i < results.length; i += 1) {
       // modify fields from API as necessary
-      // get round iconv problem in API for now: unescape special characters to get sensible text
+      // get round iconv problem in API: unescape special characters to get sensible text
       if (results[i].comments) {
         results[i].comments = he.decode(results[i].comments);
       } else {
         results[i].comments = "";
       }
       if (results[i].coursename === "") {
-        // need to force this to be a string for use elsewhere
         results[i].coursename = Course.getCourseNameByID(courses, results[i].courseid);
       }
       results[i].name = he.decode(results[i].name);
@@ -273,9 +272,6 @@ export default class {
       // TODO score courses
       course.x = this.scorex;
       course.y = this.scorey;
-    } else {
-      //course.x = rg2.courses.getCourseDetails(this.courseid).x;
-      //course.y = rg2.courses.getCourseDetails(this.courseid).y;
     }
     this.calculateTrackTimes(result, course);
     return result;

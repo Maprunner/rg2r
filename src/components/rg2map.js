@@ -5,7 +5,7 @@ import MapImage from './mapimage.js';
 import MapButtons from './mapbuttons.js';
 import AllCoursesOverprint from './allcoursesoverprint.js';
 import AllRoutes from './allroutes.js';
-import Replay from './replay.js';
+import AllRunners from './allrunners.js';
 
 class RG2Map extends Component {
   state = {
@@ -100,7 +100,7 @@ class RG2Map extends Component {
             <AllRoutes results={this.props.results} map={this.props.map} />
           </Layer>
           <Layer>
-            <Replay runners={this.props.runners} map={this.props.map} />
+            <AllRunners runners={this.props.runners} map={this.props.map} time={this.props.time} />
           </Layer>
         </Stage>
       </div >

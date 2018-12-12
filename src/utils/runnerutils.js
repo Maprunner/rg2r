@@ -26,6 +26,7 @@ export default class {
     runner.starttime = result.starttime;
     runner.splits = result.splits;
     runner.legpos = result.legpos;
+    runner.colour = result.colour
     // runner.colour = rg2.colours.getNextColour();
     // get course details
     if (result.isScoreEvent) {

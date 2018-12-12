@@ -11,10 +11,13 @@ import RG2 from './rg2Constants.js';
 import Course from './utils/courseutils.js';
 import Result from './utils/resultutils.js';
 import Runner from './utils/runnerutils.js';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSquare, faCheck, faQuestion, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
   constructor() {
-    super()
+    super();
+    library.add(faCheck, faSquare, faCoffee, faQuestion);
     let activeEvent = { id: null };
     this.state = {
       title: "Routegadget 2",
@@ -26,7 +29,8 @@ class App extends Component {
       mapImage: null,
       activeEvent: activeEvent,
       activeTabIndex: 0,
-      timerRunning: false
+      timerRunning: false,
+      animationTime: 0
     }
   }
 
@@ -131,6 +135,9 @@ class App extends Component {
 
   timerExpired = () => {
     console.log("Timer");
+    this.setState({
+      animationTime: this.state.animationTime + 5
+    })
   }
 
   saveEvent(json) {
@@ -182,7 +189,9 @@ class App extends Component {
             courses={this.state.courses}
             controls={this.state.controls}
             results={this.state.results}
-            onStartStop={this.onStartStop} />
+            runners={this.state.runners}
+            onStartStop={this.onStartStop}
+            time={this.state.animationTime} />
         </div>
       </div>
     );

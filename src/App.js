@@ -11,13 +11,14 @@ import RG2 from './rg2Constants.js';
 import Course from './utils/courseutils.js';
 import Result from './utils/resultutils.js';
 import Runner from './utils/runnerutils.js';
+import Replay from './utils/replayutils.js';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSquare, faCheck, faQuestion, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faQuestion, faPause, faPlay, faUsers, faClock } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
   constructor() {
     super();
-    library.add(faCheck, faSquare, faCoffee, faQuestion);
+    library.add(faCheck, faQuestion, faPause, faPlay, faUsers, faClock);
     let activeEvent = { id: null };
     this.state = {
       title: "Routegadget 2",
@@ -26,11 +27,10 @@ class App extends Component {
       results: [],
       controls: [],
       runners: [],
+      replay: Replay.initialiseReplay(),
       mapImage: null,
       activeEvent: activeEvent,
-      activeTabIndex: 0,
-      timerRunning: false,
-      animationTime: 0
+      activeTabIndex: 0
     }
   }
 
@@ -112,9 +112,11 @@ class App extends Component {
       course = Course.getCourseDetailsByID(this.state.courses, results[e.value].courseid);
       runners = Runner.toggleRunner(e.checked, runners, results[e.value], course, e.value);
     }
+    let replay = Replay.setReplayDetails(runners, this.state.replay);
     this.setState({
       results: results,
-      runners: runners
+      runners: runners,
+      replay: replay
     });
   }
 
@@ -123,20 +125,46 @@ class App extends Component {
   }
 
   onStartStop = () => {
-    if (this.state.timerRunning) {
+    if (this.state.replay.timerRunning) {
       clearInterval(this.timer);
     } else {
-      this.timer = setInterval(this.timerExpired, 1000);
+      this.timer = setInterval(this.timerExpired, 100);
     }
+    let replay = this.state.replay;
+    replay.timerRunning = !replay.timerRunning
     this.setState({
-      timerRunning: !this.state.timerRunning
+      replay: replay
+    });
+  }
+
+  onSetSpeed = (speed) => {
+    let replay = this.state.replay;
+    replay.timerIncrement = speed.value;
+    this.setState({
+      replay: replay
+    });
+  }
+
+  onChangeTime = (time) => {
+    let replay = Replay.setReplayTime(this.state.replay, time.value);
+    this.setState({
+      replay: replay
+    });
+  }
+
+  onChangeReplayMode = () => {
+    let replay = this.state.replay;
+    replay.realTime = !replay.realTime
+    replay = Replay.setReplayDetails(this.state.runners, this.state.replay);
+    this.setState({
+      replay: replay
     });
   }
 
   timerExpired = () => {
-    console.log("Timer");
+    let replay = Replay.timerExpired(this.state.replay);
     this.setState({
-      animationTime: this.state.animationTime + 5
+      replay: replay
     })
   }
 
@@ -191,7 +219,10 @@ class App extends Component {
             results={this.state.results}
             runners={this.state.runners}
             onStartStop={this.onStartStop}
-            time={this.state.animationTime} />
+            onSetSpeed={this.onSetSpeed}
+            onChangeReplayMode={this.onChangeReplayMode}
+            onChangeTime={this.onChangeTime}
+            replay={this.state.replay} />
         </div>
       </div>
     );

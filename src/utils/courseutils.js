@@ -44,6 +44,14 @@ export default class {
     return courses;
   }
 
+  static controlExists(controls, code) {
+    if (controls.find(control => control.code === code) === -1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   static extractControls(courses) {
     let codes;
     let controls = [];
@@ -52,7 +60,7 @@ export default class {
         codes = courses[i].codes;
         if (codes !== undefined) {
           for (let j = 0; j < codes.length; j += 1) {
-            if (controls.find(control => control.code === codes[j]) !== -1) {
+            if (this.controlExists(controls, codes[j])) {
               controls.push({ code: codes[j], x: courses[i].x[j], y: courses[i].y[j] });
             }
           }

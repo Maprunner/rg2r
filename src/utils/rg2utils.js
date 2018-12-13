@@ -30,4 +30,41 @@ export default class {
     return points;
   }
 
+  // converts seconds to MM:SS
+  static formatSecsAsMMSS(secs) {
+    let minutes = Math.floor(secs / 60);
+    let formattedtime = minutes;
+    let seconds = secs - (minutes * 60);
+    if (seconds < 10) {
+      formattedtime += ":0" + seconds;
+    } else {
+      formattedtime += ":" + seconds;
+    }
+    return formattedtime;
+  }
+
+  // returns seconds as hh:mm:ss
+  static formatSecsAsHHMMSS(secs) {
+    let time;
+    let hours = Math.floor(secs / 3600);
+    if (hours < 10) {
+      time = "0" + hours + ":";
+    } else {
+      time = hours + ":";
+    }
+    secs = secs - (hours * 3600);
+    let minutes = Math.floor(secs / 60);
+    if (minutes < 10) {
+      time += "0" + minutes;
+    } else {
+      time += minutes;
+    }
+    secs = secs - (minutes * 60);
+    if (secs < 10) {
+      time += ":0" + secs;
+    } else {
+      time += ":" + secs;
+    }
+    return time;
+  }
 }

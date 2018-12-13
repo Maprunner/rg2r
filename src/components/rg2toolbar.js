@@ -15,10 +15,6 @@ class RG2Toolbar extends Component {
         <div className="p-toolbar-group-right">
           <Button icon="pi pi-search" style={{ marginRight: '.25em' }} />
           <Button icon="pi pi-calendar" className="p-button-success" style={{ marginRight: '.25em' }} />
-          <span className="fa-layers fa-fw">
-            <FontAwesomeIcon icon={"square"} color={"green"} />
-            <FontAwesomeIcon icon={"check"} inverse transform={"shrink - 6"} />
-          </span>
           <FontAwesomeIcon icon={"question"} size={"lg"} />
         </div>
       </Toolbar>

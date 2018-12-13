@@ -90,7 +90,12 @@ class RG2Map extends Component {
                 onZoomOut={this.zoomOut}
                 onZoomIn={this.zoomIn}
                 mapLoaded={this.props.map === null ? "" : "disabled"}
-                onStartStop={this.props.onStartStop} />
+                replay={this.props.replay}
+                runnerCount={this.props.runners.length}
+                onStartStop={this.props.onStartStop}
+                onSetSpeed={this.props.onSetSpeed}
+                onChangeReplayMode={this.props.onChangeReplayMode}
+                onChangeTime={this.props.onChangeTime} />
             </Portal>
           </Layer>
           <Layer>
@@ -100,7 +105,7 @@ class RG2Map extends Component {
             <AllRoutes results={this.props.results} map={this.props.map} />
           </Layer>
           <Layer>
-            <AllRunners runners={this.props.runners} map={this.props.map} time={this.props.time} />
+            <AllRunners runners={this.props.runners} map={this.props.map} replay={this.props.replay} />
           </Layer>
         </Stage>
       </div >

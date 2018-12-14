@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'primereact/card';
+import { Toolbar } from 'primereact/toolbar';
 import { Slider } from 'primereact/slider';
 import ReplayButton from './replaybutton.js';
 import ReplayModeButton from './replaymodebutton.js';
@@ -33,20 +33,18 @@ function ReplayPanel(props) {
     minTime = 0;
   }
   return (
-    <Card>
-      <div id={"replay"}>
-        <ReplayButton replay={props.replay} onStartStop={props.onStartStop} />
-        <ReplayModeButton realTime={props.replay.realTime} onChangeReplayMode={props.onChangeReplayMode} />
-        <Slider
-          value={props.replay.time}
-          onChange={props.onChangeTime}
-          min={minTime}
-          max={maxTime}
-          style={{ width: '20em' }} />
-        <Dropdown value={props.replay.timerIncrement} options={speedOptions} onChange={props.onSetSpeed} />
-        {Utils.formatSecsAsHHMMSS(props.replay.time)}
-      </div>
-    </Card>
+    <Toolbar id={"replay"}>
+      <ReplayButton replay={props.replay} onStartStop={props.onStartStop} />
+      <ReplayModeButton realTime={props.replay.realTime} onChangeReplayMode={props.onChangeReplayMode} />
+      <Slider
+        value={props.replay.time}
+        onChange={props.onChangeTime}
+        min={minTime}
+        max={maxTime}
+        style={{ width: '20em' }} />
+      <Dropdown value={props.replay.timerIncrement} options={speedOptions} onChange={props.onSetSpeed} />
+      {Utils.formatSecsAsHHMMSS(props.replay.time)}
+    </Toolbar>
   );
 }
 

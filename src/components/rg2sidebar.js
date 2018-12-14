@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
-import Events from './events';
+import VisibleEventList from '../containers/VisibleEventList.js';
 import Courses from './courses';
 import Results from './results';
 
@@ -12,12 +12,14 @@ class RG2Sidebar extends Component {
     };
   }
 
+  // <Events events={this.props.events} setEvent={this.props.setEvent} />
+
   render() {
     return (
       <div id="rg2-info-panel">
         <TabView activeIndex={this.props.activeTabIndex} onTabChange={this.props.onTabChange} >
           <TabPanel header="Events">
-            <Events events={this.props.events} setEvent={this.props.setEvent} />
+            <VisibleEventList events={this.props.events} selectEvent={this.props.selectEvent} />
           </TabPanel>
           <TabPanel header="Courses" disabled={this.props.courses.length === 0}>
             <Courses courses={this.props.courses} onSelectCourse={this.props.onSelectCourse} />

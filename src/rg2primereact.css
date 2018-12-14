@@ -178,7 +178,7 @@ button {
 }
 
 .p-accordion .p-accordion-content-wrapper-expanded {
-    max-height: 1000px;
+    max-height: none;
     transition: max-height 1s ease-in-out;
 }
 
@@ -1569,7 +1569,7 @@ input[type=text]::-ms-clear {
 }
 
 .p-fieldset-content-wrapper-expanded {
-    max-height: 1000px;
+    max-height: none;
     transition: max-height 1s ease-in-out;
 }
 
@@ -2851,7 +2851,7 @@ input[type=text]::-ms-clear {
 }
 
 .p-panel-content-wrapper-expanded {
-    max-height: 1000px;
+    max-height: none;
     transition: max-height 1s ease-in-out;
 }
 
@@ -2929,7 +2929,7 @@ input[type=text]::-ms-clear {
 }
 
 .p-panelmenu .p-panelmenu-content-wrapper-expanded {
-    max-height: 1000px;
+    max-height: none;
     transition: max-height 1s ease-in-out;
 }
 .p-password-panel {

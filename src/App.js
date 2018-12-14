@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import RG2Toolbar from './components/rg2toolbar.js';
 import RG2Sidebar from './components/rg2sidebar.js';
 import RG2Map from './components/rg2map.js';
 import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.min.css';
+import './rg2primereact.css';
 import 'primeicons/primeicons.css';
 import './App.css';
-import Event from './utils/eventutils.js';
 import RG2 from './rg2Constants.js';
 import Course from './utils/courseutils.js';
 import Result from './utils/resultutils.js';
 import Runner from './utils/runnerutils.js';
 import Replay from './utils/replayutils.js';
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { loadEvents } from './actions/actions.js'
 import { faCheck, faQuestion, faPause, faPlay, faUsers, faClock } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
@@ -22,7 +23,6 @@ class App extends Component {
     let activeEvent = { id: null };
     this.state = {
       title: "Routegadget 2",
-      events: [],
       courses: [],
       results: [],
       controls: [],
@@ -36,32 +36,13 @@ class App extends Component {
 
   componentDidMount() {
     // load events as part of starting up app
-    // assumes server running on port 80 to deal with api calls: see package.json
-    fetch('/rg2/rg2api.php?type=events')
-      .then(response => response.json())
-      .then(json => this.saveEvents(json.data.events));
+    this.props.dispatch(loadEvents())
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.activeEvent.id !== this.state.activeEvent.id) {
-      console.log("Loading event " + this.state.activeEvent.id);
-      fetch('/rg2/rg2api.php?type=event&id=' + this.state.activeEvent.id)
-        .then(response => response.json())
-        .then(json => this.saveEvent(json))
-      this.getMap(this.state.activeEvent.mapfilename);
-    }
+    //this.getMap(this.state.activeEvent.mapfilename);
   }
 
-  saveEvents(eventsData) {
-    let events = Event.processEvents(eventsData)
-    this.setState({ events: events })
-  }
-
-  setEvent = (id) => {
-    this.setState({
-      activeEvent: this.state.events[id]
-    });
-  }
 
   onSelectCourse = (e) => {
     let courses = this.state.courses;
@@ -203,7 +184,6 @@ class App extends Component {
         </div>
         <div id="rg2-body-container">
           <RG2Sidebar
-            events={this.state.events}
             courses={this.state.courses}
             results={this.state.results}
             setEvent={this.setEvent}
@@ -229,4 +209,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App)

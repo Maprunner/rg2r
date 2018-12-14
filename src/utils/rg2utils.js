@@ -1,3 +1,5 @@
+import RG2 from '../rg2Constants.js';
+
 export default class {
   static getDistanceBetweenPoints(x1, y1, x2, y2) {
     // Pythagoras
@@ -66,5 +68,9 @@ export default class {
       time += ":" + secs;
     }
     return time;
+  }
+
+  static isScoreEvent(format) {
+    return RG2.SCORE_EVENT === format;
   }
 }

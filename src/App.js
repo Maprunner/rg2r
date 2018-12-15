@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import RG2Toolbar from './components/rg2toolbar.js';
 import RG2Sidebar from './components/rg2sidebar.js';
-import RG2Map from './components/rg2map.js';
+import Canvas from './containers/Canvas.js';
 import 'primereact/resources/themes/nova-light/theme.css';
 import './rg2primereact.css';
 import 'primeicons/primeicons.css';
@@ -38,11 +38,6 @@ class App extends Component {
     // load events as part of starting up app
     this.props.dispatch(loadEvents())
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    //this.getMap(this.state.activeEvent.mapfilename);
-  }
-
 
   onSelectCourse = (e) => {
     let courses = this.state.courses;
@@ -163,17 +158,6 @@ class App extends Component {
     })
   }
 
-  getMap(mapfilename) {
-    const image = new window.Image();
-    image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + mapfilename;
-    image.onload = () => {
-      // setState will trigger map load
-      this.setState({
-        mapImage: image
-      });
-    };
-  }
-
   render() {
     return (
       <div>
@@ -192,8 +176,7 @@ class App extends Component {
             onSelectCourse={this.onSelectCourse}
             onSelectResult={this.onSelectResult}
             onReplay={this.onReplayResult} />
-          <RG2Map
-            map={this.state.mapImage}
+          <Canvas
             courses={this.state.courses}
             controls={this.state.controls}
             results={this.state.results}

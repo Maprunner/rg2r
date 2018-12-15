@@ -7,7 +7,6 @@ export const FILTER_EVENTS = 'FILTER_EVENTS';
 
 export const SAVE_COURSES = 'SAVE_COURSES';
 
-export const LOAD_MAP = 'LOAD_MAP';
 export const MAP_LOADED = 'MAP_LOADED';
 
 export function loadEvents() {
@@ -40,17 +39,6 @@ export function loadEvent(event) {
       )
       .then(json => dispatch(saveEvent(json.data, event.format))
       )
-  }
-}
-
-export function loadMap(mapName) {
-  // assumes server running on port 80 to deal with api calls: see package.json
-  return function (dispatch) {
-    const image = new window.Image();
-    image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + mapName;
-    image.onload = () => {
-      dispatch(mapLoaded(mapName, image))
-    }
   }
 }
 

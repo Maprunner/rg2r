@@ -12,8 +12,6 @@ class RG2Sidebar extends Component {
     };
   }
 
-  // <Events events={this.props.events} setEvent={this.props.setEvent} />
-
   render() {
     return (
       <div id="rg2-info-panel">

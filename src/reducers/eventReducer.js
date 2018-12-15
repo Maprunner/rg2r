@@ -6,7 +6,6 @@ const initialState = {
   activeEvent: null,
   allEventsLoading: false,
   singleEventLoading: false,
-  mapImage: null
 }
 
 const events = (state = initialState, action) => {
@@ -28,10 +27,6 @@ const events = (state = initialState, action) => {
         singleEventLoading: { $set: true },
         activeEvent: { $set: action.event },
         mapImage: { $set: action.image },
-      });
-    case 'MAP_LOADED':
-      return update(state, {
-        mapImage: { $set: action.image }
       });
     default:
       return state

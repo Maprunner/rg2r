@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSelectEvent: (event) => dispatch(loadEvent(event)),
-  onFilterChange: filter => dispatch(filterEvents(filter)),
+  onFilterChange: filter => dispatch(filterEvents(filter))
 })
 
 export default connect(

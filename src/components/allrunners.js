@@ -18,7 +18,7 @@ class AllRunners extends Component {
       //  timeOffset = -1 * result.splits[this.massStartControl];
       //}
     }
-    // TODO: complicated stop at control logoc missing
+    // TODO: complicated stop at control logic missing
     xy = Utils.mergeXYArray(
       runner.x.slice(replay.tailStartTimeSecs - timeOffset, replay.time - timeOffset),
       runner.y.slice(replay.tailStartTimeSecs - timeOffset, replay.time - timeOffset)

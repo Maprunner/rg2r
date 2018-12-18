@@ -31,17 +31,16 @@ class AllRoutes extends Component {
   }
 
   render() {
-    if ((this.props.results === undefined) || (this.props.map === null)) {
+    if ((this.props.routes === undefined) || (this.props.map === null)) {
       return null;
     }
     const opt = this.getOverprintDetails(this.props.map);
     const allRoutes = [];
     let xy;
-    for (let i = 0; i < this.props.results.length; i += 1) {
-      if (this.props.results[i].displayTrack) {
-        xy = Utils.mergeXYArray(this.props.results[i].x, this.props.results[i].y)
-        allRoutes.push(<SingleRoute key={i} points={xy} colour={this.props.results[i].colour} opt={opt} />);
-      }
+    // routes already filtered so we just display everything we get
+    for (let i = 0; i < this.props.routes.length; i += 1) {
+      xy = Utils.mergeXYArray(this.props.routes[i].x, this.props.routes[i].y)
+      allRoutes.push(<SingleRoute key={i} points={xy} colour={this.props.routes[i].colour} opt={opt} />);
     }
     return (
       <>

@@ -35,8 +35,8 @@ class AllCoursesOverprint extends Component {
     }
     const opt = this.getOverprintDetails(this.props.map);
     const courseOverprint = [];
-    for (let i = 0; i < this.props.courses.length; i += 1) {
-      if (this.props.courses[i].display) {
+    for (let i = 0; i < this.props.display.length; i += 1) {
+      if (this.props.display[i]) {
         courseOverprint.push(<SingleCourseOverprint key={i} course={this.props.courses[i]} opt={opt} />);
       }
     }

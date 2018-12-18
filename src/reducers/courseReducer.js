@@ -1,27 +1,53 @@
 import update from 'immutability-helper';
 import Utils from '../utils/rg2utils.js';
+import RG2 from '../rg2Constants';
 
 const initialState = {
   data: [],
+  display: [],
   controls: []
 }
 
 const courses = (state = initialState, action) => {
   switch (action.type) {
+    case 'DISPLAY_COURSE':
+      return update(state, {
+        display: { $set: displayCourses(state.display, action.index, action.display) }
+      });
     case 'SAVE_EVENT':
       return update(state, {
         data: { $set: processCourses(action.data.courses, action.data.format) },
-        controls: { $set: extractControls(action.data.courses) }
+        controls: { $set: extractControls(action.data.courses) },
+        display: { $set: initialiseDisplay(action.data.courses) }
       });
     default:
       return state
   }
 }
 
+function initialiseDisplay(courses) {
+  let display = [];
+  for (let i = 0; i < courses.length; i += 1) {
+    display[i] = false;
+  }
+  return display
+}
+
+function displayCourses(currentDisplay, index, display) {
+  let courses = currentDisplay.slice()
+  if (index === RG2.DISPLAY_ALL_COURSES) {
+    for (let i = 0; i < courses.length; i += 1) {
+      courses[i] = display;
+    }
+  } else {
+    courses[index] = display;
+  }
+  return courses
+}
+
 function processCourses(courses, format) {
   const isScoreEvent = Utils.isScoreEvent(format);
   for (let i = 0; i < courses.length; i += 1) {
-    courses[i].display = false;
     courses[i].isScoreCourse = isScoreEvent;
     courses[i].x = courses[i].xpos;
     courses[i].y = courses[i].ypos;

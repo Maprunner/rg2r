@@ -13,13 +13,13 @@ function CourseItem({ name, checked, onSelectCourse, value }) {
   )
 }
 
-function CourseList({ courses, onSelectCourse }) {
+function CourseList({ courses, onSelectCourse, display }) {
   const courseItems = courses.map((course, i) =>
-    <CourseItem key={i.toString()} name={course.name} checked={course.display} onSelectCourse={onSelectCourse} value={i} />
+    <CourseItem key={i.toString()} name={course.name} checked={display[i]} onSelectCourse={onSelectCourse} value={i} />
   );
   let allChecked = true;
   for (let i = 0; i < courses.length; i += 1) {
-    if (!courses[i].display) {
+    if (!display[i]) {
       allChecked = false;
       break;
     }
@@ -40,7 +40,7 @@ class Courses extends Component {
   render() {
     return (
       <div className="rg2-ul">
-        <CourseList courses={this.props.courses} onSelectCourse={this.props.onSelectCourse} />
+        <CourseList courses={this.props.courses} display={this.props.display} onSelectCourse={this.props.onSelectCourse} />
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 function EventItem(props) {
-  return <li onClick={() => props.onClick(props.event)}>{props.event.date} {props.event.name}</li>;
+  return <tr onClick={() => props.onClick(props.event)}><td>{props.event.date}: {props.event.name}</td></tr>
 }
 
 function EventList({ events, onClick }) {
@@ -9,9 +9,11 @@ function EventList({ events, onClick }) {
     <EventItem key={i} event={event} onClick={onClick} />
   );
   return (
-    <ul>
-      {eventItems}
-    </ul>
+    <table>
+      <tbody>
+        {eventItems}
+      </tbody>
+    </table>
   );
 }
 

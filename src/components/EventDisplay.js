@@ -5,7 +5,6 @@ import EventList from '../components/EventList'
 class EventDisplay extends Component {
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <span>

@@ -11,8 +11,9 @@ const monitorReducerEnhancer = createStore => (
     const end = performance.now()
     const diff = round(end - start)
 
-    console.log('reducer process time:', diff)
-
+    if (action.type !== 'TIMER_EXPIRED') {
+      console.log(action.type, ' reducer process time:', diff)
+    }
     return newState
   }
 

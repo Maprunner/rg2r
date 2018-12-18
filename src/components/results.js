@@ -104,7 +104,7 @@ class Results extends Component {
           key={key}
           name={oldCourseName}
           results={courseResults.slice()}
-          onSelect={this.props.onSelectResult}
+          onSelect={this.props.onSelectRoute}
           onReplay={this.props.onReplay} />;
         fullResultList.push(<AccordionTab
           key={i}
@@ -123,7 +123,7 @@ class Results extends Component {
       name={oldCourseName}
       startAt={startAt}
       results={courseResults}
-      onSelect={this.props.onSelectResult}
+      onSelect={this.props.onSelectRoute}
       onReplay={this.props.onReplay} />;
     fullResultList.push(<AccordionTab key={courses.length} header={oldCourseName} >{resultListForCourse}</AccordionTab>);
 

@@ -38,7 +38,7 @@ function ReplayPanel(props) {
       <ReplayModeButton realTime={props.replay.realTime} onChangeReplayMode={props.onChangeReplayMode} />
       <Slider
         value={props.replay.time}
-        onChange={props.onChangeTime}
+        onChange={props.onSetTime}
         min={minTime}
         max={maxTime}
         style={{ width: '20em' }} />

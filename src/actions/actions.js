@@ -28,15 +28,17 @@ export function displayCourse(index, display) {
   }
 }
 
-export function displayRoute(index, courseName, display, event) {
-  return {
-    type: DISPLAY_ROUTE,
-    index: index,
-    courseName: courseName,
-    display: display,
-    event: event
+export function displayRoute(resultIndex, courseIndex, display) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: DISPLAY_ROUTE,
+      resultIndex: resultIndex,
+      courseName: getState().courses.data[courseIndex].name,
+      display: display
+    })
   }
 }
+
 
 export function eventRequested(index, id) {
   return {
@@ -107,14 +109,13 @@ export function mapLoaded(image) {
   }
 }
 
-export function replayRoute(index, courseName, display) {
-  // redux-thunk in action! get course details for selected route replay
+export function replayRoute(resultIndex, courseIndex, display) {
+  // add course details for selected route replay
   return (dispatch, getState) => {
-    let course = getState().courses.data[index]
+    let course = getState().courses.data[courseIndex]
     dispatch({
       type: REPLAY_ROUTE,
-      index: index,
-      courseName: courseName,
+      resultIndex: resultIndex,
       display: display,
       course: course
     })

@@ -1,23 +1,24 @@
-import React from 'react';
-import { Stage, Layer, Image } from 'react-konva';
-import Portal from './portal.js';
-import MapButtons from './mapbuttons.js';
-import AllCoursesOverprint from './allcoursesoverprint.js';
-import AllRoutes from './allroutes.js';
-import AllRunners from './allrunners.js';
+import React from 'react'
+import { Stage, Layer, Image } from 'react-konva'
+import Portal from './Portal.js'
+import MapButtons from './MapButtons.js'
+import ReplayPanel from './ReplayPanel.js'
+import AllCoursesOverprint from './AllCoursesOverprint.js'
+import AllRoutes from './AllRoutes.js'
+import AllRunners from './AllRunners.js'
 
 class Map extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     // ref handling as described in https://reactjs.org/docs/refs-and-the-dom.html
-    this.stage = React.createRef();
-    this.handleScroll = this.handleScroll.bind(this);
+    this.stage = React.createRef()
+    this.handleScroll = this.handleScroll.bind(this)
   }
 
   handleScroll(e) {
-    e.evt.stopPropagation();
-    e.evt.preventDefault();
-    const delta = e.evt.wheelDelta ? e.evt.wheelDelta / 40 : e.evt.detail ? -e.evt.detail : 0;
+    e.evt.stopPropagation()
+    e.evt.preventDefault()
+    const delta = e.evt.wheelDelta ? e.evt.wheelDelta / 40 : e.evt.detail ? -e.evt.detail : 0
     if (delta) {
       let mousePos = this.stage.current.pointerPos
       let xy = { x: this.stage.current.attrs.x, y: this.stage.current.attrs.y }
@@ -39,33 +40,37 @@ class Map extends React.Component {
           onWheel={this.handleScroll}
           scale={this.props.zoom}
         >
-          <Layer>
+          <Layer listening={false}>
             <Image image={this.props.map} />
             {<Portal>
               <MapButtons
                 onZoom={this.props.onZoom}
                 mapLoaded={this.props.map === null ? "" : "disabled"}
-                replay={this.props.replay}
-                runnerCount={this.props.runners.length}
-                onStartStop={this.props.onStartStop}
-                onSetSpeed={this.props.onSetSpeed}
-                onSetReplayMode={this.props.onSetReplayMode}
-                onSetTime={this.props.onSetTime}
               />
             </Portal>}
           </Layer>
-          <Layer>
-            <AllCoursesOverprint courses={this.props.courses} display={this.props.courseDisplay} controls={this.props.controls} map={this.props.map} />
+          <Layer listening={false}>
+            <AllCoursesOverprint courses={this.props.courses} display={this.props.courseDisplay} controls={this.props.controls} opt={this.props.opt} />
           </Layer>
-          <Layer>
-            <AllRoutes routes={this.props.routes} map={this.props.map} />
+          <Layer listening={false}>
+            <AllRoutes routes={this.props.routes} opt={this.props.opt} />
           </Layer>
-          <Layer>
-            <AllRunners runners={this.props.runners} map={this.props.map} replay={this.props.replay} />
+          <Layer listening={false}>
+            {<Portal>
+              <ReplayPanel
+                replay={this.props.replay}
+                onStartStop={this.props.onStartStop}
+                onSetSpeed={this.props.onSetSpeed}
+                onSetTime={this.props.onSetTime}
+                onSetReplayMode={this.props.onSetReplayMode}
+                runnerCount={this.props.runners.length} />
+              />
+            </Portal>}
+            <AllRunners runners={this.props.runners} replay={this.props.replay} />
           </Layer>
         </Stage>
       </div >
     )
   }
 }
-export default Map;
+export default Map

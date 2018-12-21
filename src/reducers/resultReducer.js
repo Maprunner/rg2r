@@ -65,10 +65,10 @@ const results = (state = initialState, action) => {
   switch (action.type) {
     case 'DISPLAY_ROUTE':
       return update(state, {
-        data: { $set: displayRoutes(state.data, action.index, action.courseName, action.display) }
+        data: { $set: displayRoutes(state.data, action.resultIndex, action.courseName, action.display) }
       })
     case 'REPLAY_ROUTE':
-      results = replayRoutes(state.data, state.runners, state.replay, action.index, action.display, action.course)
+      results = replayRoutes(state.data, state.runners, state.replay, action.resultIndex, action.display, action.course)
       return update(state, {
         data: { $set: results.data },
         runners: { $set: results.runners },
@@ -109,6 +109,8 @@ const results = (state = initialState, action) => {
         data: { $set: results.data },
         filter: { $set: results.filter }
       })
+    case 'EVENT_REQUESTED':
+      return initialState
     default:
       return state
   }
@@ -447,8 +449,8 @@ function processResults(oldResults, routes, courses, format) {
 }
 
 function getCourseIndexFromId(courses, courseid) {
- const index = courses.findIndex(course => course.courseid === courseid)
- return index;
+  const index = courses.findIndex(course => course.courseid === courseid)
+  return index;
 }
 
 function initialiseFilter(courses) {
@@ -509,9 +511,9 @@ function mergeRoutes(oldResults, routes) {
   // adds routes to the relevant result
   // should really get the API to do this at a later stage...
   if (routes.length === 0) {
-    return oldResults.map( (result) => {
+    return oldResults.map((result) => {
       result.rawx = []
-      result.rawy=[]
+      result.rawy = []
       return result
     });
   }

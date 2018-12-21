@@ -11,7 +11,7 @@ const initialState = {
 const events = (state = initialState, action) => {
   switch (action.type) {
     case 'SAVE_EVENTS':
-      return update(state, { data: { $set: processEvents(action.events) }, allEventsLoading: { $set: false } });
+      return update(state, { data: { $set: processEvents(action.events) }, allEventsLoading: { $set: false } })
     case 'FILTER_EVENTS':
       return update(state, { filter: { $set: action.filter } });
     case 'EVENTS_REQUESTED':
@@ -21,13 +21,13 @@ const events = (state = initialState, action) => {
     case 'SAVE_EVENT':
       return update(state, {
         singleEventLoading: { $set: false }
-      });
+      })
     case 'EVENT_REQUESTED':
       return update(state, {
         singleEventLoading: { $set: true },
         activeEvent: { $set: action.event },
         mapImage: { $set: action.image },
-      });
+      })
     default:
       return state
   }

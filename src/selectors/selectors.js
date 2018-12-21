@@ -2,51 +2,54 @@
 import { createSelector } from 'reselect'
 
 export const getCourses = (state) => state.courses.data
-export const getCoursesDisplay = (state) => state.courses.display
 export const getResults = (state) => state.results.data
 const getEvents = (state) => state.events.data
 const getEventsFilter = (state) => state.events.filter
 const getResultFilterByCourse = (state, props) => state.results.filter[props.courseIndex]
 const getCourseByIndex = (state, props) => state.courses.data[props.courseIndex]
 
-// create array of results by course, plus total results at end of array
+// create array of "is course displayed" by course, plus "all courses displayed" at end of array
+export const getCoursesDisplay = (state) => {
+  let display = state.courses.display
+  let allDisplayed = display.reduce((all, courseDisplayed) => all && courseDisplayed, true)
+  display.push(allDisplayed)
+  return display
+}
+
+// create array of result counts by course, plus total results at end of array
 export const getResultCountByCourse = (state) => {
-  let resultCounts = Array.from(new Array(state.courses.data.length), function() { return 0 })
-  let oldRawId = 99999;
+  let resultCount = Array.from(new Array(state.courses.data.length), function () { return 0 })
+  let total = 0;
+  // need to allow for results with more than one route
+  let oldId = 99999;
   for (let i = 0; i < state.results.data.length; i += 1) {
-    if (oldRawId !== state.results.data[i].rawid) {
-      resultCounts[state.results.data[i].courseIndex]++
-    } 
-    oldRawId = state.results.data[i].rawid
+    if (oldId !== state.results.data[i].rawid) {
+      resultCount[state.results.data[i].courseIndex]++
+      total++
+    }
+    oldId = state.results.data[i].rawid
   }
-  let total = resultCounts.reduce((accumulator, count) => accumulator + count)
-  resultCounts.push(total)
-  return resultCounts
+  resultCount.push(total)
+  return resultCount
 }
 
 // create array of routes by course, plus total routes at end of array
 export const getRouteCountByCourse = (state) => {
-  let routeCounts = Array.from(new Array(state.courses.data.length), function() { return 0 })
+  let routeCount = Array.from(new Array(state.courses.data.length), function () { return 0 })
   let total = 0;
   for (let i = 0; i < state.results.data.length; i += 1) {
-    if (state.results.data[i].x.length> 0) {
-      routeCounts[state.results.data[i].courseIndex]++
+    if (state.results.data[i].x.length > 0) {
+      routeCount[state.results.data[i].courseIndex]++
       total++
     }
   }
-  routeCounts.push(total)
-  return routeCounts
+  routeCount.push(total)
+  return routeCount
 }
 
 export const getDisplayedRoutes = (state) => {
   return state.results.data.filter(
     result => result.displayRoute
-  )
-}
-
-const getResultsByCourseIndex = (state, props) => {
-  return state.results.data.filter(
-    result => result.courseIndex === props.courseIndex
   )
 }
 

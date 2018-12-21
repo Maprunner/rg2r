@@ -18,7 +18,8 @@ const RG2 = {
   REPLAY_ALL_ROUTES_FOR_COURSE: 99997,
   TIME_NOT_FOUND: 9999,
   ONE_DAY_IN_SECONDS: 86400,
-  COLOURS: ["#ff0000", "#00ff00", "#0000ff", "#800000", "#008000", "#000080", "#ffff00", "#ff00ff", "#00ffff", "#808000", "#800080", "#008080"]
+  COLOURS: ["#ff0000", "#00ff00", "#0000ff", "#800000", "#008000", "#000080", "#ffff00", "#ff00ff", "#00ffff", "#808000", "#800080", "#008080"],
+  TOOLBAR_HEIGHT: 36
   /*
   INVALID_MAP_ID: 9999,
   // translated when output so leave as English here

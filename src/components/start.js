@@ -1,5 +1,5 @@
-import React from 'react';
-import { RegularPolygon } from 'react-konva';
+import React from 'react'
+import { RegularPolygon } from 'react-konva'
 
 const Start = ({ x, y, opt, rotation }) => (
   <>
@@ -24,4 +24,4 @@ const Start = ({ x, y, opt, rotation }) => (
   </>
 )
 
-export default Start;
+export default Start

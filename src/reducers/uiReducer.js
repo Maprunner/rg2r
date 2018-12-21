@@ -16,6 +16,8 @@ const ui = (state = initialState, action) => {
       return update(state, {
         activeTabIndex: { $set: RG2.TAB_COURSES }
       });
+    case 'EVENT_REQUESTED':
+      return initialState
     default:
       return state
   }

@@ -1,69 +1,69 @@
-import React from 'react';
-import { Checkbox } from 'primereact/checkbox';
-import RG2 from '../rg2Constants';
+import React from 'react'
+import { Checkbox } from 'primereact/checkbox'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import RG2 from '../rg2Constants'
 
-function CourseItem({ name, checked, results, routes, onSelectCourse, value }) {
+function CourseItem({ name, checked, resultCount, routeCount, onSelectCourse, value }) {
   return (
     <tr>
       <td>{name}</td>
       <td><Checkbox value={value} onChange={onSelectCourse} checked={checked}></Checkbox></td>
-      <td>{results}</td>
-      <td>{routes}</td>
+      <td>{resultCount}</td>
+      <td>{routeCount}</td>
       <td></td>
       <td></td>
     </tr>
   )
 }
 
-function CourseDisplay({ courses, results, routes, onSelectCourse, display }) {
+function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse, display }) {
   const courseItems = courses.map((course, i) =>
-    <CourseItem key={
-      i.toString()}
+    <CourseItem
+      key={i.toString()}
       name={course.name}
-      results={results[i]}
-      routes={routes[i]}
-      checked={display[i]} 
-      onSelectCourse={onSelectCourse} 
+      resultCount={resultCount[i]}
+      routeCount={routeCount[i]}
+      checked={display[i]}
+      onSelectCourse={onSelectCourse}
       value={i} />
-  );
-  let allChecked = true;
+  )
+  let allChecked = true
   for (let i = 0; i < courses.length; i += 1) {
     if (!display[i]) {
-      allChecked = false;
-      break;
+      allChecked = false
+      break
     }
   }
   // don't need a summary line if there is only one course
   if (courses.length > 1) {
-    courseItems.push(<CourseItem 
-      key={courses.length.toString()} 
-      name={"All"} 
-      results={results[results.length - 1]}
-      routes={routes[routes.length - 1]}
-      onSelectCourse={onSelectCourse} 
-      checked={allChecked} 
-      value={RG2.DISPLAY_ALL_COURSES} />);
+    courseItems.push(<CourseItem
+      key={courses.length.toString()}
+      name={"All"}
+      resultCount={resultCount[resultCount.length - 1]}
+      routeCount={routeCount[routeCount.length - 1]}
+      onSelectCourse={onSelectCourse}
+      checked={allChecked}
+      value={RG2.DISPLAY_ALL_COURSES} />)
   }
 
   return (
     <div className="rg2-ul">
-    <table>
+      <table>
         <thead>
-          <tr><th>Course</th><th></th><th>Runners</th><th>Routes</th><th></th><th></th></tr>
+          <tr>
+            <th>Course</th>
+            <th><FontAwesomeIcon icon={'eye'} /></th>
+            <th>Runners</th>
+            <th>Routes</th>
+            <th><FontAwesomeIcon icon={'eye'} /></th>
+            <th><FontAwesomeIcon icon={'play'} /></th></tr>
         </thead>
         <tbody>
           {courseItems}
-          {/* <SummaryRow
-            courseName={courseName}
-            onSelect={onSelectCourse}
-            onReplay={onReplay}
-            routesChecked={allRoutesDisplayed}
-            replayChecked={allRoutesReplayed}
-            hasRoutes={hasRoutes} /> */}
         </tbody>
       </table>
-      </div>
-  );
+    </div>
+  )
 }
 
-export default CourseDisplay;
+export default CourseDisplay

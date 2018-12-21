@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   x: state.map.x,
   y: state.map.y,
   map: state.map.mapImage,
+  opt: state.map.opt,
   zoom: state.map.zoom,
   courses: state.courses.data,
   routes: getDisplayedRoutes(state),

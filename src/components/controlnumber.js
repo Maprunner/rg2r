@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text } from 'react-konva';
+import React from 'react'
+import { Text } from 'react-konva'
 
 const ControlNumber = ({ x, y, opt, text }) => (
   <>
@@ -18,4 +18,4 @@ const ControlNumber = ({ x, y, opt, text }) => (
   </>
 )
 
-export default ControlNumber;
+export default ControlNumber

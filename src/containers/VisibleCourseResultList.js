@@ -15,7 +15,7 @@ const makeMapStateToProps = () => {
   const mapStateToProps = (state, props) => {
     return {
       results: getVisibleResultsByCourse(state, props),
-      courseName: state.courses.data[props.courseIndex].name,
+      courseIndex: props.courseIndex,
       filter: state.results.filter[props.courseIndex],
       allRoutesDisplayed: allRoutesDisplayedByCourse(state, props),
       allRoutesReplayed: allRoutesReplayedByCourse(state, props),
@@ -28,7 +28,6 @@ const makeMapStateToProps = () => {
 const mapDispatchToProps = (dispatch, props) => {
   return {
     onSelect: (event) => dispatch(displayRoute(event.target.value, event.target.name, event.target.checked)),
-    // course details get added  via thunk: see actions.js
     onReplay: (event) => dispatch(replayRoute(event.target.value, event.target.name, event.target.checked)),
     onFilterChange: filter => dispatch(filterResults(filter, props.courseIndex))
   }

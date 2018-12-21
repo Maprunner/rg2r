@@ -13,13 +13,15 @@ const courses = (state = initialState, action) => {
     case 'DISPLAY_COURSE':
       return update(state, {
         display: { $set: displayCourses(state.display, action.index, action.display) }
-      });
+      })
     case 'SAVE_EVENT':
       return update(state, {
         data: { $set: processCourses(action.data.courses, action.data.format) },
         controls: { $set: extractControls(action.data.courses) },
         display: { $set: initialiseDisplay(action.data.courses) }
-      });
+      })
+    case 'EVENT_REQUESTED':
+      return initialState
     default:
       return state
   }

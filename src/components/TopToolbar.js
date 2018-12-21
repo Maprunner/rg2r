@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Toolbar } from 'primereact/toolbar';
-import { Button } from 'primereact/button';
-import logo from '../rg2-logo.png';
+import React, { Component } from 'react'
+import { Toolbar } from 'primereact/toolbar'
+import { Button } from 'primereact/button'
+import logo from '../rg2-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-class RG2Toolbar extends Component {
+class TopToolbar extends Component {
   render() {
     return (
       <Toolbar>
@@ -21,4 +21,4 @@ class RG2Toolbar extends Component {
     )
   }
 }
-export default RG2Toolbar;
+export default TopToolbar

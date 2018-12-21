@@ -2,26 +2,17 @@ import { connect } from 'react-redux'
 import CourseDisplay from '../components/CourseDisplay'
 import { displayCourse, replayRoute, filterResults } from '../actions/actions.js'
 import {
-  makeGetVisibleResultsByCourse, getCourses,
-  getCoursesDisplay, getRouteCountByCourse, getResultCountByCourse
+  getCourses, getCoursesDisplay, getRouteCountByCourse, getResultCountByCourse
 } from '../selectors/selectors.js'
 
-const makeMapStateToProps = () => {
-  const getVisibleResultsByCourse = makeGetVisibleResultsByCourse()
-
-  const mapStateToProps = (state, props) => {
-    return {
-      courses: getCourses(state),
-      display: getCoursesDisplay(state),
-      results: getResultCountByCourse(state),
-      routes: getRouteCountByCourse(state)
-      //filter: state.results.filter[props.courseIndex],
-      //allRoutesDisplayed: allRoutesDisplayedByCourse(state, props),
-      //allRoutesReplayed: allRoutesReplayedByCourse(state, props),
-      //hasRoutes: courseHasRoutes(state, props)
-    }
+const mapStateToProps = (state) => {
+  return {
+    courses: getCourses(state),
+    display: getCoursesDisplay(state),
+    resultCount: getResultCountByCourse(state),
+    routeCount: getRouteCountByCourse(state)
   }
-  return mapStateToProps
+
 }
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -33,6 +24,6 @@ const mapDispatchToProps = (dispatch, props) => {
 }
 
 export default connect(
-  makeMapStateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(CourseDisplay)

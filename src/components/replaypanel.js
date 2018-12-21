@@ -1,14 +1,14 @@
-import React from 'react';
-import { Toolbar } from 'primereact/toolbar';
-import { Slider } from 'primereact/slider';
-import ReplayButton from './replaybutton.js';
-import ReplayModeButton from './replaymodebutton.js';
-import { Dropdown } from 'primereact/dropdown';
-import Utils from '../utils/rg2utils.js';
+import React from 'react'
+import { Toolbar } from 'primereact/toolbar'
+import { Slider } from 'primereact/slider'
+import ReplayButton from './ReplayButton.js'
+import ReplayModeButton from './ReplayModeButton.js'
+import { Dropdown } from 'primereact/dropdown'
+import Utils from '../utils/rg2utils.js'
 
 function ReplayPanel(props) {
   if (props.runnerCount === 0) {
-    return null;
+    return null
   }
   const speedOptions = [
     { label: 'x1', value: 100 },
@@ -22,15 +22,15 @@ function ReplayPanel(props) {
     { label: 'x300', value: 300000 },
     { label: 'x600', value: 600000 },
     { label: 'x1200', value: 1200000 }
-  ];
-  let maxTime;
-  let minTime;
+  ]
+  let maxTime
+  let minTime
   if (props.replay.realTime) {
-    maxTime = props.replay.latestFinishSecs;
-    minTime = props.replay.earliestStartSecs;
+    maxTime = props.replay.latestFinishSecs
+    minTime = props.replay.earliestStartSecs
   } else {
-    maxTime = props.replay.slowestTimeSecs;
-    minTime = 0;
+    maxTime = props.replay.slowestTimeSecs
+    minTime = 0
   }
   return (
     <Toolbar id={"replay"}>
@@ -45,7 +45,7 @@ function ReplayPanel(props) {
       <Dropdown value={props.replay.timerIncrement} options={speedOptions} onChange={props.onSetSpeed} />
       {Utils.formatSecsAsHHMMSS(props.replay.time)}
     </Toolbar>
-  );
+  )
 }
 
-export default ReplayPanel;
+export default ReplayPanel

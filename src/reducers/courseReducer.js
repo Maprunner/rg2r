@@ -49,6 +49,7 @@ function processCourses(courses, format) {
   const isScoreEvent = Utils.isScoreEvent(format);
   for (let i = 0; i < courses.length; i += 1) {
     courses[i].isScoreCourse = isScoreEvent;
+    courses[i].index = i;
     courses[i].x = courses[i].xpos;
     courses[i].y = courses[i].ypos;
     delete courses[i].xpos;

@@ -12,7 +12,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onTabChange: (event) => dispatch(tabChanged(event.index)),
-  onSelectCourse: (event) => dispatch(displayCourse(event.value, event.checked)),
   onSelectRoute: (event) => dispatch(displayRoute(event.value, event.checked))
 })
 

@@ -90,7 +90,7 @@ const results = (state = initialState, action) => {
         replay: { $set: replay }
       })
     case 'SET_TIME':
-      replay = setTime(state.replay, action.time)
+      replay = setReplayTime(state.replay, action.time)
       return update(state, {
         replay: { $set: replay }
       })
@@ -112,12 +112,6 @@ const results = (state = initialState, action) => {
     default:
       return state
   }
-}
-
-function setTime(currentReplay, time) {
-  let replay = Object.assign({}, currentReplay)
-  //let replay = Replay.setReplayTime(this.state.replay, time.value);
-  return replay
 }
 
 function setReplayMode(currentReplay) {
@@ -343,8 +337,8 @@ function setReplayDetails(runners, oldReplay) {
   return setReplayTime(replay, 0);
 }
 
-function setReplayTime(oldReplay, time) {
-  let replay = oldReplay;
+function setReplayTime(currentReplay, time) {
+  let replay = Object.assign({}, currentReplay);
   // sets animation time
   if (replay.realTime) {
     // if we got a time it was from the slider so use it
@@ -394,15 +388,17 @@ function processResults(oldResults, routes, courses, format) {
     } else {
       results[i].comments = "";
     }
-    if (results[i].coursename === "") {
-      results[i].coursename = Utils.getCourseNameByID(courses, results[i].courseid);
-    }
     results[i].name = he.decode(results[i].name);
     results[i].splits = adjustRawSplits(results[i].splits, results[i].time);
 
     // add extra detail to each result
     results[i].canDelete = false;
     results[i].colour = null;
+    // this assumes saved courses are in same order as array received from API
+    results[i].courseIndex = getCourseIndexFromId(courses, results[i].courseid);
+    if (results[i].coursename === "") {
+      results[i].coursename = courses[results[i].courseIndex].coursename;
+    }
     results[i].displayRoute = false;
     results[i].displayScoreCourse = false;
     results[i].hasValidTrack = false;
@@ -448,6 +444,11 @@ function processResults(oldResults, routes, courses, format) {
     data: results,
     filter: initialiseFilter(courses)
   }
+}
+
+function getCourseIndexFromId(courses, courseid) {
+ const index = courses.findIndex(course => course.courseid === courseid)
+ return index;
 }
 
 function initialiseFilter(courses) {
@@ -508,7 +509,11 @@ function mergeRoutes(oldResults, routes) {
   // adds routes to the relevant result
   // should really get the API to do this at a later stage...
   if (routes.length === 0) {
-    return oldResults;
+    return oldResults.map( (result) => {
+      result.rawx = []
+      result.rawy=[]
+      return result
+    });
   }
   let results = oldResults.sort(function (a, b) {
     return a.resultid - b.resultid;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
 import VisibleEventList from '../containers/VisibleEventList.js';
-import Courses from './Courses';
+import CourseList from '../containers/CourseList';
 import FullResultList from './FullResultList';
 
 function Sidebar(props) {
@@ -12,10 +12,7 @@ function Sidebar(props) {
           <VisibleEventList />
         </TabPanel>
         <TabPanel header="Courses" disabled={props.courses.length === 0}>
-          <Courses
-            courses={props.courses}
-            display={props.courseDisplay}
-            onSelectCourse={props.onSelectCourse} />
+          <CourseList />
         </TabPanel>
         <TabPanel header="Results" disabled={props.results.length === 0}>
           <FullResultList courses={props.courses} />

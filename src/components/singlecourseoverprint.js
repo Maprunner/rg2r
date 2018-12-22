@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Control from './Control.js'
 import Finish from './Finish.js'
-import Start from './start.js'
+import Start from './Start.js'
 import ControlNumber from './ControlNumber.js'
 import { Line } from 'react-konva'
 import Utils from '../utils/rg2utils.js'

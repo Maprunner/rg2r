@@ -10,8 +10,8 @@ function CourseItem({ name, checked, resultCount, routeCount, onSelectCourse, va
       <td><Checkbox value={value} onChange={onSelectCourse} checked={checked}></Checkbox></td>
       <td>{resultCount}</td>
       <td>{routeCount}</td>
-      <td></td>
-      <td></td>
+      <td>{routeCount > 0 ? <Checkbox value={value} onChange={onSelectCourse} checked={checked}></Checkbox> : null}</td>
+      <td>{routeCount > 0 ? <Checkbox value={value} onChange={onSelectCourse} checked={checked}></Checkbox> : null}</td>
     </tr>
   )
 }
@@ -27,13 +27,6 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse, displ
       onSelectCourse={onSelectCourse}
       value={i} />
   )
-  let allChecked = true
-  for (let i = 0; i < courses.length; i += 1) {
-    if (!display[i]) {
-      allChecked = false
-      break
-    }
-  }
   // don't need a summary line if there is only one course
   if (courses.length > 1) {
     courseItems.push(<CourseItem
@@ -42,7 +35,7 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse, displ
       resultCount={resultCount[resultCount.length - 1]}
       routeCount={routeCount[routeCount.length - 1]}
       onSelectCourse={onSelectCourse}
-      checked={allChecked}
+      checked={display[resultCount.length - 1]}
       value={RG2.DISPLAY_ALL_COURSES} />)
   }
 

@@ -1,3 +1,4 @@
+import RG2 from '../rg2Constants'
 export const DISPLAY_COURSE = 'DISPLAY_COURSE'
 export const DISPLAY_ROUTE = 'DISPLAY_ROUTE'
 export const EVENT_REQUESTED = 'EVENT_REQUESTED'
@@ -72,8 +73,8 @@ export function filterResults(filter, courseIndex) {
 export function loadEvent(event) {
   // assumes server running on port 80 to deal with api calls: see package.json
   return function (dispatch) {
-    const image = new window.Image();
-    image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + event.mapfilename;
+    const image = new window.Image()
+    image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + event.mapfilename
     image.onload = () => {
       dispatch(mapLoaded(image))
     }
@@ -144,13 +145,13 @@ export function saveEvents(events) {
   }
 }
 
-export function screenResized(width, height) {
-  let body = document.querySelector('#rg2-body-container');
-  body.style.height = (window.innerHeight - 56) + 'px';
+export function screenResized() {
+  let canvas = document.querySelector('#rg2-canvas-container')
+  canvas.style.height = (window.innerHeight - RG2.TOOLBAR_HEIGHT) + 'px'
   return {
     type: SCREEN_RESIZED,
     width: window.innerWidth,
-    height: window.innerHeight - 56
+    height: window.innerHeight - RG2.TOOLBAR_HEIGHT
   }
 }
 

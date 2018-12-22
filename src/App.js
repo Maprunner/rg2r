@@ -9,28 +9,21 @@ import 'primeicons/primeicons.css'
 import './App.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { loadEvents, screenResized, timerExpired } from './actions/actions.js'
-import { faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye, faSearch, faGlobeAmericas, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
 
   constructor() {
     super()
-    library.add(faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye)
-    let activeEvent = { id: null }
+    library.add(faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye, faSearch, faGlobeAmericas, faInfoCircle)
     this.timer = null
-    this.state = {
-      title: "Routegadget 2",
-      courses: [],
-      results: [],
-      controls: [],
-      runners: [],
-      activeEvent: activeEvent
-    }
   }
 
   componentDidMount() {
+    // initialise screen size and then watch for future changes
+    this.props.dispatch(screenResized())
     window.addEventListener('resize', () => {
-      this.props.dispatch(screenResized());
+      this.props.dispatch(screenResized())
     })
     // load events as part of starting up app
     this.props.dispatch(loadEvents())
@@ -50,9 +43,9 @@ class App extends Component {
     return (
       <div>
         <div id="rg2-header-container">
-          <TopToolbar title={this.state.title} />
+          <TopToolbar title={"Routegadget 2"} />
         </div>
-        <div id="rg2-body-container">
+        <div id="rg2-canvas-container">
           <InfoPanel />
           <Canvas />
         </div>

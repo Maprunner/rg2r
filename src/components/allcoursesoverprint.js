@@ -6,7 +6,7 @@ class AllCoursesOverprint extends Component {
     if (this.props.courses.length === 0) {
       return null
     }
-    const courseOverprint = [];
+    const courseOverprint = []
     for (let i = 0; i < this.props.courses.length - 1; i += 1) {
       if (this.props.display[i]) {
         courseOverprint.push(<SingleCourseOverprint key={i} course={this.props.courses[i]} opt={this.props.opt} />)
@@ -16,7 +16,7 @@ class AllCoursesOverprint extends Component {
       <>
         {courseOverprint}
       </>
-    );
+    )
   }
 }
 

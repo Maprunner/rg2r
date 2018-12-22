@@ -1,8 +1,8 @@
-import React from 'react';
-import { TabView, TabPanel } from 'primereact/tabview';
-import VisibleEventList from '../containers/VisibleEventList.js';
-import CourseList from '../containers/CourseList';
-import ResultDisplay from './ResultDisplay';
+import React from 'react'
+import { TabView, TabPanel } from 'primereact/tabview'
+import VisibleEventList from '../containers/VisibleEventList.js'
+import CourseList from '../containers/CourseList'
+import ResultDisplay from './ResultDisplay'
 
 function Sidebar(props) {
   return (
@@ -24,4 +24,4 @@ function Sidebar(props) {
     </div >
   )
 }
-export default Sidebar;
+export default Sidebar

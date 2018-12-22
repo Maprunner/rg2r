@@ -1,5 +1,5 @@
-import React from 'react';
-import { Circle } from 'react-konva';
+import React from 'react'
+import { Circle } from 'react-konva'
 
 
 const Finish = ({ x, y, opt }) => (
@@ -35,4 +35,4 @@ const Finish = ({ x, y, opt }) => (
   </>
 )
 
-export default Finish;
+export default Finish

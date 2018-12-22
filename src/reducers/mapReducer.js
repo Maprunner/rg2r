@@ -1,4 +1,4 @@
-import update from 'immutability-helper';
+import update from 'immutability-helper'
 import RG2 from '../rg2Constants.js'
 
 const initialState = {
@@ -26,12 +26,12 @@ function getRadius(height, width) {
   // Empirically derived  so open to suggestions. This is based on a nominal 20px circle
   // as default. The square root stops things getting too big too quickly.
   // 1500px is a typical map image maximum size.
-  let scaleFact = Math.pow(Math.min(height, width) / 1500, 0.5);
+  let scaleFact = Math.pow(Math.min(height, width) / 1500, 0.5)
   // don't get too carried away, although these would be strange map files
-  scaleFact = Math.min(scaleFact, 5);
-  scaleFact = Math.max(scaleFact, 0.5);
-  //circleSize = Math.round(rg2.options.circleSize * scaleFact);
-  return Math.round(20 * scaleFact);
+  scaleFact = Math.min(scaleFact, 5)
+  scaleFact = Math.max(scaleFact, 0.5)
+  //circleSize = Math.round(rg2.options.circleSize * scaleFact)
+  return Math.round(20 * scaleFact)
 }
 
 const map = (state = initialState, action) => {
@@ -39,7 +39,7 @@ const map = (state = initialState, action) => {
     case 'MAP_LOADED':
       return update(state, {
         mapImage: { $set: action.image }
-      });
+      })
     case 'EVENT_REQUESTED':
       return initialState
     case 'SCREEN_RESIZED':
@@ -47,12 +47,12 @@ const map = (state = initialState, action) => {
         zoom: { $set: { x: 1, y: 1 } },
         width: { $set: action.width },
         height: { $set: action.height }
-      });
+      })
     case 'ZOOM':
       let zoom = doZoom(state.zoom, action.zoomIn)
       return update(state, {
         zoom: { $set: zoom }
-      });
+      })
     case 'SCROLL':
       let updated = handleScroll(action.delta, action.mousePos, action.zoom, action.xy)
       if (updated.ok) {
@@ -80,9 +80,9 @@ function doZoom(currentZoom, zoomIn) {
 }
 
 function handleScroll(delta, mousePos, zoom, xy) {
-  const factor = Math.pow(1.1, delta);
+  const factor = Math.pow(1.1, delta)
   // assuming same zoom factor for x and y
-  let newZoom = zoom.x * factor;
+  let newZoom = zoom.x * factor
   // limit zoom to avoid things disappearing
   // chosen values seem reasonable after some quick tests
   if (isNaN(newZoom)) {
@@ -103,4 +103,4 @@ function handleScroll(delta, mousePos, zoom, xy) {
   return ({ ok: false })
 }
 
-export default map;
+export default map

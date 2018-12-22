@@ -1,10 +1,10 @@
-import React from 'react';
-import { Checkbox } from 'primereact/checkbox';
+import React from 'react'
+import { Checkbox } from 'primereact/checkbox'
 
 function ResultItem({ result, onSelect, onReplay }) {
-  let displayRoute;
+  let displayRoute
   if (result.x.length > 0) {
-    displayRoute = <Checkbox name={result.courseIndex.toString()} value={result.index} onChange={onSelect} checked={result.displayRoute} />;
+    displayRoute = <Checkbox name={result.courseIndex.toString()} value={result.index} onChange={onSelect} checked={result.displayRoute} />
   } else {
     displayRoute = <></>
   }
@@ -21,4 +21,4 @@ function ResultItem({ result, onSelect, onReplay }) {
   )
 }
 
-export default ResultItem;
+export default ResultItem

@@ -3,6 +3,7 @@ import { createSelector } from 'reselect'
 
 export const getCourses = (state) => state.courses.data
 export const getResults = (state) => state.results.data
+export const getTitle = (state) => state.ui.title
 const getEvents = (state) => state.events.data
 const getEventsFilter = (state) => state.events.filter
 const getResultFilterByCourse = (state, props) => state.results.filter[props.courseIndex]
@@ -10,7 +11,7 @@ const getCourseByIndex = (state, props) => state.courses.data[props.courseIndex]
 
 // create array of "is course displayed" by course, plus "all courses displayed" at end of array
 export const getCoursesDisplay = (state) => {
-  let display = state.courses.display
+  let display = state.courses.display.slice()
   let allDisplayed = display.reduce((all, courseDisplayed) => all && courseDisplayed, true)
   display.push(allDisplayed)
   return display
@@ -19,9 +20,9 @@ export const getCoursesDisplay = (state) => {
 // create array of result counts by course, plus total results at end of array
 export const getResultCountByCourse = (state) => {
   let resultCount = Array.from(new Array(state.courses.data.length), function () { return 0 })
-  let total = 0;
+  let total = 0
   // need to allow for results with more than one route
-  let oldId = 99999;
+  let oldId = 99999
   for (let i = 0; i < state.results.data.length; i += 1) {
     if (oldId !== state.results.data[i].rawid) {
       resultCount[state.results.data[i].courseIndex]++
@@ -36,7 +37,7 @@ export const getResultCountByCourse = (state) => {
 // create array of routes by course, plus total routes at end of array
 export const getRouteCountByCourse = (state) => {
   let routeCount = Array.from(new Array(state.courses.data.length), function () { return 0 })
-  let total = 0;
+  let total = 0
   for (let i = 0; i < state.results.data.length; i += 1) {
     if (state.results.data[i].x.length > 0) {
       routeCount[state.results.data[i].courseIndex]++
@@ -64,7 +65,7 @@ export const getVisibleEvents = createSelector(
   [getEvents, getEventsFilter],
   (events, filter) => {
     return events.filter(
-      (event) => event.name.toLowerCase().indexOf(filter.toLowerCase()) > -1
+      (event) => (event.date + ": " + event.name).toLowerCase().indexOf(filter.toLowerCase()) > -1
     )
   }
 )

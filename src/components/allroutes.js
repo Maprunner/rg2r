@@ -18,7 +18,7 @@ class AllRoutes extends Component {
       <>
         {allRoutes}
       </>
-    );
+    )
   }
 }
 

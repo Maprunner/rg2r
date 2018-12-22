@@ -9,8 +9,7 @@
     border-bottom: 4px solid black;
 }
 
-#rg2-body-container {
-  height: 500px;
+#rg2-canvas-container {
   width: 100%;
 }
 
@@ -25,8 +24,22 @@
 #rg2-map-canvas {
   z-index: 50;
   position: absolute;
-  background-color: #f4f4f4;
+  background-color: #007ad9;
 }
+
+#rg2-event-list ul {
+  padding: 0;
+}
+
+#rg2-event-list li {
+  margin: 5px;
+  list-style: none;
+}
+
+#rg2-event-list li:nth-child(odd) {
+  background: rgb(196, 233, 255);
+}
+
 
 #zoom-in {
   position: absolute;

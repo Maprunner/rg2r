@@ -14,7 +14,7 @@ class AllRunners extends Component {
       timeOffset = 0
       //} else {
       //  // offset needs to move forward (hence negative) to time at control
-      //  timeOffset = -1 * result.splits[this.massStartControl];
+      //  timeOffset = -1 * result.splits[this.massStartControl]
       //}
     }
     // TODO: complicated stop at control logic missing
@@ -33,13 +33,13 @@ class AllRunners extends Component {
     let xy
     for (let i = 0; i < this.props.runners.length; i += 1) {
       xy = this.getPoints(this.props.runners[i], this.props.replay)
-      allRunners.push(<SingleRunner key={i} points={xy} colour={"red"} />);
+      allRunners.push(<SingleRunner key={i} points={xy} colour={"red"} />)
     }
     return (
       <>
         {allRunners}
       </>
-    );
+    )
   }
 }
 

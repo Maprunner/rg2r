@@ -1,5 +1,5 @@
-import React from 'react';
-import { Circle } from 'react-konva';
+import React from 'react'
+import { Circle } from 'react-konva'
 
 const Control = ({ x, y, opt }) => (
   <>
@@ -20,4 +20,4 @@ const Control = ({ x, y, opt }) => (
   </>
 )
 
-export default Control;
+export default Control

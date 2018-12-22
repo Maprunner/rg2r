@@ -60,6 +60,6 @@ const RG2 = {
   //number of drawn routes that can be saved for possible later deletion
   MAX_DRAWN_ROUTES: 10
   */
-};
+}
 
-export default RG2;
+export default RG2

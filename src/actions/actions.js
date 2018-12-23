@@ -30,11 +30,11 @@ export function displayCourse(index, display) {
 }
 
 export function displayRoute(resultIndex, courseIndex, display) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: DISPLAY_ROUTE,
       resultIndex: resultIndex,
-      courseName: getState().courses.data[courseIndex].name,
+      courseIndex: parseInt(courseIndex, 10),
       display: display
     })
   }

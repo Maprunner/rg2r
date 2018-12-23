@@ -3,20 +3,34 @@ import { Checkbox } from 'primereact/checkbox'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RG2 from '../rg2Constants'
 
-function CourseItem({ name, checked, resultCount, routeCount, onSelectCourse, value }) {
+function CourseItem({ name, checked, resultCount, routeCount, onSelectCourse,
+  allRoutesDisplayed, allRoutesReplayed, onDisplayAllRoutes, onReplayAllRoutes, index }) {
   return (
     <tr>
       <td>{name}</td>
-      <td><Checkbox value={value} onChange={onSelectCourse} checked={checked}></Checkbox></td>
-      <td>{resultCount}</td>
-      <td>{routeCount}</td>
-      <td>{routeCount > 0 ? <Checkbox value={value} onChange={onSelectCourse} checked={checked}></Checkbox> : null}</td>
-      <td>{routeCount > 0 ? <Checkbox value={value} onChange={onSelectCourse} checked={checked}></Checkbox> : null}</td>
+      <td><Checkbox value={index} onChange={onSelectCourse} checked={checked}></Checkbox></td>
+      <td className="center-text">{resultCount}</td>
+      <td className="center-text">{routeCount}</td>
+      <td>{routeCount > 0 ?
+        <Checkbox
+          value={RG2.DISPLAY_ALL_ROUTES_FOR_COURSE}
+          name={index.toString()}
+          onChange={onDisplayAllRoutes}
+          checked={allRoutesDisplayed}>
+        </Checkbox> : null}</td>
+      <td>{routeCount > 0 ?
+        <Checkbox
+          value={RG2.REPLAY_ALL_ROUTES_FOR_COURSE}
+          name={index.toString()}
+          onChange={onReplayAllRoutes}
+          checked={allRoutesReplayed}>
+        </Checkbox> : null}</td>
     </tr>
   )
 }
 
-function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse, display }) {
+function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
+  allRoutesDisplayed, allRoutesReplayed, onDisplayAllRoutes, onReplayAllRoutes, display }) {
   const courseItems = courses.map((course, i) =>
     <CourseItem
       key={i.toString()}
@@ -25,7 +39,11 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse, displ
       routeCount={routeCount[i]}
       checked={display[i]}
       onSelectCourse={onSelectCourse}
-      value={i} />
+      onDisplayAllRoutes={onDisplayAllRoutes}
+      onReplayAllRoutes={onReplayAllRoutes}
+      allRoutesDisplayed={allRoutesDisplayed[i]}
+      allRoutesReplayed={allRoutesReplayed[i]}
+      index={i} />
   )
   // don't need a summary line if there is only one course
   if (courses.length > 1) {
@@ -35,12 +53,15 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse, displ
       resultCount={resultCount[resultCount.length - 1]}
       routeCount={routeCount[routeCount.length - 1]}
       onSelectCourse={onSelectCourse}
+      onDisplayAllRoutes={onDisplayAllRoutes}
       checked={display[resultCount.length - 1]}
-      value={RG2.DISPLAY_ALL_COURSES} />)
+      allRoutesDisplayed={allRoutesDisplayed[routeCount.length - 1]}
+      allRoutesReplayed={allRoutesReplayed[routeCount.length - 1]}
+      index={RG2.DISPLAY_ALL_COURSES} />)
   }
 
   return (
-    <div className="rg2-ul">
+    <div>
       <table>
         <thead>
           <tr>

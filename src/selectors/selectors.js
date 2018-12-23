@@ -34,6 +34,48 @@ export const getResultCountByCourse = (state) => {
   return resultCount
 }
 
+// create array of "all routes replayed" by course, plus "all routes for all courses" at end of array
+export const getAllRoutesReplayed = (state) => {
+  let allRoutesReplayed = Array.from(new Array(state.courses.data.length), function () { return true })
+  let oldCourseIndex = 0
+  let allCourse = true
+  for (let i = 0; i < state.results.data.length; i += 1) {
+    if (oldCourseIndex !== state.results.data[i].courseIndex) {
+      allRoutesReplayed[oldCourseIndex] = allCourse
+      allCourse = true
+      oldCourseIndex = state.results.data[i].courseIndex
+    }
+    if (state.results.data[i].x.length > 0) {
+      allCourse = allCourse && state.results.data[i].replay
+    }
+  }
+  allRoutesReplayed[oldCourseIndex] = allCourse
+  let allReplayed = allRoutesReplayed.reduce((all, routesReplayed) => all && routesReplayed, true)
+  allRoutesReplayed.push(allReplayed)
+  return allRoutesReplayed
+}
+
+// create array of "all routes displayed" by course, plus "all routes for all courses" at end of array
+export const getAllRoutesDisplayed = (state) => {
+  let allRoutesDisplayed = Array.from(new Array(state.courses.data.length), function () { return true })
+  let oldCourseIndex = 0
+  let allCourse = true
+  for (let i = 0; i < state.results.data.length; i += 1) {
+    if (oldCourseIndex !== state.results.data[i].courseIndex) {
+      allRoutesDisplayed[oldCourseIndex] = allCourse
+      allCourse = true
+      oldCourseIndex = state.results.data[i].courseIndex
+    }
+    if (state.results.data[i].x.length > 0) {
+      allCourse = allCourse && state.results.data[i].displayRoute
+    }
+  }
+  allRoutesDisplayed[oldCourseIndex] = allCourse
+  let allDisplayed = allRoutesDisplayed.reduce((all, routesDisplayed) => all && routesDisplayed, true)
+  allRoutesDisplayed.push(allDisplayed)
+  return allRoutesDisplayed
+}
+
 // create array of routes by course, plus total routes at end of array
 export const getRouteCountByCourse = (state) => {
   let routeCount = Array.from(new Array(state.courses.data.length), function () { return 0 })

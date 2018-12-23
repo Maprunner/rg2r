@@ -20,7 +20,7 @@ function SummaryRow({ onSelect, onReplay, courseIndex, routesChecked, replayChec
     <>
       <tr><td></td><td>All</td><td></td><td>{routes}</td><td>
         <Checkbox
-          value={RG2.REPLAY_ALL_ROUTES_FOR_COURSE}
+          value={RG2.REPLAY_ALL_RESULTS_FOR_COURSE}
           name={courseIndex.toString()}
           onChange={onReplay}
           checked={replayChecked} />
@@ -38,8 +38,8 @@ function CourseResultDisplay({ results, courseIndex, filter, onSelect, onReplay,
   return (
     <>
       <span>
+        <FontAwesomeIcon icon={'search'} fixedWidth />
         <InputText value={filter} onChange={(e) => onFilterChange(e.target.value)} />
-        <label htmlFor="in"> Search</label>
       </span>
       <table>
         <thead>

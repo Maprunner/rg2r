@@ -40,6 +40,13 @@
   background: rgb(196, 233, 255);
 }
 
+.center-text {
+  text-align: center;
+}
+
+.bold {
+  font-weight: bold;
+}
 
 #zoom-in {
   position: absolute;

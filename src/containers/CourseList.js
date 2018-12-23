@@ -1,8 +1,10 @@
 import { connect } from 'react-redux'
 import CourseDisplay from '../components/CourseDisplay'
-import { displayCourse, replayRoute, filterResults } from '../actions/actions.js'
+import { displayCourse, displayRoute, replayRoute, filterResults } from '../actions/actions.js'
 import {
-  getCourses, getCoursesDisplay, getRouteCountByCourse, getResultCountByCourse
+  getCourses, getCoursesDisplay, getRouteCountByCourse,
+  getResultCountByCourse, getAllRoutesDisplayed,
+  getAllRoutesReplayed
 } from '../selectors/selectors.js'
 
 const mapStateToProps = (state) => {
@@ -10,16 +12,19 @@ const mapStateToProps = (state) => {
     courses: getCourses(state),
     display: getCoursesDisplay(state),
     resultCount: getResultCountByCourse(state),
-    routeCount: getRouteCountByCourse(state)
+    routeCount: getRouteCountByCourse(state),
+    allRoutesDisplayed: getAllRoutesDisplayed(state),
+    allRoutesReplayed: getAllRoutesReplayed(state)
   }
-
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
     onSelectCourse: (event) => dispatch(displayCourse(event.value, event.checked)),
-    onReplay: (event) => dispatch(replayRoute(event.target.value, event.target.name, event.target.checked)),
-    onFilterChange: filter => dispatch(filterResults(filter, props.courseIndex))
+    onFilterChange: filter => dispatch(filterResults(filter, props.courseIndex)),
+    onDisplayAllRoutes: (event) => dispatch(displayRoute(event.target.value, event.target.name, event.target.checked)),
+    onReplayAllRoutes: (event) => dispatch(replayRoute(event.target.value, event.target.name, event.target.checked))
+
   }
 }
 

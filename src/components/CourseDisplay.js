@@ -1,33 +1,7 @@
 import React from 'react'
-import { Checkbox } from 'primereact/checkbox'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import CourseItem from './CourseItem.js'
+import CourseItemHeader from './CourseItemHeader.js'
 import RG2 from '../rg2Constants'
-
-function CourseItem({ name, checked, resultCount, routeCount, onSelectCourse,
-  allRoutesDisplayed, allRoutesReplayed, onDisplayAllRoutes, onReplayAllRoutes, index }) {
-  return (
-    <tr>
-      <td>{name}</td>
-      <td><Checkbox value={index} onChange={onSelectCourse} checked={checked}></Checkbox></td>
-      <td className="center-text">{resultCount}</td>
-      <td className="center-text">{routeCount}</td>
-      <td>{routeCount > 0 ?
-        <Checkbox
-          value={RG2.ALL_ROUTES}
-          name={index.toString()}
-          onChange={onDisplayAllRoutes}
-          checked={allRoutesDisplayed}>
-        </Checkbox> : null}</td>
-      <td>{routeCount > 0 ?
-        <Checkbox
-          value={RG2.ALL_ROUTES}
-          name={index.toString()}
-          onChange={onReplayAllRoutes}
-          checked={allRoutesReplayed}>
-        </Checkbox> : null}</td>
-    </tr>
-  )
-}
 
 function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
   allRoutesDisplayed, allRoutesReplayed, onDisplayAllRoutes, onReplayAllRoutes, display }) {
@@ -54,6 +28,7 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
       routeCount={routeCount[routeCount.length - 1]}
       onSelectCourse={onSelectCourse}
       onDisplayAllRoutes={onDisplayAllRoutes}
+      onReplayAllRoutes={onReplayAllRoutes}
       checked={display[resultCount.length - 1]}
       allRoutesDisplayed={allRoutesDisplayed[routeCount.length - 1]}
       allRoutesReplayed={allRoutesReplayed[routeCount.length - 1]}
@@ -64,13 +39,7 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
     <div>
       <table>
         <thead>
-          <tr>
-            <th>Course</th>
-            <th><FontAwesomeIcon icon={'eye'} /></th>
-            <th>Runners</th>
-            <th>Routes</th>
-            <th><FontAwesomeIcon icon={'eye'} /></th>
-            <th><FontAwesomeIcon icon={'play'} /></th></tr>
+          <CourseItemHeader />
         </thead>
         <tbody>
           {courseItems}

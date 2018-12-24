@@ -18,7 +18,7 @@ class Map extends React.Component {
   handleScroll(e) {
     e.evt.stopPropagation()
     e.evt.preventDefault()
-    const delta = e.evt.wheelDelta ? e.evt.wheelDelta / 40 : e.evt.detail ? -e.evt.detail : 0
+    const delta = e.evt.wheelDelta ? e.evt.wheelDelta / 40 : e.evt.deltaY ? -e.evt.deltaY : 0
     if (delta) {
       let mousePos = this.stage.current.pointerPos
       let xy = { x: this.stage.current.attrs.x, y: this.stage.current.attrs.y }

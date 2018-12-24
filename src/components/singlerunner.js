@@ -1,8 +1,13 @@
 import React from 'react'
 import { Line } from 'react-konva'
 
-const SingleRunner = ({ points, colour }) => (
-  <Line points={points} stroke={colour} strokeWidth={3} />
-)
+class SingleRunner extends React.PureComponent {
+  render() {
+    const { points, colour } = this.props
+    return (
+      <Line points={points} stroke={colour} strokeWidth={3} />
+    )
+  }
+}
 
 export default SingleRunner

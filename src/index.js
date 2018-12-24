@@ -7,6 +7,11 @@ import * as serviceWorker from './serviceWorker'
 
 import configureStore from './configureStore'
 
+if (process.env.NODE_ENV !== 'production') {
+  const { whyDidYouUpdate } = require('why-did-you-update');
+  whyDidYouUpdate(React);
+}
+
 const store = configureStore()
 
 const rootElement = document.getElementById("root")

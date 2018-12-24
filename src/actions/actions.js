@@ -8,7 +8,8 @@ export const FILTER_RESULTS = 'FILTER_RESULTS'
 export const LOAD_EVENTS = 'LOAD_EVENTS'
 export const MAP_LOADED = 'MAP_LOADED'
 export const REPLAY_RESULT = 'REPLAY_RESULT'
-export const REPLAY_ROUTE = 'REPLAY_ROUTE'
+export const REPLAY_ROUTES_FOR_ALL_COURSES = 'REPLAY_ROUTES_FOR_ALL_COURSES'
+export const REPLAY_ROUTES_FOR_COURSE = 'REPLAY_ROUTES_FOR_COURSE'
 export const SET_REPLAY_MODE = 'SET_REPLAY_MODE'
 export const SAVE_COURSES = 'SAVE_COURSES'
 export const SAVE_EVENT = 'SAVE_EVENT'
@@ -123,15 +124,21 @@ export function replayResult(resultIndex, courseIndex, display) {
   }
 }
 
-export function replayRoute(resultIndex, courseIndex, display) {
-  // add course details for selected route replay
+export function replayRoutesForCourse(courseIndex, display) {
   return (dispatch, getState) => {
-    dispatch({
-      type: REPLAY_RESULT,
-      resultIndex: resultIndex,
-      display: display,
-      course: getState().courses.data[courseIndex]
-    })
+    if (courseIndex === RG2.ALL_COURSES) {
+      dispatch({
+        type: REPLAY_ROUTES_FOR_ALL_COURSES,
+        display: display,
+        courses: getState().courses.data
+      })
+    } else {
+      dispatch({
+        type: REPLAY_ROUTES_FOR_COURSE,
+        display: display,
+        course: getState().courses.data[courseIndex]
+      })
+    }
   }
 }
 

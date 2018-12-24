@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Checkbox } from 'primereact/checkbox'
 
-function ResultItem({ result, onSelect, onReplay }) {
+function ResultItem(props) {
+  const { result, onSelect, onReplay } = props
   let displayRoute
   if (result.x.length > 0) {
     displayRoute = <Checkbox name={result.courseIndex.toString()} value={result.index} onChange={onSelect} checked={result.displayRoute} />
@@ -21,4 +22,10 @@ function ResultItem({ result, onSelect, onReplay }) {
   )
 }
 
-export default ResultItem
+function arePropsEqual(prevProps, nextProps) {
+  console.log(prevProps.result.displayRoute, nextProps.result.displayRoute, prevProps.result.replay, nextProps.result.replay)
+  return (prevProps.result.displayRoute === nextProps.result.displayRoute)
+    && (prevProps.result.replay === nextProps.result.replay)
+}
+
+export default memo(ResultItem, arePropsEqual)

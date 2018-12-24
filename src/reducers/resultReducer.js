@@ -67,8 +67,22 @@ const results = (state = initialState, action) => {
       return update(state, {
         data: { $set: displayRoutes(state.data, action.resultIndex, action.courseIndex, action.display) }
       })
-    case 'REPLAY_ROUTE':
-      results = replayRoutes(state.data, state.runners, state.replay, action.resultIndex, action.display, action.course)
+    case 'REPLAY_RESULT':
+      results = replayResults(state.data, state.runners, state.replay, action.resultIndex, action.display, action.course)
+      return update(state, {
+        data: { $set: results.data },
+        runners: { $set: results.runners },
+        replay: { $set: results.replay }
+      })
+    case 'REPLAY_ROUTES_FOR_ALL_COURSES':
+      results = replayRoutesForAllCourses(state.data, state.runners, state.replay, action.display, action.courses)
+      return update(state, {
+        data: { $set: results.data },
+        runners: { $set: results.runners },
+        replay: { $set: results.replay }
+      })
+    case 'REPLAY_ROUTES_FOR_COURSE':
+      results = replayRoutesForCourse(state.data, state.runners, state.replay, action.display, action.course)
       return update(state, {
         data: { $set: results.data },
         runners: { $set: results.runners },
@@ -161,7 +175,7 @@ function displayRoutes(currentResults, index, courseIndex, display) {
   let results = currentResults.slice()
   if (index === RG2.ALL_ROUTES) {
     for (let i = 0; i < results.length; i += 1) {
-      if ((results[i].courseIndex === courseIndex) || (courseIndex === RG2.DISPLAY_ALL_COURSES)) {
+      if ((results[i].courseIndex === courseIndex) || (courseIndex === RG2.ALL_COURSES)) {
         if (results[i].hasValidTrack) {
           results[i].displayRoute = display
         }
@@ -173,7 +187,7 @@ function displayRoutes(currentResults, index, courseIndex, display) {
   return results
 }
 
-function replayRoutes(currentResults, currentRunners, currentReplay, index, display, course) {
+function replayResults(currentResults, currentRunners, currentReplay, index, display, course) {
   // index can be a result index or RG2.ALL_ROUTES
   let results = currentResults.slice()
   let runners = currentRunners.slice()
@@ -187,6 +201,38 @@ function replayRoutes(currentResults, currentRunners, currentReplay, index, disp
   } else {
     results[index].replay = display
     runners = toggleRunner(results[index], runners, course, display)
+  }
+  let replay = setReplayDetails(runners, currentReplay)
+  return { data: results, runners: runners, replay: replay }
+}
+
+
+function replayRoutesForCourse(currentResults, currentRunners, currentReplay, display, course) {
+  // replays all routes for a given course
+  let results = currentResults.slice()
+  let runners = currentRunners.slice()
+  for (let i = 0; i < results.length; i += 1) {
+    if (results[i].courseIndex === course.index) {
+      if (results[i].x.length > 0) {
+        results[i].replay = display
+        runners = toggleRunner(results[i], runners, course, display)
+      }
+    }
+  }
+  let replay = setReplayDetails(runners, currentReplay)
+  return { data: results, runners: runners, replay: replay }
+}
+
+
+function replayRoutesForAllCourses(currentResults, currentRunners, currentReplay, display, courses) {
+  // replays all results that have routes
+  let results = currentResults.slice()
+  let runners = currentRunners.slice()
+  for (let i = 0; i < results.length; i += 1) {
+    if (results[i].x.length > 0) {
+      results[i].replay = display
+      runners = toggleRunner(results[i], runners, courses[results[i].courseIndex], display)
+    }
   }
   let replay = setReplayDetails(runners, currentReplay)
   return { data: results, runners: runners, replay: replay }

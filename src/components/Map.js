@@ -64,7 +64,6 @@ class Map extends React.Component {
                 onSetTime={this.props.onSetTime}
                 onSetReplayMode={this.props.onSetReplayMode}
                 runnerCount={this.props.runners.length} />
-              />
             </Portal>}
             <AllRunners runners={this.props.runners} replay={this.props.replay} />
           </Layer>

@@ -37,7 +37,7 @@ function initialiseDisplay(courses) {
 
 function displayCourses(currentDisplay, index, display) {
   let courses = currentDisplay.slice()
-  if (index === RG2.DISPLAY_ALL_COURSES) {
+  if (index === RG2.ALL_COURSES) {
     for (let i = 0; i < courses.length; i += 1) {
       courses[i] = display
     }

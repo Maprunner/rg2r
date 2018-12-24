@@ -7,6 +7,7 @@ export const FILTER_EVENTS = 'FILTER_EVENTS'
 export const FILTER_RESULTS = 'FILTER_RESULTS'
 export const LOAD_EVENTS = 'LOAD_EVENTS'
 export const MAP_LOADED = 'MAP_LOADED'
+export const REPLAY_RESULT = 'REPLAY_RESULT'
 export const REPLAY_ROUTE = 'REPLAY_ROUTE'
 export const SET_REPLAY_MODE = 'SET_REPLAY_MODE'
 export const SAVE_COURSES = 'SAVE_COURSES'
@@ -110,15 +111,26 @@ export function mapLoaded(image) {
   }
 }
 
+export function replayResult(resultIndex, courseIndex, display) {
+  // add course details for selected route replay
+  return (dispatch, getState) => {
+    dispatch({
+      type: REPLAY_RESULT,
+      resultIndex: resultIndex,
+      display: display,
+      course: getState().courses.data[courseIndex]
+    })
+  }
+}
+
 export function replayRoute(resultIndex, courseIndex, display) {
   // add course details for selected route replay
   return (dispatch, getState) => {
-    let course = getState().courses.data[courseIndex]
     dispatch({
-      type: REPLAY_ROUTE,
+      type: REPLAY_RESULT,
       resultIndex: resultIndex,
       display: display,
-      course: course
+      course: getState().courses.data[courseIndex]
     })
   }
 }

@@ -9,7 +9,8 @@ import 'primeicons/primeicons.css'
 import './App.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { loadEvents, screenResized, timerExpired } from './actions/actions.js'
-import { faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye, faSearch, faGlobeAmericas, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye,
+  faSearch, faGlobeAmericas, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
 

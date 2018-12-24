@@ -159,7 +159,7 @@ function setSpeed(currentReplay, speed) {
 
 function displayRoutes(currentResults, index, courseIndex, display) {
   let results = currentResults.slice()
-  if (index === RG2.DISPLAY_ALL_ROUTES_FOR_COURSE) {
+  if (index === RG2.ALL_ROUTES) {
     for (let i = 0; i < results.length; i += 1) {
       if ((results[i].courseIndex === courseIndex) || (courseIndex === RG2.DISPLAY_ALL_COURSES)) {
         if (results[i].hasValidTrack) {
@@ -174,10 +174,10 @@ function displayRoutes(currentResults, index, courseIndex, display) {
 }
 
 function replayRoutes(currentResults, currentRunners, currentReplay, index, display, course) {
-  // index can be a result index or RG2.REPLAY_ALL_RESULTS_FOR_COURSE
+  // index can be a result index or RG2.ALL_ROUTES
   let results = currentResults.slice()
   let runners = currentRunners.slice()
-  if (index === RG2.REPLAY_ALL_RESULTS_FOR_COURSE) {
+  if (index === RG2.ALL_ROUTES) {
     for (let i = 0; i < results.length; i += 1) {
       if (results[i].coursename === course.name) {
         results[i].replay = display

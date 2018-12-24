@@ -10,7 +10,7 @@ function SummaryRow({ onSelect, onReplay, courseIndex, routesChecked, replayChec
   if (hasRoutes) {
     routes = <Checkbox
       name={courseIndex.toString()}
-      value={RG2.DISPLAY_ALL_ROUTES_FOR_COURSE}
+      value={RG2.ALL_ROUTES}
       onChange={onSelect}
       checked={routesChecked} />
   } else {
@@ -20,7 +20,7 @@ function SummaryRow({ onSelect, onReplay, courseIndex, routesChecked, replayChec
     <>
       <tr><td></td><td>All</td><td></td><td>{routes}</td><td>
         <Checkbox
-          value={RG2.REPLAY_ALL_RESULTS_FOR_COURSE}
+          value={RG2.ALL_ROUTES}
           name={courseIndex.toString()}
           onChange={onReplay}
           checked={replayChecked} />
@@ -29,7 +29,8 @@ function SummaryRow({ onSelect, onReplay, courseIndex, routesChecked, replayChec
   )
 }
 
-function CourseResultDisplay({ results, courseIndex, filter, onSelect, onReplay, onFilterChange, allRoutesDisplayed, allRoutesReplayed, hasRoutes }) {
+function CourseResultDisplay({ results, courseIndex, filter, onSelect, onReplay, onFilterChange,
+   allRoutesDisplayed, allRoutesReplayed, hasRoutes }) {
   const resultsList = results.map((result) => <ResultItem
     key={result.index.toString()}
     onSelect={onSelect}

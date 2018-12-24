@@ -13,14 +13,14 @@ function CourseItem({ name, checked, resultCount, routeCount, onSelectCourse,
       <td className="center-text">{routeCount}</td>
       <td>{routeCount > 0 ?
         <Checkbox
-          value={RG2.DISPLAY_ALL_ROUTES_FOR_COURSE}
+          value={RG2.ALL_ROUTES}
           name={index.toString()}
           onChange={onDisplayAllRoutes}
           checked={allRoutesDisplayed}>
         </Checkbox> : null}</td>
       <td>{routeCount > 0 ?
         <Checkbox
-          value={RG2.REPLAY_ALL_ROUTES_FOR_COURSE}
+          value={RG2.ALL_ROUTES}
           name={index.toString()}
           onChange={onReplayAllRoutes}
           checked={allRoutesReplayed}>
@@ -57,7 +57,7 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
       checked={display[resultCount.length - 1]}
       allRoutesDisplayed={allRoutesDisplayed[routeCount.length - 1]}
       allRoutesReplayed={allRoutesReplayed[routeCount.length - 1]}
-      index={RG2.DISPLAY_ALL_COURSES} />)
+      index={RG2.ALL_COURSES} />)
   }
 
   return (

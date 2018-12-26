@@ -1,23 +1,23 @@
-import React from 'react'
+import React, { memo }from 'react'
 import { Circle } from 'react-konva'
 
-const Control = ({ x, y, opt }) => (
+const Control = ({ x, y, radius, width, color }) => (
   <>
     <Circle
       x={x}
       y={y}
-      radius={opt.radius}
+      radius={radius}
       stroke={"white"}
-      strokeWidth={opt.width + 2}
+      strokeWidth={width + 2}
     />
     <Circle
       x={x}
       y={y}
-      radius={opt.radius}
-      stroke={opt.color}
-      strokeWidth={opt.width}
+      radius={radius}
+      stroke={color}
+      strokeWidth={width}
     />
   </>
 )
 
-export default Control
+export default memo(Control)

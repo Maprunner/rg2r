@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ReplayModeButton(props) {
-  let icon = props.realTime ? 'clock' : 'users'
+  const { realTime, onChangeReplayMode } = props
+  let icon = realTime ? 'clock' : 'users'
   return (
-    <FontAwesomeIcon icon={icon} size={"lg"} onClick={props.onChangeReplayMode} />
+    <FontAwesomeIcon icon={icon} size={"lg"} onClick={onChangeReplayMode} />
   )
 }
 
-export default ReplayModeButton
+export default memo(ReplayModeButton)

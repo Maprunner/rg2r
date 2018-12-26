@@ -1,28 +1,15 @@
 import React from 'react'
-import { Toolbar } from 'primereact/toolbar'
-import { Slider } from 'primereact/slider'
+import { Panel } from 'primereact/panel'
 import ReplayButton from './ReplayButton.js'
+import ReplaySpeed from './ReplaySpeed.js'
+import ReplaySlider from './ReplaySlider.js'
 import ReplayModeButton from './ReplayModeButton.js'
-import { Dropdown } from 'primereact/dropdown'
 import Utils from '../utils/rg2utils.js'
 
 function ReplayPanel(props) {
   if (props.runnerCount === 0) {
     return null
   }
-  const speedOptions = [
-    { label: 'x1', value: 100 },
-    { label: 'x2', value: 200 },
-    { label: 'x5', value: 500 },
-    { label: 'x10', value: 10000 },
-    { label: 'x15', value: 15000 },
-    { label: 'x30', value: 30000 },
-    { label: 'x60', value: 60000 },
-    { label: 'x120', value: 120000 },
-    { label: 'x300', value: 300000 },
-    { label: 'x600', value: 600000 },
-    { label: 'x1200', value: 1200000 }
-  ]
   let maxTime
   let minTime
   if (props.replay.realTime) {
@@ -33,18 +20,31 @@ function ReplayPanel(props) {
     minTime = 0
   }
   return (
-    <Toolbar id={"replay"}>
-      <ReplayButton replay={props.replay} onStartStop={props.onStartStop} />
-      <ReplayModeButton realTime={props.replay.realTime} onChangeReplayMode={props.onChangeReplayMode} />
-      <Slider
-        value={props.replay.time}
-        onChange={props.onSetTime}
-        min={minTime}
-        max={maxTime}
-        style={{ width: '20em' }} />
-      <Dropdown value={props.replay.timerIncrement} options={speedOptions} onChange={props.onSetSpeed} />
+    <Panel id={"replay"}>
+    <table>
+      <tbody>
+      <tr>
+        <td>
+          <ReplayButton replay={props.replay} onStartStop={props.onStartStop} />
+        </td>
+        <td>
+          <ReplayModeButton realTime={props.replay.realTime} onChangeReplayMode={props.onChangeReplayMode} />
+          </td>
+          <td>
+      <ReplaySlider
+        time={props.replay.time}
+        onSetTime={props.onSetTime}
+        minTime={minTime}
+        maxTime={maxTime} />
+      </td>
+      <td>
+      <ReplaySpeed timerIncrement={props.replay.timerIncrement} onSetSpeed={props.onSetSpeed} />
       {Utils.formatSecsAsHHMMSS(props.replay.time)}
-    </Toolbar>
+      </td>
+      </tr>
+      </tbody>
+      </table>
+    </Panel>
   )
 }
 

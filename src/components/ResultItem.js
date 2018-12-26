@@ -1,4 +1,5 @@
-import React, { memo } from 'react'
+import React from 'react'
+//import React, { memo } from 'react'
 import { Checkbox } from 'primereact/checkbox'
 
 function ResultItem(props) {
@@ -22,10 +23,11 @@ function ResultItem(props) {
   )
 }
 
-function arePropsEqual(prevProps, nextProps) {
-  console.log(prevProps.result.displayRoute, nextProps.result.displayRoute, prevProps.result.replay, nextProps.result.replay)
-  return (prevProps.result.displayRoute === nextProps.result.displayRoute)
-    && (prevProps.result.replay === nextProps.result.replay)
-}
+//function arePropsEqual(prevProps, nextProps) {
+  //console.log(prevProps.result.displayRoute, nextProps.result.displayRoute, prevProps.result.replay, nextProps.result.replay)
+//  return (prevProps.result.displayRoute === nextProps.result.displayRoute)
+//    && (prevProps.result.replay === nextProps.result.replay)
+ // }
 
-export default memo(ResultItem, arePropsEqual)
+export default ResultItem
+//export default memo(ResultItem, arePropsEqual)

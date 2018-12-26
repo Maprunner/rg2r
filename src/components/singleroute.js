@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {memo} from 'react'
 import { Line } from 'react-konva'
 
-const SingleRoute = ({ points, colour, width }) => (
-  <Line points={points} stroke={colour} strokeWidth={width} />
-)
+function SingleRoute(props) {
+  const { points, colour, width } = props
+  return (
+    <Line points={points} stroke={colour} strokeWidth={width} />
+  )
+  }
 
-export default SingleRoute
+export default memo(SingleRoute)

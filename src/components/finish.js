@@ -1,38 +1,38 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Circle } from 'react-konva'
 
 
-const Finish = ({ x, y, opt }) => (
+const Finish = ({ x, y, width, color,  finishInnerRadius, finishOuterRadius}) => (
   <>
     <Circle
       x={x}
       y={y}
-      radius={opt.finishInnerRadius}
+      radius={finishInnerRadius}
       stroke={"white"}
-      strokeWidth={opt.width + 2}
+      strokeWidth={width + 2}
     />
     <Circle
       x={x}
       y={y}
-      radius={opt.finishOuterRadius}
+      radius={finishOuterRadius}
       stroke={"white"}
-      strokeWidth={opt.width + 2}
+      strokeWidth={width + 2}
     />
     <Circle
       x={x}
       y={y}
-      radius={opt.finishInnerRadius}
-      stroke={opt.color}
-      strokeWidth={opt.width}
+      radius={finishInnerRadius}
+      stroke={color}
+      strokeWidth={width}
     />
     <Circle
       x={x}
       y={y}
-      radius={opt.finishOuterRadius}
-      stroke={opt.color}
-      strokeWidth={opt.width}
+      radius={finishOuterRadius}
+      stroke={color}
+      strokeWidth={width}
     />
   </>
 )
 
-export default Finish
+export default memo(Finish)

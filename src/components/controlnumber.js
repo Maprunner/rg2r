@@ -1,16 +1,16 @@
-import React from 'react'
+import React , { memo } from 'react'
 import { Text } from 'react-konva'
 
-const ControlNumber = ({ x, y, opt, text }) => (
+const ControlNumber = ({ x, y, fontSize, color, text }) => (
   <>
     <Text
       text={text}
-      fontSize={opt.fontSize}
+      fontSize={fontSize}
       fontStyle={"bold"}
       x={x}
       y={y}
       stroke={"white"}
-      fill={opt.color}
+      fill={color}
       strokeWidth={0.5}
       align={"center"}
       textAlign={"middle"}
@@ -18,4 +18,4 @@ const ControlNumber = ({ x, y, opt, text }) => (
   </>
 )
 
-export default ControlNumber
+export default memo(ControlNumber)

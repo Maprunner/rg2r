@@ -1,13 +1,14 @@
-import React from 'react'
+import React,{ memo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ReplayButton(props) {
-  let icon = props.replay.timerRunning ? 'pause' : 'play'
+  const {timerRunning, onStartStop} = props
+  let icon = timerRunning ? 'pause' : 'play'
   return (
     <div>
-      <FontAwesomeIcon icon={icon} size={"lg"} onClick={props.onStartStop} />
+      <FontAwesomeIcon icon={icon} size={"lg"} onClick={onStartStop} />
     </div>
   )
 }
 
-export default ReplayButton
+export default memo(ReplayButton)

@@ -1,27 +1,27 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { RegularPolygon } from 'react-konva'
 
-const Start = ({ x, y, opt, rotation }) => (
+const Start = ({ x, y, radius, width, color, rotation }) => (
   <>
     <RegularPolygon
       x={x}
       y={y}
       sides={3}
-      radius={opt.radius}
+      radius={radius}
       rotation={rotation}
       stroke={"white"}
-      strokeWidth={opt.width + 2}
+      strokeWidth={width + 2}
     />
     <RegularPolygon
       x={x}
       y={y}
       sides={3}
-      radius={opt.radius}
+      radius={radius}
       rotation={rotation}
-      stroke={opt.color}
-      strokeWidth={opt.width}
+      stroke={color}
+      strokeWidth={width}
     />
   </>
 )
 
-export default Start
+export default memo(Start)

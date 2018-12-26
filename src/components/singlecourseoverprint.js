@@ -59,17 +59,44 @@ class CourseOverprint extends Component {
     const course = this.props.course
     const opt = this.props.opt
     const controlOverprint = []
-    controlOverprint.push(<Start key={0} x={course.x[0]} y={course.y[0]} opt={opt} rotation={Utils.getDegreesFromRadians(course.angle[0] + Math.PI / 3)} />)
+    controlOverprint.push(<Start
+      key={0}
+      x={course.x[0]}
+      y={course.y[0]}
+      radius={opt.radius}
+      width={opt.width}
+      color={opt.color}
+      rotation={Utils.getDegreesFromRadians(course.angle[0] + Math.PI / 3)} />)
     for (let i = 1; i < course.codes.length; i += 1) {
       if (i === course.codes.length - 1) {
-        controlOverprint.push(<Finish key={i} x={course.x[i]} y={course.y[i]} opt={opt} />)
+        controlOverprint.push(<Finish
+          key={i}
+          x={course.x[i]}
+          y={course.y[i]}
+          width={opt.width}
+          color={opt.color}
+          finishOuterRadius={opt.finishOuterRadius}
+          finishInnerRadius={opt.finishInnerRadius}          
+          />)
       } else {
-        controlOverprint.push(<Control key={i} x={course.x[i]} y={course.y[i]} opt={opt} />)
+        controlOverprint.push(<Control
+          key={i} 
+          x={course.x[i]} 
+          y={course.y[i]}
+          radius={opt.radius}
+          width={opt.width}
+          color={opt.color} />)
       }
       // no number for finish
       if (i !== course.codes.length - 1) {
         let offSet = this.offsetControlText(course.x[i], course.y[i], course.textAngle[i], opt, i.toString())
-        controlOverprint.push(<ControlNumber key={i + 2000} opt={opt} text={i} x={offSet.x} y={offSet.y} />)
+        controlOverprint.push(<ControlNumber
+          key={i + 2000}
+          fontSize={opt.fontSize}
+          color={opt.color}
+          text={i}
+          x={offSet.x}
+          y={offSet.y} />)
       }
     }
     // draw connecting line if not a score course and we have more than a start and finish
@@ -79,14 +106,6 @@ class CourseOverprint extends Component {
         controlOverprint.push(<Line key={i + 1000} points={points.slice((4 * i), (4 * i) + 4)} stroke={opt.color} strokeWidth={opt.width} />)
       }
     }
-    //for (let i = 1; i < 12; i += 1) {
-    //  let x = 400 + (50 * i)
-    //  let y = 50
-    //  let offSet = this.offsetControlText(x, y, (Math.PI * 2 / 12 * i), opt, i.toString())
-    //  controlOverprint.push(<Control key={i + 5000} x={x} y={y} opt={opt} />)
-    //  controlOverprint.push(<ControlNumber key={i + 3000} opt={opt} text={i} x={offSet.x} y={offSet.y} />)
-    //  console.log(x, y, offSet)
-    //}
     return (
       <>
         {controlOverprint}

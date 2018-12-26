@@ -8,6 +8,7 @@ const getEvents = (state) => state.events.data
 const getEventsFilter = (state) => state.events.filter
 const getResultFilterByCourse = (state, props) => state.results.filter[props.courseIndex]
 const getCourseByIndex = (state, props) => state.courses.data[props.courseIndex]
+export const getResultsDisplay = (state) => state.results.display
 
 // create array of "is course displayed" by course, plus "all courses displayed" at end of array
 export const getCoursesDisplay = (state) => {
@@ -67,7 +68,7 @@ export const getAllRoutesDisplayed = (state) => {
       oldCourseIndex = state.results.data[i].courseIndex
     }
     if (state.results.data[i].x.length > 0) {
-      allCourse = allCourse && state.results.data[i].displayRoute
+      allCourse = allCourse && state.results.display[i]
     }
   }
   allRoutesDisplayed[oldCourseIndex] = allCourse
@@ -92,7 +93,7 @@ export const getRouteCountByCourse = (state) => {
 
 export const getDisplayedRoutes = (state) => {
   return state.results.data.filter(
-    result => result.displayRoute
+    result => state.results.display[result.index]
   )
 }
 
@@ -128,10 +129,10 @@ export const makeGetVisibleResultsByCourse = () => {
 // result.x.length > 0 shows there is a route to display
 export const makeAllRoutesDisplayedByCourse = () => {
   return createSelector(
-    [getResultsByCourse],
-    (results) => {
+    [getResultsByCourse, getResultsDisplay],
+    (results, display) => {
       return results.findIndex(
-        (result) => (result.x.length > 0) && (!result.displayRoute)) === -1
+        (result) => (result.x.length > 0) && (!display[result.index])) === -1
     }
   )
 }

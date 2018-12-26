@@ -9,8 +9,7 @@ import he from 'he'
 // courseid: 1                   NOT index into courses
 // coursename: "Blue" 
 // displayScoreCourse: false     ??
-// displayRoute: false           user has selected to display route
-// hasValidTrack: false          route has been expanded successfully?? 
+// hasValidTrack: false          route has been expanded successfully
 // initials: "SE"
 // index                         index into data array to make life easier elsewhere
 // isGPSTrack: false             potentially redundant: could derive from resultid
@@ -38,12 +37,14 @@ import he from 'he'
 const initialState = {
   // array of results data
   data: [],
+  display: [],
+  replay: [],
   // array of one search filter per course
   filter: [],
   // array of runners selected for replay
   runners: [],
   // replay details
-  replay: {
+  animation: {
     timerRunning: false,
     animationTime: 0,
     timerIncrement: 500,
@@ -61,17 +62,18 @@ const initialState = {
 
 const results = (state = initialState, action) => {
   let results
-  let replay
+  let animation
   switch (action.type) {
     case 'DISPLAY_ROUTE':
       return update(state, {
-        data: { $set: displayRoutes(state.data, action.resultIndex, action.courseIndex, action.display) }
+        display: { $set: displayRoutes(state.data, state.display, action.resultIndex, action.courseIndex, action.display) }
       })
     case 'REPLAY_RESULT':
-      results = replayResults(state.data, state.runners, state.replay, action.resultIndex, action.display, action.course)
+      results = replayResults(state.data, state.runners, state.animation, state.replay, action.resultIndex, action.display, action.course)
       return update(state, {
         data: { $set: results.data },
         runners: { $set: results.runners },
+        animation: { $set: results.animation },
         replay: { $set: results.replay }
       })
     case 'REPLAY_ROUTES_FOR_ALL_COURSES':
@@ -89,29 +91,29 @@ const results = (state = initialState, action) => {
         replay: { $set: results.replay }
       })
     case 'START_STOP':
-      replay = handleStartStop(state.replay)
+      animation = handleStartStop(state.animation)
       return update(state, {
-        replay: { $set: replay }
+        animation: { $set: animation }
       })
     case 'TIMER_EXPIRED':
-      replay = handleTimer(state.replay)
+      animation = handleTimer(state.animation)
       return update(state, {
-        replay: { $set: replay }
+        animation: { $set: animation }
       })
     case 'SET_SPEED':
-      replay = setSpeed(state.replay, action.speed)
+      animation = setAnimationSpeed(state.animation, action.speed)
       return update(state, {
-        replay: { $set: replay }
+        animation: { $set: animation }
       })
     case 'SET_TIME':
-      replay = setReplayTime(state.replay, action.time)
+      animation = setAnimationTime(state.animation, action.time)
       return update(state, {
-        replay: { $set: replay }
+        animation: { $set: animation }
       })
     case 'SET_REPLAY_MODE':
-      replay = setReplayMode(state.replay)
+      animation = setAnimationMode(state.animation)
       return update(state, {
-        replay: { $set: replay }
+        animation: { $set: animation }
       })
     case 'FILTER_RESULTS':
       let filter = state.filter.slice()
@@ -121,6 +123,8 @@ const results = (state = initialState, action) => {
       results = processResults(action.data.results, action.data.routes, action.data.courses, action.data.format)
       return update(state, {
         data: { $set: results.data },
+        display: { $set: results.display },
+        replay: { $set: results.replay },
         filter: { $set: results.filter }
       })
     case 'EVENT_REQUESTED':
@@ -130,80 +134,81 @@ const results = (state = initialState, action) => {
   }
 }
 
-function setReplayMode(currentReplay) {
-  let replay = Object.assign({}, currentReplay)
+function setAnimationMode(currentAnimation) {
+  let animation = Object.assign({}, currentAnimation)
   // toggle between real time and mass start
-  replay.realTime = !replay.realTime
-  return replay
+  animation.realTime = !animation.realTime
+  return animation
 }
 
-function handleStartStop(currentReplay) {
-  let replay = Object.assign({}, currentReplay)
-  replay.timerRunning = !replay.timerRunning
-  return replay
+function handleStartStop(currentAnimation) {
+  let animation = Object.assign({}, currentAnimation)
+  animation.timerRunning = !animation.timerRunning
+  return animation
 }
 
-function handleTimer(currentReplay) {
-  let replay = Object.assign({}, currentReplay)
+function handleTimer(currentAnimation) {
+  let animation = Object.assign({}, currentAnimation)
   // only increment time if we haven't got to the end already
-  if (replay.realTime) {
-    if (replay.time < replay.latestFinishSecs) {
-      replay.millisecs += replay.timerIncrement
+  if (animation.realTime) {
+    if (animation.time < animation.latestFinishSecs) {
+      animation.millisecs += animation.timerIncrement
     }
   } else {
-    if (replay.time < replay.slowestTimeSecs) {
-      replay.millisecs += replay.timerIncrement
+    if (animation.time < animation.slowestTimeSecs) {
+      animation.millisecs += animation.timerIncrement
     }
   }
-  replay.time = parseInt((replay.millisecs / 1000), 10)
+  animation.time = parseInt((animation.millisecs / 1000), 10)
   // find earliest time we need to worry about when drawing screen
-  if (replay.useFullTails) {
-    replay.tailStartTimeSecs = replay.startSecs + 1
+  if (animation.useFullTails) {
+    animation.tailStartTimeSecs = animation.startSecs + 1
   } else {
-    replay.tailStartTimeSecs = Math.max(replay.time - replay.tailLength, replay.startSecs + 1)
+    animation.tailStartTimeSecs = Math.max(animation.time - animation.tailLength, animation.startSecs + 1)
   }
-  return replay
+  return animation
 }
 
-function setSpeed(currentReplay, speed) {
-  let replay = Object.assign({}, currentReplay)
-  replay.timerIncrement = speed
-  return replay
+function setAnimationSpeed(currentAnimation, speed) {
+  let animation = Object.assign({}, currentAnimation)
+  animation.timerIncrement = speed
+  return animation
 }
 
-function displayRoutes(currentResults, index, courseIndex, display) {
-  let results = currentResults.slice()
+function displayRoutes(results, currentDisplay, index, courseIndex, doDisplay) {
+  let display = currentDisplay.slice()
   if (index === RG2.ALL_ROUTES) {
     for (let i = 0; i < results.length; i += 1) {
       if ((results[i].courseIndex === courseIndex) || (courseIndex === RG2.ALL_COURSES)) {
         if (results[i].hasValidTrack) {
-          results[i].displayRoute = display
+          display[i] = doDisplay
         }
       }
     }
   } else {
-    results[index].displayRoute = display
+    display[index] = doDisplay
   }
-  return results
+  return display
 }
 
-function replayResults(currentResults, currentRunners, currentReplay, index, display, course) {
+function replayResults(currentResults, currentRunners, currentAnimation, currentReplay, index, display, course) {
   // index can be a result index or RG2.ALL_ROUTES
   let results = currentResults.slice()
+  let replay = currentReplay.slice()
   let runners = currentRunners.slice()
   if (index === RG2.ALL_ROUTES) {
     for (let i = 0; i < results.length; i += 1) {
       if (results[i].coursename === course.name) {
-        results[i].replay = display
+        replay[i] = display
         runners = toggleRunner(results[i], runners, course, display)
       }
     }
   } else {
-    results[index].replay = display
+    replay[index] = display
     runners = toggleRunner(results[index], runners, course, display)
   }
-  let replay = setReplayDetails(runners, currentReplay)
-  return { data: results, runners: runners, replay: replay }
+  let animation = setAnimationDetails(runners, currentAnimation)
+  return { data: results, runners: runners, animation: animation, replay: replay }
 }
 
 
@@ -219,7 +224,7 @@ function replayRoutesForCourse(currentResults, currentRunners, currentReplay, di
       }
     }
   }
-  let replay = setReplayDetails(runners, currentReplay)
+  let replay = setAnimationDetails(runners, currentReplay)
   return { data: results, runners: runners, replay: replay }
 }
 
@@ -234,7 +239,7 @@ function replayRoutesForAllCourses(currentResults, currentRunners, currentReplay
       runners = toggleRunner(results[i], runners, courses[results[i].courseIndex], display)
     }
   }
-  let replay = setReplayDetails(runners, currentReplay)
+  let replay = setAnimationDetails(runners, currentReplay)
   return { data: results, runners: runners, replay: replay }
 }
 
@@ -369,51 +374,53 @@ function expandTrack(runner, x, y, time) {
   return runner
 }
 
-function setReplayDetails(runners, oldReplay) {
-  let replay = Object.assign({}, oldReplay)
-  replay.earliestStartSecs = RG2.ONE_DAY_IN_SECONDS
-  replay.latestFinishSecs = 0
-  replay.slowestTimeSecs = 0
+function setAnimationDetails(runners, oldAnimation) {
+  let animation = Object.assign({}, oldAnimation)
+  animation.earliestStartSecs = RG2.ONE_DAY_IN_SECONDS
+  animation.latestFinishSecs = 0
+  animation.slowestTimeSecs = 0
   for (let i = 0; i < runners.length; i += 1) {
-    if (runners[i].starttime < replay.earliestStartSecs) {
-      replay.earliestStartSecs = runners[i].starttime
+    if (runners[i].starttime < animation.earliestStartSecs) {
+      animation.earliestStartSecs = runners[i].starttime
     }
-    if ((runners[i].starttime + runners[i].x.length) > replay.latestFinishSecs) {
-      replay.latestFinishSecs = runners[i].starttime + runners[i].x.length
+    if ((runners[i].starttime + runners[i].x.length) > animation.latestFinishSecs) {
+      animation.latestFinishSecs = runners[i].starttime + runners[i].x.length
     }
-    if ((runners[i].x.length) > replay.slowestTimeSecs) {
-      replay.slowestTimeSecs = runners[i].x.length
+    if ((runners[i].x.length) > animation.slowestTimeSecs) {
+      animation.slowestTimeSecs = runners[i].x.length
     }
   }
-  return setReplayTime(replay, 0)
+  return setAnimationTime(animation, 0)
 }
 
-function setReplayTime(currentReplay, time) {
-  let replay = Object.assign({}, currentReplay)
+function setAnimationTime(currentAnimation, time) {
+  let animation = Object.assign({}, currentAnimation)
   // sets animation time
-  if (replay.realTime) {
+  if (animation.realTime) {
     // if we got a time it was from the slider so use it
     if (time > 0) {
-      replay.time = time
+      animation.time = time
     } else {
-      replay.time = replay.earliestStartSecs
+      animation.time = animation.earliestStartSecs
     }
-    replay.startSecs = replay.earliestStartSecs
+    animation.startSecs = animation.earliestStartSecs
   } else {
     if (time > 0) {
-      replay.time = time
+      animation.time = time
     } else {
-      replay.time = 0
+      animation.time = 0
     }
-    replay.startSecs = 0
+    animation.startSecs = 0
   }
-  replay.millisecs = replay.time * 1000
-  return replay
+  animation.millisecs = animation.time * 1000
+  return animation
 }
 
-function processResults(oldResults, routes, courses, format) {
+function processResults(currentResults, routes, courses, format) {
   // TODO Events with no results
-  let results = combineResults(oldResults, routes)
+  let results = combineResults(currentResults, routes)
+  let display = []
+  let replay = []
   let scorecodes = []
   let scorex = []
   let scorey = []
@@ -450,7 +457,6 @@ function processResults(oldResults, routes, courses, format) {
     if (results[i].coursename === "") {
       results[i].coursename = courses[results[i].courseIndex].coursename
     }
-    results[i].displayRoute = false
     results[i].displayScoreCourse = false
     results[i].hasValidTrack = false
     results[i].index = i
@@ -464,7 +470,6 @@ function processResults(oldResults, routes, courses, format) {
     results[i].legpos = []
     results[i].racepos = []
     results[i].rawid = results[i].resultid % RG2.GPS_RESULT_OFFSET
-    results[i].replay = false
     results[i].showResult = true
     results[i].token = 0
     results[i].x = expandAPITrack(results[i].rawx)
@@ -485,6 +490,8 @@ function processResults(oldResults, routes, courses, format) {
       results[i].colour = RG2.COLOURS[results[i].rawid % RG2.COLOURS.length]
       results[i] = expandRoute(results[i], course, format)
     }
+    display[i] = false
+    replay[i] = false
   }
   // setDeletionInfo()
   // sanitiseSplits()
@@ -493,6 +500,8 @@ function processResults(oldResults, routes, courses, format) {
 
   return {
     data: results,
+    display: display,
+    replay: replay,
     filter: initialiseFilter(courses)
   }
 }

@@ -7,7 +7,7 @@ import { Line } from 'react-konva'
 import Utils from '../utils/rg2utils.js'
 
 class CourseOverprint extends Component {
-
+  //  TODO: move all this to a selector
   getPointsForLines(x, y, angle, opt) {
     // works out line ends so that they meet circles, start and finish
     let dist
@@ -76,12 +76,12 @@ class CourseOverprint extends Component {
           width={opt.width}
           color={opt.color}
           finishOuterRadius={opt.finishOuterRadius}
-          finishInnerRadius={opt.finishInnerRadius}          
-          />)
+          finishInnerRadius={opt.finishInnerRadius}
+        />)
       } else {
         controlOverprint.push(<Control
-          key={i} 
-          x={course.x[i]} 
+          key={i}
+          x={course.x[i]}
           y={course.y[i]}
           radius={opt.radius}
           width={opt.width}

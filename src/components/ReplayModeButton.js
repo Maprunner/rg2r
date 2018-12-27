@@ -2,10 +2,10 @@ import React, { memo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ReplayModeButton(props) {
-  const { realTime, onChangeReplayMode } = props
+  const { realTime, onSetReplayMode } = props
   let icon = realTime ? 'clock' : 'users'
   return (
-    <FontAwesomeIcon icon={icon} size={"lg"} onClick={onChangeReplayMode} />
+    <FontAwesomeIcon icon={icon} size={"lg"} onClick={onSetReplayMode} />
   )
 }
 

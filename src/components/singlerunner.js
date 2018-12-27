@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Line } from 'react-konva'
 
 class SingleRunner extends React.PureComponent {
@@ -10,4 +10,4 @@ class SingleRunner extends React.PureComponent {
   }
 }
 
-export default SingleRunner
+export default memo(SingleRunner)

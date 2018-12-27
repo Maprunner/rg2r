@@ -2,7 +2,10 @@
 import { createSelector } from 'reselect'
 
 export const getCourses = (state) => state.courses.data
+export const getCourseDisplay = (state) => state.courses.display
+export const getControls = (state) => state.courses.controls
 export const getResults = (state) => state.results.data
+export const getRunners = (state) => state.results.runners
 export const getTitle = (state) => state.ui.title
 const getEvents = (state) => state.events.data
 const getEventsFilter = (state) => state.events.filter

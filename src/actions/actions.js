@@ -219,7 +219,7 @@ export function tabChanged(index) {
 
 export function timerExpired() {
   return (dispatch, getState) => {
-    if (getState().results.replay.timerRunning) {
+    if (getState().results.animation.timerRunning) {
       dispatch({
         type: TIMER_EXPIRED
       })

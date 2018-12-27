@@ -1,8 +1,8 @@
-import React from 'react'
-import { InputText } from 'primereact/inputtext'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { memo } from 'react'
 import ResultItem from '../components/ResultItem'
+import ResultSearch from '../components/ResultSearch'
 import CourseResultSummaryRow from '../components/CourseResultSummaryRow'
+import CourseResultHeaderRow from '../components/CourseResultHeaderRow'
 
 function CourseResultDisplay({ results, display, replay, courseIndex, filter, onSelect, onReplay, onFilterChange,
   allRoutesDisplayed, allRoutesReplayed, hasRoutes }) {
@@ -13,21 +13,15 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
     result={result}
     replay={replay[result.index]}
     display={display[result.index]} />)
+
   return (
     <>
-      <span>
-        <FontAwesomeIcon icon={'search'} fixedWidth />
-        <InputText value={filter} onChange={(e) => onFilterChange(e.target.value)} />
-      </span>
+      <ResultSearch
+        filter={filter}
+        onFilterChange={onFilterChange} />
       <table>
         <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Time</th>
-            <th><FontAwesomeIcon icon={'eye'} /></th>
-            <th><FontAwesomeIcon icon={'play'} /></th>
-          </tr>
+          <CourseResultHeaderRow />
         </thead>
         <tbody>
           {resultsList}
@@ -44,4 +38,4 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
   )
 }
 
-export default CourseResultDisplay
+export default memo(CourseResultDisplay)

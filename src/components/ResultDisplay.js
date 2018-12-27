@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Accordion, AccordionTab } from 'primereact/accordion'
 import VisibleCourseResultList from '../containers/VisibleCourseResultList'
 
@@ -16,4 +16,4 @@ function ResultDisplay({ courses }) {
   )
 }
 
-export default ResultDisplay
+export default memo(ResultDisplay)

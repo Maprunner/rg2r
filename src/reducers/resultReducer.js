@@ -76,16 +76,16 @@ const results = (state = initialState, action) => {
         replay: { $set: results.replay }
       })
     case 'REPLAY_ROUTES_FOR_ALL_COURSES':
-      results = replayRoutesForAllCourses(state.data, state.runners, state.replay, action.display, action.courses)
+      results = replayRoutesForAllCourses(state.data, state.runners, state.replay, state.animation, action.display, action.courses)
       return update(state, {
-        data: { $set: results.data },
+        animation: { $set: results.animation },
         runners: { $set: results.runners },
         replay: { $set: results.replay }
       })
     case 'REPLAY_ROUTES_FOR_COURSE':
-      results = replayRoutesForCourse(state.data, state.runners, state.replay, action.display, action.course)
+      results = replayRoutesForCourse(state.data, state.runners, state.replay, state.animation, action.display, action.course)
       return update(state, {
-        data: { $set: results.data },
+        animation: { $set: results.animation },
         runners: { $set: results.runners },
         replay: { $set: results.replay }
       })
@@ -211,35 +211,37 @@ function replayResults(currentResults, currentRunners, currentAnimation, current
 }
 
 
-function replayRoutesForCourse(currentResults, currentRunners, currentReplay, display, course) {
+function replayRoutesForCourse(currentResults, currentRunners, currentReplay, currentAnimation, display, course) {
   // replays all routes for a given course
   let results = currentResults.slice()
+  let replay = currentReplay.slice()
   let runners = currentRunners.slice()
   for (let i = 0; i < results.length; i += 1) {
     if (results[i].courseIndex === course.index) {
       if (results[i].x.length > 0) {
-        results[i].replay = display
+        replay[i] = display
         runners = toggleRunner(results[i], runners, course, display)
       }
     }
   }
-  let replay = setAnimationDetails(runners, currentReplay)
-  return { data: results, runners: runners, replay: replay }
+  let animation = setAnimationDetails(runners, currentAnimation)
+  return { animation: animation, runners: runners, replay: replay }
 }
 
 
-function replayRoutesForAllCourses(currentResults, currentRunners, currentReplay, display, courses) {
+function replayRoutesForAllCourses(currentResults, currentRunners, currentReplay, currentAnimation, display, courses) {
   // replays all results that have routes
   let results = currentResults.slice()
+  let replay = currentReplay.slice()
   let runners = currentRunners.slice()
   for (let i = 0; i < results.length; i += 1) {
     if (results[i].x.length > 0) {
-      results[i].replay = display
+      replay[i] = display
       runners = toggleRunner(results[i], runners, courses[results[i].courseIndex], display)
     }
   }
-  let replay = setAnimationDetails(runners, currentReplay)
-  return { data: results, runners: runners, replay: replay }
+  let animation = setAnimationDetails(runners, currentAnimation)
+  return { animation: animation, runners: runners, replay: replay }
 }
 
 function toggleRunner(result, runners, course, display) {

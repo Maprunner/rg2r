@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Map from '../components/Map'
 import { scroll, zoom, startStop, setSpeed, setReplayMode, setTime } from '../actions/actions.js'
-import { getDisplayedRoutes } from '../selectors/selectors.js'
+import { getDisplayedRoutes, getRunners, getControls, getCourses, getCourseDisplay } from '../selectors/selectors.js'
 
 const mapStateToProps = state => ({
   width: state.map.width,
@@ -11,12 +11,12 @@ const mapStateToProps = state => ({
   map: state.map.mapImage,
   opt: state.map.opt,
   zoom: state.map.zoom,
-  courses: state.courses.data,
+  courses: getCourses(state),
   routes: getDisplayedRoutes(state),
   animation: state.results.animation,
-  runners: state.results.runners,
-  controls: state.courses.controls,
-  courseDisplay: state.courses.display
+  runners: getRunners(state),
+  controls: getControls(state),
+  courseDisplay: getCourseDisplay(state)
 })
 
 const mapDispatchToProps = dispatch => ({

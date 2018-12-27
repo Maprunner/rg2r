@@ -12,11 +12,11 @@ function ReplayPanel(props) {
   }
   let maxTime
   let minTime
-  if (props.replay.realTime) {
-    maxTime = props.replay.latestFinishSecs
-    minTime = props.replay.earliestStartSecs
+  if (props.animation.realTime) {
+    maxTime = props.animation.latestFinishSecs
+    minTime = props.animation.earliestStartSecs
   } else {
-    maxTime = props.replay.slowestTimeSecs
+    maxTime = props.animation.slowestTimeSecs
     minTime = 0
   }
   return (
@@ -25,21 +25,21 @@ function ReplayPanel(props) {
       <tbody>
       <tr>
         <td>
-          <ReplayButton replay={props.replay} onStartStop={props.onStartStop} />
+          <ReplayButton animation={props.animation} onStartStop={props.onStartStop} />
         </td>
         <td>
-          <ReplayModeButton realTime={props.replay.realTime} onChangeReplayMode={props.onChangeReplayMode} />
+          <ReplayModeButton realTime={props.animation.realTime} onChangeReplayMode={props.onChangeReplayMode} />
           </td>
           <td>
       <ReplaySlider
-        time={props.replay.time}
+        time={props.animation.time}
         onSetTime={props.onSetTime}
         minTime={minTime}
         maxTime={maxTime} />
       </td>
       <td>
-      <ReplaySpeed timerIncrement={props.replay.timerIncrement} onSetSpeed={props.onSetSpeed} />
-      {Utils.formatSecsAsHHMMSS(props.replay.time)}
+      <ReplaySpeed timerIncrement={props.animation.timerIncrement} onSetSpeed={props.onSetSpeed} />
+      {Utils.formatSecsAsHHMMSS(props.animation.time)}
       </td>
       </tr>
       </tbody>

@@ -3,10 +3,10 @@ import SingleRunner from './SingleRunner.js'
 import Utils from '../utils/rg2utils.js'
 
 class AllRunners extends Component {
-  getPoints(runner, replay) {
+  getPoints(runner, animation) {
     let xy
     let timeOffset
-    if (replay.realTime) {
+    if (animation.realTime) {
       timeOffset = runner.starttime
     } else {
       //if ((this.massStartControl === 0) || (runner.splits.length < this.massStartControl)) {
@@ -19,8 +19,8 @@ class AllRunners extends Component {
     }
     // TODO: complicated stop at control logic missing
     xy = Utils.mergeXYArray(
-      runner.x.slice(replay.tailStartTimeSecs - timeOffset, replay.time - timeOffset),
-      runner.y.slice(replay.tailStartTimeSecs - timeOffset, replay.time - timeOffset)
+      runner.x.slice(animation.tailStartTimeSecs - timeOffset, animation.time - timeOffset),
+      runner.y.slice(animation.tailStartTimeSecs - timeOffset, animation.time - timeOffset)
     )
     return xy
   }
@@ -32,7 +32,7 @@ class AllRunners extends Component {
     const allRunners = []
     let xy
     for (let i = 0; i < this.props.runners.length; i += 1) {
-      xy = this.getPoints(this.props.runners[i], this.props.replay)
+      xy = this.getPoints(this.props.runners[i], this.props.animation)
       allRunners.push(<SingleRunner key={i} points={xy} colour={"red"} />)
     }
     return (

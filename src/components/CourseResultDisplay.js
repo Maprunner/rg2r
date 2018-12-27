@@ -4,14 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ResultItem from '../components/ResultItem'
 import CourseResultSummaryRow from '../components/CourseResultSummaryRow'
 
-function CourseResultDisplay({ results, display, courseIndex, filter, onSelect, onReplay, onFilterChange,
+function CourseResultDisplay({ results, display, replay, courseIndex, filter, onSelect, onReplay, onFilterChange,
   allRoutesDisplayed, allRoutesReplayed, hasRoutes }) {
   const resultsList = results.map((result) => <ResultItem
     key={result.index.toString()}
     onSelect={onSelect}
     onReplay={onReplay}
     result={result}
-    display={display} />)
+    replay={replay[result.index]}
+    display={display[result.index]} />)
   return (
     <>
       <span>

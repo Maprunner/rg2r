@@ -71,7 +71,6 @@ const results = (state = initialState, action) => {
     case 'REPLAY_RESULT':
       results = replayResults(state.data, state.runners, state.animation, state.replay, action.resultIndex, action.display, action.course)
       return update(state, {
-        data: { $set: results.data },
         runners: { $set: results.runners },
         animation: { $set: results.animation },
         replay: { $set: results.replay }
@@ -208,7 +207,7 @@ function replayResults(currentResults, currentRunners, currentAnimation, current
     runners = toggleRunner(results[index], runners, course, display)
   }
   let animation = setAnimationDetails(runners, currentAnimation)
-  return { data: results, runners: runners, animation: animation, replay: replay }
+  return { runners: runners, animation: animation, replay: replay }
 }
 
 

@@ -58,14 +58,14 @@ class Map extends React.Component {
           <Layer listening={false}>
             {<Portal>
               <ReplayPanel
-                replay={this.props.replay}
+                animation={this.props.animation}
                 onStartStop={this.props.onStartStop}
                 onSetSpeed={this.props.onSetSpeed}
                 onSetTime={this.props.onSetTime}
                 onSetReplayMode={this.props.onSetReplayMode}
                 runnerCount={this.props.runners.length} />
             </Portal>}
-            <AllRunners runners={this.props.runners} replay={this.props.replay} />
+            <AllRunners runners={this.props.runners} animation={this.props.animation} />
           </Layer>
         </Stage>
       </div >

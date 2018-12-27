@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
   zoom: state.map.zoom,
   courses: state.courses.data,
   routes: getDisplayedRoutes(state),
-  replay: state.results.replay,
+  animation: state.results.animation,
   runners: state.results.runners,
   controls: state.courses.controls,
   courseDisplay: state.courses.display

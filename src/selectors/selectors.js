@@ -9,6 +9,7 @@ const getEventsFilter = (state) => state.events.filter
 const getResultFilterByCourse = (state, props) => state.results.filter[props.courseIndex]
 const getCourseByIndex = (state, props) => state.courses.data[props.courseIndex]
 export const getResultsDisplay = (state) => state.results.display
+export const getResultsReplay = (state) => state.results.replay
 
 // create array of "is course displayed" by course, plus "all courses displayed" at end of array
 export const getCoursesDisplay = (state) => {
@@ -47,7 +48,7 @@ export const getAllRoutesReplayed = (state) => {
       oldCourseIndex = state.results.data[i].courseIndex
     }
     if (state.results.data[i].x.length > 0) {
-      allCourse = allCourse && state.results.data[i].replay
+      allCourse = allCourse && state.results.replay[i]
     }
   }
   allRoutesReplayed[oldCourseIndex] = allCourse
@@ -140,10 +141,10 @@ export const makeAllRoutesDisplayedByCourse = () => {
 // allows setting of "All replay" checkbox for a course
 export const makeAllRoutesReplayedByCourse = () => {
   return createSelector(
-    [getResultsByCourse],
-    (results) => {
+    [getResultsByCourse, getResultsReplay],
+    (results, replay) => {
       return results.findIndex(
-        (result) => !result.replay) === -1
+        (result) => !replay[result.index]) === -1
     }
   )
 }

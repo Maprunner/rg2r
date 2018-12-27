@@ -4,7 +4,7 @@ import { displayRoute, replayResult, filterResults } from '../actions/actions.js
 import {
   makeGetVisibleResultsByCourse, makeAllRoutesDisplayedByCourse,
   makeAllRoutesReplayedByCourse, makeCourseHasRoutes,
-  getResultsDisplay
+  getResultsDisplay, getResultsReplay
 } from '../selectors/selectors.js'
 
 const makeMapStateToProps = () => {
@@ -17,6 +17,7 @@ const makeMapStateToProps = () => {
     return {
       results: getVisibleResultsByCourse(state, props),
       display: getResultsDisplay(state),
+      replay: getResultsReplay(state),
       courseIndex: props.courseIndex,
       filter: state.results.filter[props.courseIndex],
       allRoutesDisplayed: allRoutesDisplayedByCourse(state, props),

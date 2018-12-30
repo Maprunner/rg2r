@@ -1,5 +1,6 @@
 import React from 'react'
-import { TabView, TabPanel } from 'primereact/tabview'
+import Tab from 'react-bootstrap/lib/Tab'
+import Tabs from 'react-bootstrap/lib/Tabs'
 import VisibleEventList from '../containers/VisibleEventList.js'
 import CourseList from '../containers/CourseList'
 import ResultDisplay from './ResultDisplay'
@@ -7,7 +8,26 @@ import ResultDisplay from './ResultDisplay'
 function Sidebar(props) {
   return (
     <div id="rg2-info-panel">
-      <TabView activeIndex={props.activeTabIndex} onTabChange={props.onTabChange} >
+      <Tabs
+        id="rg2-info-sidebar"
+        activeKey={props.activeTabIndex}
+        onSelect={key => props.onTabChange({ key })}
+      >
+        <Tab eventKey="events" title="Events">
+          <VisibleEventList />
+        </Tab>
+        <Tab eventKey="courses" title="Courses">
+          <CourseList />
+        </Tab>
+        <Tab eventKey="results" title="Results">
+          <ResultDisplay courses={props.courses} />
+        </Tab>
+        <Tab eventKey="draw" title="Draw" disabled>
+          Text
+        </Tab>
+      </Tabs>
+
+      {/* <TabView activeIndex={props.activeTabIndex} onTabChange={props.onTabChange} >
         <TabPanel header="Events">
           <VisibleEventList />
         </TabPanel>
@@ -20,7 +40,7 @@ function Sidebar(props) {
         <TabPanel header="Draw" disabled={true}>
           Text
         </TabPanel>
-      </TabView>
+      </TabView> */}
     </div >
   )
 }

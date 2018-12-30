@@ -73,10 +73,15 @@ export function filterResults(filter, courseIndex) {
 }
 
 export function loadEvent(event) {
-  // assumes server running on port 80 to deal with api calls: see package.json
   return function (dispatch) {
     const image = new window.Image()
-    image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + event.mapfilename
+
+    if (process.env.NODE_ENV !== 'production') {
+      // assumes development server running on port 80 to deal with api calls locally: see package.json
+      image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + event.mapfilename
+    } else {
+      image.src = '/kartat/' + event.mapfilename
+    }
     image.onload = () => {
       dispatch(mapLoaded(image))
     }

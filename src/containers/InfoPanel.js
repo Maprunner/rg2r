@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onTabChange: (event) => dispatch(tabChanged(event.index)),
+  onTabChange: (event) => dispatch(tabChanged(event.key)),
 })
 
 export default connect(

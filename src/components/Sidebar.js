@@ -16,31 +16,16 @@ function Sidebar(props) {
         <Tab eventKey="events" title="Events">
           <VisibleEventList />
         </Tab>
-        <Tab eventKey="courses" title="Courses">
+        <Tab eventKey="courses" title="Courses" disabled={!props.courses.length > 0}>
           <CourseList />
         </Tab>
-        <Tab eventKey="results" title="Results">
+        <Tab eventKey="results" title="Results" disabled={!props.hasResults}>
           <ResultDisplay courses={props.courses} />
         </Tab>
         <Tab eventKey="draw" title="Draw" disabled>
           Text
         </Tab>
       </Tabs>
-
-      {/* <TabView activeIndex={props.activeTabIndex} onTabChange={props.onTabChange} >
-        <TabPanel header="Events">
-          <VisibleEventList />
-        </TabPanel>
-        <TabPanel header="Courses" disabled={!props.courses.length > 0}>
-          <CourseList />
-        </TabPanel>
-        <TabPanel header="Results" disabled={!props.hasResults}>
-          <ResultDisplay courses={props.courses} />
-        </TabPanel>
-        <TabPanel header="Draw" disabled={true}>
-          Text
-        </TabPanel>
-      </TabView> */}
     </div >
   )
 }

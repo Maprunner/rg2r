@@ -9,8 +9,9 @@
     border-bottom: 4px solid black;
 }
 
-#rg2-canvas-container {
+#rg2-container {
   width: 100%;
+  display: block;
 }
 
 #rg2-info-panel {
@@ -18,7 +19,7 @@
   width: 360px;
   z-index: 100;
   height: 99%;
-  overflow: auto;
+  background: white;
  }
 
 #rg2-map-canvas {

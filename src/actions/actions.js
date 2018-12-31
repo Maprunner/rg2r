@@ -170,8 +170,8 @@ export function saveEvents(events) {
 }
 
 export function screenResized() {
-  let canvas = document.querySelector('#rg2-canvas-container')
-  canvas.style.height = (window.innerHeight - RG2.TOOLBAR_HEIGHT) + 'px'
+  let container = document.querySelector('#rg2-container')
+  container.style.height = (window.innerHeight - RG2.TOOLBAR_HEIGHT) + 'px'
   return {
     type: SCREEN_RESIZED,
     width: window.innerWidth,

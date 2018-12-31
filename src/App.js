@@ -48,7 +48,7 @@ class App extends Component {
         <div id="rg2-header-container">
           <TopToolbar title={"Routegadget 2"} />
         </div>
-        <div id="rg2-canvas-container">
+        <div id="rg2-container">
           <InfoPanel />
           <Canvas />
         </div>

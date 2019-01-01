@@ -20,10 +20,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onSelectCourse: (event) => dispatch(displayCourse(event.value, event.checked)),
+    onSelectCourse: (event) => dispatch(displayCourse(event)),
     onFilterChange: filter => dispatch(filterResults(filter, props.courseIndex)),
-    onDisplayAllRoutes: (event) => dispatch(displayRoute(event.target.value, event.target.name, event.target.checked)),
-    onReplayAllRoutes: (event) => dispatch(replayRoutesForCourse(event.target.value, event.target.checked))
+    onDisplayAllRoutes: (event) => dispatch(displayRoute(event)),
+    onReplayAllRoutes: (event) => dispatch(replayRoutesForCourse(event))
 
   }
 }

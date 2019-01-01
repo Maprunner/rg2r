@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import Card from 'react-bootstrap/lib/Card'
 import ResultItem from '../components/ResultItem'
 import ResultSearch from '../components/ResultSearch'
 import CourseResultSummaryRow from '../components/CourseResultSummaryRow'
@@ -15,7 +16,7 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
     display={display[result.index]} />)
 
   return (
-    <>
+    <Card body>
       <ResultSearch
         filter={filter}
         onFilterChange={onFilterChange} />
@@ -34,7 +35,7 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
             hasRoutes={hasRoutes} />
         </tbody>
       </table>
-    </>
+    </Card>
   )
 }
 

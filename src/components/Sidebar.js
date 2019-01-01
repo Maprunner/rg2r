@@ -10,6 +10,7 @@ function Sidebar(props) {
     <div id="rg2-info-panel">
       <Tabs
         id="rg2-info-sidebar"
+        variant="pills"
         activeKey={props.activeTabIndex}
         onSelect={key => props.onTabChange({ key })}
       >

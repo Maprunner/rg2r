@@ -1,6 +1,7 @@
 import React from 'react'
 import CourseItem from './CourseItem.js'
 import CourseItemHeader from './CourseItemHeader.js'
+import Card from 'react-bootstrap/lib/Card'
 import RG2 from '../rg2Constants'
 
 function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
@@ -36,7 +37,7 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
   }
 
   return (
-    <div>
+    <Card body>
       <table>
         <thead>
           <CourseItemHeader />
@@ -45,7 +46,7 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
           {courseItems}
         </tbody>
       </table>
-    </div>
+    </Card>
   )
 }
 

@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { Checkbox } from 'primereact/checkbox'
+import Form from 'react-bootstrap/lib/Form'
 import RG2 from '../rg2Constants'
 
 const CourseItem = (props) => {
@@ -8,22 +8,28 @@ const CourseItem = (props) => {
   return (
     <tr>
       <td>{name}</td>
-      <td><Checkbox value={index} onChange={onSelectCourse} checked={checked}></Checkbox></td>
+      <td><Form.Check
+        id={index}
+        value={index}
+        onChange={onSelectCourse}
+        checked={checked} />
+      </td>
       <td className="center-text">{resultCount}</td>
       <td className="center-text">{routeCount}</td>
       <td>{routeCount > 0 ?
-        <Checkbox
-          value={RG2.ALL_ROUTES}
-          name={index.toString()}
+        <Form.Check
+          id={RG2.ALL_ROUTES}
+          value={index.toString()}
           onChange={onDisplayAllRoutes}
-          checked={allRoutesDisplayed}>
-        </Checkbox> : null}</td>
+          checked={allRoutesDisplayed}
+        /> : null}</td>
       <td>{routeCount > 0 ?
-        <Checkbox
+        <Form.Check
+          id={index}
           value={index}
           onChange={onReplayAllRoutes}
-          checked={allRoutesReplayed}>
-        </Checkbox> : null}</td>
+          checked={allRoutesReplayed}
+        /> : null}</td>
     </tr>
   )
 }

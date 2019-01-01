@@ -1,13 +1,16 @@
 import React, { memo } from 'react'
-import { InputText } from 'primereact/inputtext'
+import Form from 'react-bootstrap/lib/Form'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ResultSearch({ filter, onFilterChange }) {
   return (
-    <>
-      <FontAwesomeIcon icon={'search'} fixedWidth />
-      <InputText value={filter} onChange={(e) => onFilterChange(e.target.value)} />
-    </>
+    <Form inline>
+      <Form.Group controlId="formBasicEmail">
+        <Form.Label><FontAwesomeIcon icon={'search'} fixedWidth /></Form.Label>
+        <Form.Control type="search" />
+        <Form.Text value={filter} onChange={(e) => onFilterChange(e.target.value)} />
+      </Form.Group>
+    </Form>
   )
 }
 

@@ -18,7 +18,7 @@ const RG2 = {
   TIME_NOT_FOUND: 9999,
   ONE_DAY_IN_SECONDS: 86400,
   COLOURS: ["#ff0000", "#00ff00", "#0000ff", "#800000", "#008000", "#000080", "#ffff00", "#ff00ff", "#00ffff", "#808000", "#800080", "#008080"],
-  TOOLBAR_HEIGHT: 36
+  TOOLBAR_HEIGHT: 60
   /*
   INVALID_MAP_ID: 9999,
   // translated when output so leave as English here

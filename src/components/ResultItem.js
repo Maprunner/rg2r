@@ -1,15 +1,15 @@
 //import React from 'react'
 import React, { memo } from 'react'
-import { Checkbox } from 'primereact/checkbox'
+import Form from 'react-bootstrap/lib/Form'
 
 function ResultItem(props) {
   const { result, display, replay, onSelect, onReplay } = props
   let displayRoute
   if (result.x.length > 0) {
-    displayRoute = <Checkbox 
-      name={result.courseIndex.toString()}
-      value={result.index}
-      onChange={onSelect} 
+    displayRoute = <Form.Check
+      value={result.courseIndex.toString()}
+      id={result.index}
+      onChange={onSelect}
       checked={display} />
   } else {
     displayRoute = <></>
@@ -21,22 +21,14 @@ function ResultItem(props) {
         <td>{result.name}</td>
         <td>{result.time}</td>
         <td>{displayRoute}</td>
-        <td><Checkbox 
-          value={result.index} 
-          name={result.courseIndex.toString()} 
-          onChange={onReplay} 
+        <td><Form.Check
+          value={result.index}
+          id={result.courseIndex.toString()}
+          onChange={onReplay}
           checked={replay} /></td>
       </tr>
     </>
   )
 }
 
-//function arePropsEqual(prevProps, nextProps) {
-//console.log(prevProps.result.displayRoute, nextProps.result.displayRoute, prevProps.result.replay, nextProps.result.replay)
-//  return (prevProps.result.displayRoute === nextProps.result.displayRoute)
-//    && (prevProps.result.replay === nextProps.result.replay)
-// }
-
-//export default ResultItem
 export default memo(ResultItem)
-//export default memo(ResultItem, arePropsEqual)

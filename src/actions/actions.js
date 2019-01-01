@@ -23,21 +23,21 @@ export const TAB_CHANGED = 'TAB_CHANGED'
 export const TIMER_EXPIRED = 'TIMER_EXPIRED'
 export const ZOOM = 'ZOOM'
 
-export function displayCourse(index, display) {
+export function displayCourse(event) {
   return {
     type: DISPLAY_COURSE,
-    index: index,
-    display: display
+    index: parseInt(event.target.value, 10),
+    display: event.target.checked
   }
 }
 
-export function displayRoute(resultIndex, courseIndex, display) {
+export function displayRoute(event) {
   return (dispatch) => {
     dispatch({
       type: DISPLAY_ROUTE,
-      resultIndex: resultIndex,
-      courseIndex: parseInt(courseIndex, 10),
-      display: display
+      resultIndex: parseInt(event.target.id, 10),
+      courseIndex: parseInt(event.target.value, 10),
+      display: event.target.checked
     })
   }
 }
@@ -117,30 +117,31 @@ export function mapLoaded(image) {
   }
 }
 
-export function replayResult(resultIndex, courseIndex, display) {
+export function replayResult(event) {
   // add course details for selected route replay
   return (dispatch, getState) => {
     dispatch({
       type: REPLAY_RESULT,
-      resultIndex: resultIndex,
-      display: display,
-      course: getState().courses.data[courseIndex]
+      resultIndex: parseInt(event.target.value, 10),
+      display: event.target.checked,
+      course: getState().courses.data[parseInt(event.target.id, 10)]
     })
   }
 }
 
-export function replayRoutesForCourse(courseIndex, display) {
+export function replayRoutesForCourse(event) {
   return (dispatch, getState) => {
+    const courseIndex = parseInt(event.target.value, 10)
     if (courseIndex === RG2.ALL_COURSES) {
       dispatch({
         type: REPLAY_ROUTES_FOR_ALL_COURSES,
-        display: display,
+        display: event.target.checked,
         courses: getState().courses.data
       })
     } else {
       dispatch({
         type: REPLAY_ROUTES_FOR_COURSE,
-        display: display,
+        display: event.target.checked,
         course: getState().courses.data[courseIndex]
       })
     }

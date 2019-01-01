@@ -30,8 +30,8 @@ const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onSelect: (event) => dispatch(displayRoute(event.target.value, event.target.name, event.target.checked)),
-    onReplay: (event) => dispatch(replayResult(event.target.value, event.target.name, event.target.checked)),
+    onSelect: (event) => dispatch(displayRoute(event)),
+    onReplay: (event) => dispatch(replayResult(event)),
     onFilterChange: filter => dispatch(filterResults(filter, props.courseIndex))
   }
 }

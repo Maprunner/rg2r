@@ -1,15 +1,17 @@
 import React, { memo } from 'react'
-import { Slider } from 'primereact/slider'
 
 function ReplaySlider(props) {
   const { time, onSetTime, minTime, maxTime } = props
   return (
-<   Slider
-      value={time}
-      onChange={onSetTime}
-      min={minTime}
-      max={maxTime}
-      style={{ width: '20em' }} />
+    <div>
+      <input
+        type="range"
+        id="replay-speed"
+        min={minTime}
+        max={maxTime}
+        value={time}
+        onChange={onSetTime} />
+    </div>
   )
 }
 

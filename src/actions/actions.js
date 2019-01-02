@@ -203,10 +203,10 @@ export function setSpeed(speed) {
   }
 }
 
-export function setTime(time) {
+export function setTime(event) {
   return {
     type: SET_TIME,
-    time: time
+    time: parseInt(event.target.value, 10)
   }
 }
 

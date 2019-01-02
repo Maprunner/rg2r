@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
   onStartStop: () => dispatch(startStop()),
   onSetSpeed: (event) => dispatch(setSpeed(event)),
   onSetReplayMode: () => dispatch(setReplayMode()),
-  onSetTime: (event) => dispatch(setTime(event.value))
+  onSetTime: (event) => dispatch(setTime(event))
 })
 
 export default connect(

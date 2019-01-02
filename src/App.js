@@ -11,14 +11,15 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { loadEvents, screenResized, timerExpired } from './actions/actions.js'
 import {
   faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye,
-  faSearch, faGlobeAmericas, faInfoCircle
+  faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown
 } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
 
   constructor() {
     super()
-    library.add(faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye, faSearch, faGlobeAmericas, faInfoCircle)
+    library.add(faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye,
+      faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown)
     this.timer = null
   }
 

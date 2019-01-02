@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
   onScroll: (delta, mousePos, zoom, xy) => dispatch(scroll(delta, mousePos, zoom, xy)),
   onZoom: (zoomIn) => dispatch(zoom(zoomIn)),
   onStartStop: () => dispatch(startStop()),
-  onSetSpeed: (event) => dispatch(setSpeed(event.target.value)),
+  onSetSpeed: (event) => dispatch(setSpeed(event)),
   onSetReplayMode: () => dispatch(setReplayMode()),
   onSetTime: (event) => dispatch(setTime(event.value))
 })

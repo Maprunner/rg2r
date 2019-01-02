@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import Card from 'react-bootstrap/lib/Card'
 import ResultItem from '../components/ResultItem'
-import ResultSearch from '../components/ResultSearch'
+import SearchBox from './SearchBox'
 import CourseResultSummaryRow from '../components/CourseResultSummaryRow'
 import CourseResultHeaderRow from '../components/CourseResultHeaderRow'
 
@@ -17,7 +17,7 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
 
   return (
     <Card body>
-      <ResultSearch
+      <SearchBox
         filter={filter}
         onFilterChange={onFilterChange} />
       <table>

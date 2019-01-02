@@ -1,5 +1,6 @@
 import React from 'react'
-import { Panel } from 'primereact/panel'
+import Card from 'react-bootstrap/lib/Card'
+import Form from 'react-bootstrap/lib/Form'
 import ReplayButton from './ReplayButton.js'
 import ReplaySpeed from './ReplaySpeed.js'
 import ReplaySlider from './ReplaySlider.js'
@@ -21,31 +22,23 @@ function ReplayPanel(props) {
     minTime = 0
   }
   return (
-    <Panel id={"replay"}>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <ReplayButton animation={animation} onStartStop={onStartStop} />
-            </td>
-            <td>
-              <ReplayModeButton realTime={animation.realTime} onSetReplayMode={onSetReplayMode} />
-            </td>
-            <td>
-              <ReplaySlider
+    <Card id={"replay"}>
+    <Form inline>
+      {/* <Form.Group controlId="formSearch">
+        <Form.Control type="search" value="A" />
+        <Form.Text />
+      </Form.Group> */}
+      <ReplayButton animation={animation} onStartStop={onStartStop} />
+      <ReplayModeButton realTime={animation.realTime} onSetReplayMode={onSetReplayMode} />
+      <ReplaySpeed timerIncrement={animation.timerIncrement} onSetSpeed={onSetSpeed} />
+      <ReplaySlider
                 time={animation.time}
                 onSetTime={onSetTime}
                 minTime={minTime}
                 maxTime={maxTime} />
-            </td>
-            <td>
-              <ReplaySpeed timerIncrement={animation.timerIncrement} onSetSpeed={onSetSpeed} />
-              {Utils.formatSecsAsHHMMSS(animation.time)}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </Panel>
+      {Utils.formatSecsAsHHMMSS(animation.time)}
+    </Form>
+    </Card>
   )
 }
 

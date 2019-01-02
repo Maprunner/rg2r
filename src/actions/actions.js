@@ -199,7 +199,7 @@ export function setReplayMode() {
 export function setSpeed(speed) {
   return {
     type: SET_SPEED,
-    speed: speed
+    speed: parseInt(speed, 10)
   }
 }
 

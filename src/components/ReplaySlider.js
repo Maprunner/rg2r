@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 function ReplaySlider(props) {
   const { time, onSetTime, minTime, maxTime } = props
   return (
-    <div>
+    <div className="p-1">
       <input
         type="range"
         id="replay-speed"

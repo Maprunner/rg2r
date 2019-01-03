@@ -20,14 +20,17 @@ function ReplaySpeed(props) {
     <Dropdown.Item key={option.value} eventKey={option.value}>{option.label}</Dropdown.Item>
   ))
   return (
-<DropdownButton 
-  id="speed-dropdown"
-  onSelect={onSetSpeed}
-  title={"x" + (timerIncrement / 100)}
-  variant="Primary"
-  key={timerIncrement} >
-  {speedOptions}
-</DropdownButton>
+    <div className='p-1 align-middle'>
+      <DropdownButton
+        drop="up"
+        id="speed-dropdown"
+        onSelect={onSetSpeed}
+        title={"x" + (timerIncrement / 100)}
+        variant="Primary"
+        key={timerIncrement} >
+        {speedOptions}
+      </DropdownButton>
+    </div>
   )
 }
 

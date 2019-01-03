@@ -9,7 +9,7 @@ import { loadEvents, screenResized, timerExpired } from './actions/actions.js'
 import {
   faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye,
   faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown, faPlusSquare, faMinusSquare,
-  faSyncAlt, faRedoAlt, faUndoAlt
+  faSyncAlt, faRedoAlt, faUndoAlt, faCog, faCircle
 } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
@@ -18,7 +18,7 @@ class App extends Component {
     super()
     library.add(faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye,
       faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown, faPlusSquare, faMinusSquare,
-      faSyncAlt, faRedoAlt, faUndoAlt)
+      faSyncAlt, faRedoAlt, faUndoAlt, faCog, faCircle)
     this.timer = null
   }
 

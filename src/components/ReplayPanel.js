@@ -1,6 +1,5 @@
 import React from 'react'
 import Card from 'react-bootstrap/lib/Card'
-import Form from 'react-bootstrap/lib/Form'
 import ReplayButton from './ReplayButton.js'
 import ReplaySpeed from './ReplaySpeed.js'
 import ReplaySlider from './ReplaySlider.js'
@@ -23,21 +22,19 @@ function ReplayPanel(props) {
   }
   return (
     <Card id={"replay"}>
-    <Form inline>
-      {/* <Form.Group controlId="formSearch">
-        <Form.Control type="search" value="A" />
-        <Form.Text />
-      </Form.Group> */}
+    <div className="d-flex p-1">
       <ReplayButton animation={animation} onStartStop={onStartStop} />
       <ReplayModeButton realTime={animation.realTime} onSetReplayMode={onSetReplayMode} />
       <ReplaySpeed timerIncrement={animation.timerIncrement} onSetSpeed={onSetSpeed} />
+      <div className='p-1'>
+        {Utils.formatSecsAsHHMMSS(animation.time)}
+      </div>
       <ReplaySlider
                 time={animation.time}
                 onSetTime={onSetTime}
                 minTime={minTime}
                 maxTime={maxTime} />
-      {Utils.formatSecsAsHHMMSS(animation.time)}
-    </Form>
+    </div>
     </Card>
   )
 }

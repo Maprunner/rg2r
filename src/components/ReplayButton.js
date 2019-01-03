@@ -5,8 +5,8 @@ function ReplayButton(props) {
   const {timerRunning, onStartStop} = props
   let icon = timerRunning ? 'pause' : 'play'
   return (
-    <div>
-      <FontAwesomeIcon icon={icon} size={"lg"} onClick={onStartStop} />
+    <div className='p-1'>
+      <FontAwesomeIcon fixedWidth icon={icon} size={"lg"} onClick={onStartStop} />
     </div>
   )
 }

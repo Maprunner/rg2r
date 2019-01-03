@@ -11,9 +11,9 @@ class TopPanel extends Component {
           <span className="rg2-title align-middle px-2">{this.props.title}</span>
         </div>
         <div>
-          <span><FontAwesomeIcon icon={'redo-alt'} size="sm" onClick={() => this.props.onRotate(true)} /></span>
-          <span className="px-2"><FontAwesomeIcon icon={'sync-alt'} size="sm" onClick={() => this.props.onResetMap()} /></span>
-          <span><FontAwesomeIcon icon={'question'} color='white' size="lg" onClick={() => this.props.onShowInfo()} /></span>
+          <span className="px-1 align-middle"><FontAwesomeIcon icon={'circle'} color='white' size="lg" onClick={() => this.props.onRotate(true)} /></span>
+          <span className="px-1 align-middle"><FontAwesomeIcon icon={'cog'} color='white' size="lg" onClick={() => this.props.onResetMap()} /></span>
+          <span className="px-1 align-middle"><FontAwesomeIcon icon={'question'} color='white' size="lg" onClick={() => this.props.onShowInfo()} /></span>
         </div>
       </div >
     )

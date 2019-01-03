@@ -10,7 +10,7 @@ function EventDisplay(props) {
       <SearchBox
         filter={filter}
         onFilterChange={onFilterChange} />
-      <div>
+      <div className="py-2">
         <EventList events={events} onClick={onSelectEvent} ></EventList>
       </div>
     </Card>

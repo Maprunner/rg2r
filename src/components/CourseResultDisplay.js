@@ -2,14 +2,16 @@ import React, { memo } from 'react'
 import Card from 'react-bootstrap/lib/Card'
 import Collapse from 'react-bootstrap/lib/Collapse'
 import Form from 'react-bootstrap/lib/Form'
+import Table from 'react-bootstrap/lib/Table'
 import ResultItem from '../components/ResultItem'
 import SearchBox from './SearchBox'
 import CourseResultSummaryRow from '../components/CourseResultSummaryRow'
 import CourseResultHeaderRow from '../components/CourseResultHeaderRow'
+import RG2 from '../rg2Constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-function CourseResultDisplay({ results, display, replay, courseIndex, filter, onSelect, 
-  onReplay, onFilterChange, onShowResults,
+function CourseResultDisplay({ results, display, replay, courseIndex, filter, onSelect,
+  onReplay, onFilterChange, onShowResults, isOpen,
   allRoutesDisplayed, allRoutesReplayed, hasRoutes, courseName, onSelectCourse, courseDisplay }) {
   const resultsList = results.map((result) => <ResultItem
     key={result.index.toString()}
@@ -18,12 +20,12 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
     result={result}
     replay={replay[result.index]}
     display={display[result.index]} />)
-
+  const caret = isOpen ? 'caret-down' : 'caret-right'
   return (
-    <Card style={{ minWidth: '360px' }}>
-      <Card.Header className="clearflex">
-        <div className="float-left" onClick={onShowResults}>
-          <FontAwesomeIcon icon={'caret-right'} /> {courseName}
+    <Card style={{ minWidth: RG2.INFO_BAR_WIDTH + 'px' }}>
+      <Card.Header className="clearflex" id={courseIndex} onClick={onShowResults}>
+        <div className="float-left">
+          <FontAwesomeIcon icon={caret} /> {courseName}
         </div>
         <div className="float-right">
           <Form.Check
@@ -33,26 +35,28 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
             checked={courseDisplay[courseIndex]} />
         </div>
       </Card.Header>
-      <Collapse in={false}>
+      <Collapse in={isOpen}>
         <Card.Body>
           <SearchBox
             filter={filter}
             onFilterChange={onFilterChange} />
-          <table>
-            <thead>
-              <CourseResultHeaderRow />
-            </thead>
-            <tbody>
-              {resultsList}
-              <CourseResultSummaryRow
-                courseIndex={courseIndex}
-                onSelect={onSelect}
-                onReplay={onReplay}
-                routesChecked={allRoutesDisplayed}
-                replayChecked={allRoutesReplayed}
-                hasRoutes={hasRoutes} />
-            </tbody>
-          </table>
+          <div className="py-2">
+            <Table striped hover size="sm">
+              <thead>
+                <CourseResultHeaderRow />
+              </thead>
+              <tbody>
+                {resultsList}
+                <CourseResultSummaryRow
+                  courseIndex={courseIndex}
+                  onSelect={onSelect}
+                  onReplay={onReplay}
+                  routesChecked={allRoutesDisplayed}
+                  replayChecked={allRoutesReplayed}
+                  hasRoutes={hasRoutes} />
+              </tbody>
+            </Table>
+          </div>
         </Card.Body>
       </Collapse>
     </Card>

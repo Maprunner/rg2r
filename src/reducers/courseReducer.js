@@ -5,8 +5,9 @@ import RG2 from '../rg2Constants'
 const initialState = {
   data: [],
   display: [],
-  displayResults: [],
-  controls: []
+  controls: [],
+  // temporary (?) accordion functions
+  showResults: []
 }
 
 const courses = (state = initialState, action) => {
@@ -15,15 +16,16 @@ const courses = (state = initialState, action) => {
       return update(state, {
         display: { $set: displayCourses(state.display, action.index, action.display) }
       })
-      case 'SHOW_RESULTS':
+    case 'SHOW_RESULTS':
       return update(state, {
-        display: { $set: displayCourses(state.display, action.index, action.display) }
+        showResults: { $set: showResults(state.showResults, action.index) }
       })
     case 'SAVE_EVENT':
       return update(state, {
         data: { $set: processCourses(action.data.courses, action.data.format) },
         controls: { $set: extractControls(action.data.courses) },
-        display: { $set: initialiseDisplay(action.data.courses) }
+        display: { $set: initialiseDisplay(action.data.courses) },
+        showResults: { $set: initialiseShowResults(action.data.courses) }
       })
     case 'EVENT_REQUESTED':
       return initialState
@@ -40,8 +42,17 @@ function initialiseDisplay(courses) {
   return display
 }
 
-function displayCourses(currentDisplay, index, display) {
-  let courses = currentDisplay.slice()
+function initialiseShowResults(courses) {
+  let showResults = []
+  for (let i = 0; i < courses.length; i += 1) {
+    showResults[i] = false
+  }
+  return showResults
+}
+
+
+function displayCourses(prevDisplay, index, display) {
+  let courses = prevDisplay.slice()
   if (index === RG2.ALL_COURSES) {
     for (let i = 0; i < courses.length; i += 1) {
       courses[i] = display
@@ -50,6 +61,12 @@ function displayCourses(currentDisplay, index, display) {
     courses[index] = display
   }
   return courses
+}
+
+function showResults(prevShowResults, index) {
+  let showResults = prevShowResults.slice()
+  showResults[index] = !showResults[index]
+  return showResults
 }
 
 function processCourses(courses, format) {

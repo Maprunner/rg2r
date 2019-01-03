@@ -133,21 +133,21 @@ const results = (state = initialState, action) => {
   }
 }
 
-function setAnimationMode(currentAnimation) {
-  let animation = Object.assign({}, currentAnimation)
+function setAnimationMode(prevAnimation) {
+  let animation = Object.assign({}, prevAnimation)
   // toggle between real time and mass start
   animation.realTime = !animation.realTime
   return animation
 }
 
-function handleStartStop(currentAnimation) {
-  let animation = Object.assign({}, currentAnimation)
+function handleStartStop(prevAnimation) {
+  let animation = Object.assign({}, prevAnimation)
   animation.timerRunning = !animation.timerRunning
   return animation
 }
 
-function handleTimer(currentAnimation) {
-  let animation = Object.assign({}, currentAnimation)
+function handleTimer(prevAnimation) {
+  let animation = Object.assign({}, prevAnimation)
   // only increment time if we haven't got to the end already
   if (animation.realTime) {
     if (animation.time < animation.latestFinishSecs) {
@@ -168,14 +168,14 @@ function handleTimer(currentAnimation) {
   return animation
 }
 
-function setAnimationSpeed(currentAnimation, speed) {
-  let animation = Object.assign({}, currentAnimation)
+function setAnimationSpeed(prevAnimation, speed) {
+  let animation = Object.assign({}, prevAnimation)
   animation.timerIncrement = speed
   return animation
 }
 
-function displayRoutes(results, currentDisplay, index, courseIndex, doDisplay) {
-  let display = currentDisplay.slice()
+function displayRoutes(results, prevDisplay, index, courseIndex, doDisplay) {
+  let display = prevDisplay.slice()
   if (index === RG2.ALL_ROUTES) {
     for (let i = 0; i < results.length; i += 1) {
       if ((results[i].courseIndex === courseIndex) || (courseIndex === RG2.ALL_COURSES)) {
@@ -190,11 +190,11 @@ function displayRoutes(results, currentDisplay, index, courseIndex, doDisplay) {
   return display
 }
 
-function replayResults(currentResults, currentRunners, currentAnimation, currentReplay, index, display, course) {
+function replayResults(prevResults, prevRunners, prevAnimation, prevReplay, index, display, course) {
   // index can be a result index or RG2.ALL_ROUTES
-  let results = currentResults.slice()
-  let replay = currentReplay.slice()
-  let runners = currentRunners.slice()
+  let results = prevResults.slice()
+  let replay = prevReplay.slice()
+  let runners = prevRunners.slice()
   if (index === RG2.ALL_ROUTES) {
     for (let i = 0; i < results.length; i += 1) {
       if (results[i].coursename === course.name) {
@@ -206,16 +206,16 @@ function replayResults(currentResults, currentRunners, currentAnimation, current
     replay[index] = display
     runners = toggleRunner(results[index], runners, course, display)
   }
-  let animation = setAnimationDetails(runners, currentAnimation)
+  let animation = setAnimationDetails(runners, prevAnimation)
   return { runners: runners, animation: animation, replay: replay }
 }
 
 
-function replayRoutesForCourse(currentResults, currentRunners, currentReplay, currentAnimation, display, course) {
+function replayRoutesForCourse(prevResults, prevRunners, prevReplay, prevAnimation, display, course) {
   // replays all routes for a given course
-  let results = currentResults.slice()
-  let replay = currentReplay.slice()
-  let runners = currentRunners.slice()
+  let results = prevResults.slice()
+  let replay = prevReplay.slice()
+  let runners = prevRunners.slice()
   for (let i = 0; i < results.length; i += 1) {
     if (results[i].courseIndex === course.index) {
       if (results[i].x.length > 0) {
@@ -224,23 +224,23 @@ function replayRoutesForCourse(currentResults, currentRunners, currentReplay, cu
       }
     }
   }
-  let animation = setAnimationDetails(runners, currentAnimation)
+  let animation = setAnimationDetails(runners, prevAnimation)
   return { animation: animation, runners: runners, replay: replay }
 }
 
 
-function replayRoutesForAllCourses(currentResults, currentRunners, currentReplay, currentAnimation, display, courses) {
+function replayRoutesForAllCourses(prevResults, prevRunners, prevReplay, prevAnimation, display, courses) {
   // replays all results that have routes
-  let results = currentResults.slice()
-  let replay = currentReplay.slice()
-  let runners = currentRunners.slice()
+  let results = prevResults.slice()
+  let replay = prevReplay.slice()
+  let runners = prevRunners.slice()
   for (let i = 0; i < results.length; i += 1) {
     if (results[i].x.length > 0) {
       replay[i] = display
       runners = toggleRunner(results[i], runners, courses[results[i].courseIndex], display)
     }
   }
-  let animation = setAnimationDetails(runners, currentAnimation)
+  let animation = setAnimationDetails(runners, prevAnimation)
   return { animation: animation, runners: runners, replay: replay }
 }
 
@@ -394,8 +394,8 @@ function setAnimationDetails(runners, oldAnimation) {
   return setAnimationTime(animation, 0)
 }
 
-function setAnimationTime(currentAnimation, time) {
-  let animation = Object.assign({}, currentAnimation)
+function setAnimationTime(prevAnimation, time) {
+  let animation = Object.assign({}, prevAnimation)
   // sets animation time
   if (animation.realTime) {
     // if we got a time it was from the slider so use it
@@ -417,9 +417,9 @@ function setAnimationTime(currentAnimation, time) {
   return animation
 }
 
-function processResults(currentResults, routes, courses, format) {
+function processResults(prevResults, routes, courses, format) {
   // TODO Events with no results
-  let results = combineResults(currentResults, routes)
+  let results = combineResults(prevResults, routes)
   let display = []
   let replay = []
   let scorecodes = []
@@ -691,7 +691,7 @@ function expandTrackWithNoSplits(result, course) {
   // this means we have a course and a finish time but no split times
   // only have finish time, which is in [1] at present
   let totaltime = result.splits[1]
-  let currenttime = 0
+  let prevtime = 0
   result.xysecs[0] = 0
   // get course details: can't be a score course since they aren't supported for format 2
   let nextcontrol = 1
@@ -718,9 +718,9 @@ function expandTrackWithNoSplits(result, course) {
     }
     // track ends at control, as long as we have moved away from the start
     if ((nextx === x) && (nexty === y) && moved) {
-      currenttime = parseInt((result.cumulativeDistance[i] / totaldist) * totaltime, 10)
-      result.xysecs[i] = currenttime
-      result.splits[nextcontrol] = currenttime
+      prevtime = parseInt((result.cumulativeDistance[i] / totaldist) * totaltime, 10)
+      result.xysecs[i] = prevtime
+      result.splits[nextcontrol] = prevtime
       result.xysecs = addInterpolatedTimes(result.xysecs, previouscontrolindex, i, result.cumulativeDistance)
       previouscontrolindex = i
       nextcontrol += 1

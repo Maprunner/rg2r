@@ -1,4 +1,4 @@
-body {
+/* body {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -8,10 +8,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
+} */

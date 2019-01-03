@@ -8,11 +8,10 @@ class EventItem extends React.PureComponent {
   render() {
     const { event } = this.props
     return (
-      <li onClick={this.onClick} title={event.type + (event.comment !== "" ? ": " + event.comment : "")}>
-        {event.worldfile.valid ? this.worldfile : null}
-        {event.comment !== "" ? this.comment : null}
-        {event.date}: {event.name}
-      </li>
+      <tr onClick={this.onClick} title={event.type + (event.comment !== "" ? ": " + event.comment : "")}>
+        <td>{event.worldfile.valid ? this.worldfile : null}{event.comment !== "" ? this.comment : null}</td>
+        <td>{event.date}: {event.name}</td>
+      </tr>
     )
   }
 }

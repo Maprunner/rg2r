@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
 import CourseResultDisplay from '../components/CourseResultDisplay'
-import { displayRoute, displayCourse, 
-  replayResult, filterResults, showResults } from '../actions/actions.js'
+import {
+  displayRoute, displayCourse,
+  replayResult, filterResults, showResults
+} from '../actions/actions.js'
 import {
   makeGetVisibleResultsByCourse, makeAllRoutesDisplayedByCourse,
   makeAllRoutesReplayedByCourse, makeCourseHasRoutes,
-  getResultsDisplay, getResultsReplay, getCourseDisplay
+  getResultsDisplay, getResultsReplay, getCourseDisplay, makeResultsDisplayedForCourse
 } from '../selectors/selectors.js'
 
 const makeMapStateToProps = () => {
@@ -13,6 +15,7 @@ const makeMapStateToProps = () => {
   const allRoutesDisplayedByCourse = makeAllRoutesDisplayedByCourse()
   const allRoutesReplayedByCourse = makeAllRoutesReplayedByCourse()
   const courseHasRoutes = makeCourseHasRoutes()
+  const resultsDisplayedForCourse = makeResultsDisplayedForCourse()
 
   const mapStateToProps = (state, props) => {
     return {
@@ -25,7 +28,8 @@ const makeMapStateToProps = () => {
       filter: state.results.filter[props.courseIndex],
       allRoutesDisplayed: allRoutesDisplayedByCourse(state, props),
       allRoutesReplayed: allRoutesReplayedByCourse(state, props),
-      hasRoutes: courseHasRoutes(state, props)
+      hasRoutes: courseHasRoutes(state, props),
+      isOpen: resultsDisplayedForCourse(state, props)
     }
   }
   return mapStateToProps

@@ -6,7 +6,8 @@ const initialState = {
   width: window.innerWidth,
   height: window.innerHeight - RG2.TOOLBAR_HEIGHT,
   zoom: { x: 1, y: 1 },
-  x: 360,
+  angle: 0,
+  x: RG2.INFO_BAR_WIDTH,
   y: 0,
   // ratios based on IOF ISOM overprint specification
   opt: {
@@ -48,6 +49,18 @@ const map = (state = initialState, action) => {
         width: { $set: action.width },
         height: { $set: action.height }
       })
+    case 'ROTATE_MAP':
+      let angle = rotateMap(state.angle, action.clockwise)
+      return update(state, {
+        angle: { $set: angle }
+      })
+    case 'RESET_MAP':
+      return update(state, {
+        angle: { $set: 0 },
+        zoom: { $set: { x: 1, y: 1 } },
+        x: { $set: RG2.INFO_BAR_WIDTH },
+        y: { $set: 0 }
+      })
     case 'ZOOM':
       let zoom = doZoom(state.zoom, action.zoomIn)
       return update(state, {
@@ -69,14 +82,22 @@ const map = (state = initialState, action) => {
   }
 }
 
-function doZoom(currentZoom, zoomIn) {
+function doZoom(prevZoom, zoomIn) {
   let zoom
   if (zoomIn) {
-    zoom = { x: currentZoom.x * 1.2, y: currentZoom.y * 1.2 }
+    zoom = { x: prevZoom.x * 1.2, y: prevZoom.y * 1.2 }
   } else {
-    zoom = { x: currentZoom.x / 1.2, y: currentZoom.y / 1.2 }
+    zoom = { x: prevZoom.x / 1.2, y: prevZoom.y / 1.2 }
   }
   return zoom
+}
+
+function rotateMap(prevAngle, clockwise) {
+  if (clockwise) {
+    return prevAngle + RG2.ROTATION_STEP_IN_DEGREES;
+  } else {
+    return prevAngle - RG2.ROTATION_STEP_IN_DEGREES;
+  }
 }
 
 function handleScroll(delta, mousePos, zoom, xy) {

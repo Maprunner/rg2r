@@ -2,6 +2,7 @@ import React from 'react'
 import CourseItem from './CourseItem.js'
 import CourseItemHeader from './CourseItemHeader.js'
 import Card from 'react-bootstrap/lib/Card'
+import Table from 'react-bootstrap/lib/Table'
 import RG2 from '../rg2Constants'
 
 function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
@@ -38,14 +39,14 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
 
   return (
     <Card body>
-      <table>
+      <Table striped hover size="sm">
         <thead>
           <CourseItemHeader />
         </thead>
         <tbody>
           {courseItems}
         </tbody>
-      </table>
+      </Table>
     </Card>
   )
 }

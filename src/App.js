@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import TopToolbar from './components/TopToolbar.js'
+import Header from './containers/Header.js'
 import InfoPanel from './containers/InfoPanel.js'
 import Canvas from './containers/Canvas.js'
-import './rg2novalight.css'
-import './rg2primereact.css'
-import 'primeicons/primeicons.css'
 import './App.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { loadEvents, screenResized, timerExpired } from './actions/actions.js'
 import {
   faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye,
-  faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown
+  faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown, faPlusSquare, faMinusSquare,
+  faSyncAlt, faRedoAlt, faUndoAlt
 } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
@@ -19,7 +17,8 @@ class App extends Component {
   constructor() {
     super()
     library.add(faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye,
-      faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown)
+      faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown, faPlusSquare, faMinusSquare,
+      faSyncAlt, faRedoAlt, faUndoAlt)
     this.timer = null
   }
 
@@ -47,7 +46,7 @@ class App extends Component {
     return (
       <div>
         <div id="rg2-header-container">
-          <TopToolbar title={"Routegadget 2"} />
+          <Header />
         </div>
         <div id="rg2-container">
           <InfoPanel />

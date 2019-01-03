@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import Table from 'react-bootstrap/lib/Table'
 import EventItem from '../components/EventItem'
 
 function EventList({ events, onClick }) {
@@ -7,9 +8,11 @@ function EventList({ events, onClick }) {
   )
   return (
     <div id="rg2-event-list">
-      <ul>
-        {eventItems}
-      </ul>
+      <Table striped hover size="sm">
+        <tbody>
+          {eventItems}
+        </tbody>
+      </Table>
     </div>
   )
 }

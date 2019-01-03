@@ -10,6 +10,8 @@ export const MAP_LOADED = 'MAP_LOADED'
 export const REPLAY_RESULT = 'REPLAY_RESULT'
 export const REPLAY_ROUTES_FOR_ALL_COURSES = 'REPLAY_ROUTES_FOR_ALL_COURSES'
 export const REPLAY_ROUTES_FOR_COURSE = 'REPLAY_ROUTES_FOR_COURSE'
+export const RESET_MAP = 'RESET_MAP'
+export const ROTATE_MAP = 'ROTATE_MAP'
 export const SET_REPLAY_MODE = 'SET_REPLAY_MODE'
 export const SAVE_COURSES = 'SAVE_COURSES'
 export const SAVE_EVENT = 'SAVE_EVENT'
@@ -44,11 +46,10 @@ export function displayRoute(event) {
 }
 
 
-export function eventRequested(index, id) {
+export function eventRequested(event) {
   return {
     type: EVENT_REQUESTED,
-    index: index,
-    id: id
+    event: event
   }
 }
 
@@ -86,7 +87,7 @@ export function loadEvent(event) {
     image.onload = () => {
       dispatch(mapLoaded(image))
     }
-    dispatch(eventRequested(event, image))
+    dispatch(eventRequested(event))
     return fetch('/rg2/rg2api.php?type=event&id=' + event.id)
       .then(
         response => response.json(),
@@ -146,6 +147,20 @@ export function replayRoutesForCourse(event) {
         course: getState().courses.data[courseIndex]
       })
     }
+  }
+}
+
+export function resetMap(clockwise) {
+  return {
+    type: RESET_MAP
+  }
+}
+
+
+export function rotateMap(clockwise) {
+  return {
+    type: ROTATE_MAP,
+    clockwise: clockwise
   }
 }
 
@@ -214,8 +229,7 @@ export function setTime(event) {
 export function showResults(event) {
   return {
     type: SHOW_RESULTS,
-    courseIndex: parseInt(event.target.value, 10),
-    display: event.target.checked
+    index: parseInt(event.target.id, 10)
   }
 }
 

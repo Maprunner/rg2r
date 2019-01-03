@@ -1,17 +1,29 @@
-#root {
-  overflow: hidden;
+/*
+ * prevent selection of objects everywhere
+ */
+ body {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 #rg2-header-container {
-    background: #002bd9;
-    color:black;
-    position: relative;
-    border-bottom: 4px solid black;
+  background: #002bd9;
+  color:black;
+  position: relative;
+  border-bottom: 4px solid black;
 }
 
 #rg2-container {
   width: 100%;
+  height: 100%;
   display: block;
+  overflow: hidden;
+  position: relative;
 }
 
 #rg2-info-panel {
@@ -22,43 +34,23 @@
   background: white;
  }
 
+ #rg2-info {
+  height: 95%;
+  overflow-y: auto;
+ }
+
 #rg2-map-canvas {
   z-index: 50;
   position: absolute;
   background-color: #007ad9;
 }
 
-#rg2-event-list ul {
-  padding: 0;
-}
-
-#rg2-event-list li {
-  margin: 5px;
-  list-style: none;
-}
-
-#rg2-event-list li:nth-child(odd) {
-  background: rgb(196, 233, 255);
-}
-
-.center-text {
-  text-align: center;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-#zoom-in {
+#zoom-controls {
+  font-size: 1.5rem;
+  line-height: 0;
   position: absolute;
   right: 10px;
-  top: 70px;
-}
-
-#zoom-out {
-  position: absolute;
-  right: 10px;
-  top: 105px;
+  top: 46px;
 }
 
 #replay {
@@ -67,32 +59,8 @@
   bottom: 10px;
 }
 
-.rg2-ul ul {
-  list-style-type: none;
-  padding-left: 0px;
-  line-height: 1.8;
-}
-
-.rg2-ul ul > li:nth-of-type(odd) {
-    background-color: #d7f4ff ;
-}
-
-.rg2-ul ul > li {
-  border-bottom: 1px solid rgb(221,221,221);
-  padding: 6px;
-}
-
 .rg2-title {
-  margin: 0 5px;
-  font-size: 1.5em;
-  float: right;
-}
-
-.rg2-button {
-  background: silver;
+  font-size: 1.25rem;
   color: white;
-  float: right;
-  width: 30px;
-  text-align: center;
-  border-left: 4px solid darkgray;
+  line-height: 1.25rem;
 }

@@ -11,6 +11,7 @@ const getEvents = (state) => state.events.data
 const getEventsFilter = (state) => state.events.filter
 const getResultFilterByCourse = (state, props) => state.results.filter[props.courseIndex]
 const getCourseByIndex = (state, props) => state.courses.data[props.courseIndex]
+const getShowResultsByCourseIndex = (state, props) => state.courses.showResults[props.courseIndex]
 export const getResultsDisplay = (state) => state.results.display
 export const getResultsReplay = (state) => state.results.replay
 
@@ -168,6 +169,15 @@ export const makeGetCourseByIndex = () => {
     [getCourseByIndex],
     (course) => {
       return course
+    }
+  )
+}
+
+export const makeResultsDisplayedForCourse = () => {
+  return createSelector(
+    [getShowResultsByCourseIndex],
+    (show) => {
+      return show
     }
   )
 }

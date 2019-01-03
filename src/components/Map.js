@@ -39,12 +39,15 @@ class Map extends React.Component {
           y={this.props.y}
           onWheel={this.handleScroll}
           scale={this.props.zoom}
+          rotation={this.props.angle}
         >
           <Layer listening={false}>
             <Image image={this.props.map} />
             {<Portal>
               <MapButtons
                 onZoom={this.props.onZoom}
+                onRotate={this.props.onRotate}
+                onResetMap={this.props.onResetMap}
                 mapLoaded={this.props.map === null ? "" : "disabled"}
               />
             </Portal>}

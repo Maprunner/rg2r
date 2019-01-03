@@ -2,7 +2,6 @@ import update from 'immutability-helper'
 import RG2 from '../rg2Constants'
 
 const initialState = {
-  title: 'Routegadget 2',
   activeTabIndex: RG2.TAB_EVENTS,
   drawEnabled: false
 }

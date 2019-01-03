@@ -7,7 +7,6 @@ function ResultDisplay({ courses }) {
   let courseResults
   for (let i = 0; i < courses.length; i += 1) {
     courseResults = <VisibleCourseResultList key={i} courseIndex={i} />
-    //fullResultList.push(<AccordionTab key={i} header={courses[i].name} >{courseResults}</AccordionTab>)
     fullResultList.push(courseResults)
   }
   return (

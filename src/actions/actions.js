@@ -18,6 +18,7 @@ export const SCREEN_RESIZED = 'SCREEN_RESIZED'
 export const SCROLL = 'SCROLL'
 export const SET_SPEED = 'SET_SPEED'
 export const SET_TIME = 'SET_TIME'
+export const SHOW_RESULTS = 'SHOW_RESULTS'
 export const START_STOP = 'START_STOP'
 export const TAB_CHANGED = 'TAB_CHANGED'
 export const TIMER_EXPIRED = 'TIMER_EXPIRED'
@@ -207,6 +208,14 @@ export function setTime(event) {
   return {
     type: SET_TIME,
     time: parseInt(event.target.value, 10)
+  }
+}
+
+export function showResults(event) {
+  return {
+    type: SHOW_RESULTS,
+    courseIndex: parseInt(event.target.value, 10),
+    display: event.target.checked
   }
 }
 

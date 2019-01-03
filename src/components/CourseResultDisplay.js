@@ -8,8 +8,9 @@ import CourseResultSummaryRow from '../components/CourseResultSummaryRow'
 import CourseResultHeaderRow from '../components/CourseResultHeaderRow'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-function CourseResultDisplay({ results, display, replay, courseIndex, filter, onSelect, onReplay, onFilterChange,
-  allRoutesDisplayed, allRoutesReplayed, hasRoutes }) {
+function CourseResultDisplay({ results, display, replay, courseIndex, filter, onSelect, 
+  onReplay, onFilterChange, onShowResults,
+  allRoutesDisplayed, allRoutesReplayed, hasRoutes, courseName, onSelectCourse, courseDisplay }) {
   const resultsList = results.map((result) => <ResultItem
     key={result.index.toString()}
     onSelect={onSelect}
@@ -20,12 +21,17 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
 
   return (
     <Card style={{ minWidth: '360px' }}>
-      <Card.Header><FontAwesomeIcon icon={'caret-right'} />Course
-      <Form.Check
-          id={1}
-          value={1}
-          onChange={onSelect}
-          checked={false} />
+      <Card.Header className="clearflex">
+        <div className="float-left" onClick={onShowResults}>
+          <FontAwesomeIcon icon={'caret-right'} /> {courseName}
+        </div>
+        <div className="float-right">
+          <Form.Check
+            id={courseIndex}
+            value={courseIndex}
+            onChange={onSelectCourse}
+            checked={courseDisplay[courseIndex]} />
+        </div>
       </Card.Header>
       <Collapse in={false}>
         <Card.Body>

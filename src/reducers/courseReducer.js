@@ -5,12 +5,17 @@ import RG2 from '../rg2Constants'
 const initialState = {
   data: [],
   display: [],
+  displayResults: [],
   controls: []
 }
 
 const courses = (state = initialState, action) => {
   switch (action.type) {
     case 'DISPLAY_COURSE':
+      return update(state, {
+        display: { $set: displayCourses(state.display, action.index, action.display) }
+      })
+      case 'SHOW_RESULTS':
       return update(state, {
         display: { $set: displayCourses(state.display, action.index, action.display) }
       })

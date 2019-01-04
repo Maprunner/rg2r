@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
   return {
     onSelectCourse: (event) => dispatch(displayCourse(event)),
-    onFilterChange: filter => dispatch(filterResults(filter, props.courseIndex)),
+    onFilterChange: (filter) => dispatch(filterResults(filter, props.courseIndex)),
     onDisplayAllRoutes: (event) => dispatch(displayRoute(event)),
     onReplayAllRoutes: (event) => dispatch(replayRoutesForCourse(event))
 

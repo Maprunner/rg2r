@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import CourseItem from './CourseItem.js'
 import CourseItemHeader from './CourseItemHeader.js'
 import Card from 'react-bootstrap/lib/Card'
@@ -51,4 +51,4 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
   )
 }
 
-export default CourseDisplay
+export default memo(CourseDisplay)

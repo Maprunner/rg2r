@@ -2,6 +2,7 @@ import update from 'immutability-helper'
 import RG2 from '../rg2Constants'
 
 const initialState = {
+  infoOpen: true,
   activeTabIndex: RG2.TAB_EVENTS,
   drawEnabled: false
 }
@@ -18,6 +19,10 @@ const ui = (state = initialState, action) => {
       })
     case 'EVENT_REQUESTED':
       return initialState
+    case 'TOGGLE_INFO':
+      return update(state, {
+        infoOpen: { $set: !state.infoOpen }
+      })
     default:
       return state
   }

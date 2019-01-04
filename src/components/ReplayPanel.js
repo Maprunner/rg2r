@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import Card from 'react-bootstrap/lib/Card'
 import ReplayButton from './ReplayButton.js'
 import ReplaySpeed from './ReplaySpeed.js'
@@ -22,21 +22,21 @@ function ReplayPanel(props) {
   }
   return (
     <Card id={"replay"}>
-    <div className="d-flex p-1">
-      <ReplayButton animation={animation} onStartStop={onStartStop} />
-      <ReplayModeButton realTime={animation.realTime} onSetReplayMode={onSetReplayMode} />
-      <ReplaySpeed timerIncrement={animation.timerIncrement} onSetSpeed={onSetSpeed} />
-      <div className='p-1'>
-        {Utils.formatSecsAsHHMMSS(animation.time)}
+      <div className="d-flex p-1">
+        <ReplayButton running={animation.timerRunning} onStartStop={onStartStop} />
+        <ReplayModeButton realTime={animation.realTime} onSetReplayMode={onSetReplayMode} />
+        <ReplaySpeed timerIncrement={animation.timerIncrement} onSetSpeed={onSetSpeed} />
+        <div className='p-1'>
+          {Utils.formatSecsAsHHMMSS(animation.time)}
+        </div>
+        <ReplaySlider
+          time={animation.time}
+          onSetTime={onSetTime}
+          minTime={minTime}
+          maxTime={maxTime} />
       </div>
-      <ReplaySlider
-                time={animation.time}
-                onSetTime={onSetTime}
-                minTime={minTime}
-                maxTime={maxTime} />
-    </div>
     </Card>
   )
 }
 
-export default ReplayPanel
+export default memo(ReplayPanel)

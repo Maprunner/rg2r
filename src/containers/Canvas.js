@@ -17,7 +17,8 @@ const mapStateToProps = state => ({
   animation: state.results.animation,
   runners: getRunners(state),
   controls: getControls(state),
-  courseDisplay: getCourseDisplay(state)
+  courseDisplay: getCourseDisplay(state),
+  showControls: state.courses.showControls
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -13,6 +13,7 @@ export const REPLAY_ROUTES_FOR_COURSE = 'REPLAY_ROUTES_FOR_COURSE'
 export const RESET_MAP = 'RESET_MAP'
 export const ROTATE_MAP = 'ROTATE_MAP'
 export const SET_REPLAY_MODE = 'SET_REPLAY_MODE'
+export const SAVE_CONFIG = 'SAVE_CONFIG'
 export const SAVE_COURSES = 'SAVE_COURSES'
 export const SAVE_EVENT = 'SAVE_EVENT'
 export const SAVE_EVENTS = 'SAVE_EVENTS'
@@ -24,6 +25,8 @@ export const SHOW_RESULTS = 'SHOW_RESULTS'
 export const START_STOP = 'START_STOP'
 export const TAB_CHANGED = 'TAB_CHANGED'
 export const TIMER_EXPIRED = 'TIMER_EXPIRED'
+export const TOGGLE_INFO = 'TOGGLE_INFO'
+export const TOGGLE_CONTROLS = 'TOGGLE_CONTROLS'
 export const ZOOM = 'ZOOM'
 
 export function displayCourse(event) {
@@ -164,6 +167,13 @@ export function rotateMap(clockwise) {
   }
 }
 
+export function saveConfig(config) {
+  return {
+    type: SAVE_CONFIG,
+    config: config
+  }
+}
+
 export function saveCourses(courses) {
   return {
     type: SAVE_COURSES,
@@ -255,6 +265,19 @@ export function timerExpired() {
     }
   }
 }
+
+export function toggleInfo() {
+  return {
+    type: TOGGLE_INFO
+  }
+}
+
+export function toggleControls() {
+  return {
+    type: TOGGLE_CONTROLS
+  }
+}
+
 
 export function zoom(zoomIn) {
   return {

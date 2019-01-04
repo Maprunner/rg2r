@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import SingleCourseOverprint from './SingleCourseOverprint.js'
 
 function AllCoursesOverprint(props) {
-  const {courses, display, opt} = props
+  const { courses, display, opt } = props
   if (courses.length === 0) {
     return null
   }
@@ -19,4 +19,4 @@ function AllCoursesOverprint(props) {
   )
 }
 
-export default AllCoursesOverprint
+export default memo(AllCoursesOverprint)

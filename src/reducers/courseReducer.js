@@ -7,7 +7,8 @@ const initialState = {
   display: [],
   controls: [],
   // temporary (?) accordion functions
-  showResults: []
+  showResults: [],
+  showControls: false
 }
 
 const courses = (state = initialState, action) => {
@@ -26,6 +27,10 @@ const courses = (state = initialState, action) => {
         controls: { $set: extractControls(action.data.courses) },
         display: { $set: initialiseDisplay(action.data.courses) },
         showResults: { $set: initialiseShowResults(action.data.courses) }
+      })
+    case 'TOGGLE_CONTROLS':
+      return update(state, {
+        showControls: { $set: !state.showControls }
       })
     case 'EVENT_REQUESTED':
       return initialState

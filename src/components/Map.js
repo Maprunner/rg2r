@@ -4,6 +4,7 @@ import Portal from './Portal.js'
 import MapButtons from './MapButtons.js'
 import ReplayPanel from './ReplayPanel.js'
 import AllCoursesOverprint from './AllCoursesOverprint.js'
+import AllControlsOverprint from './AllControlsOverprint.js'
 import AllRoutes from './AllRoutes.js'
 import AllRunners from './AllRunners.js'
 
@@ -53,7 +54,17 @@ class Map extends React.Component {
             </Portal>}
           </Layer>
           <Layer listening={false}>
-            <AllCoursesOverprint courses={this.props.courses} display={this.props.courseDisplay} controls={this.props.controls} opt={this.props.opt} />
+            <AllCoursesOverprint
+              courses={this.props.courses}
+              display={this.props.courseDisplay}
+              controls={this.props.controls}
+              opt={this.props.opt}
+              showControls={this.props.showControls} />
+            {this.props.showControls ?
+              <AllControlsOverprint
+                controls={this.props.controls}
+                opt={this.props.opt}
+              /> : null}
           </Layer>
           <Layer listening={false}>
             <AllRoutes routes={this.props.routes} opt={this.props.opt} />

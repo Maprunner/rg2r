@@ -26,12 +26,28 @@
   position: relative;
 }
 
+#rg2-info-hider {
+  position: absolute;
+  width: 14px;
+  z-index: 100;
+  height: 100%;
+  color: black;
+  background: #f0f0f0;
+  border-right: solid 1px #444;
+ }
+
+ #rg2-info-hider:hover {
+    background: #002bd9;
+    color: white;
+  }
+
 #rg2-info-panel {
   position: absolute;
+  left: 15px;
   width: 360px;
   z-index: 100;
   height: 99%;
-  background: white;
+  background: #f0f0f0;
  }
 
  #rg2-info {
@@ -51,6 +67,7 @@
   position: absolute;
   right: 10px;
   top: 46px;
+  background-color: rgba(200, 200, 200, 0.8);
 }
 
 #replay {

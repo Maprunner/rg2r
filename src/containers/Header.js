@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import TopPanel from '../components/TopPanel'
-import { toggleInfo, toggleControls, saveConfig } from '../actions/actions.js'
+import { toggleInfo, toggleControls, toggleConfig, saveConfig } from '../actions/actions.js'
 
 const mapStateToProps = state => ({
   title: state.events.title,
@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onToggleInfo: () => dispatch(toggleInfo()),
+  onToggleConfig: () => dispatch(toggleConfig()),
   onToggleControls: () => dispatch(toggleControls()),
   onSaveConfig: (config) => dispatch(saveConfig(config))
 })

@@ -1,77 +1,53 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Modal from 'react-bootstrap/lib/Modal'
-import Button from 'react-bootstrap/lib/Button'
 import Form from 'react-bootstrap/lib/Form'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
+import RG2 from '../rg2Constants'
 
-class Config extends React.PureComponent {
-  constructor(props) {
-    super(props);
+function Config(props) {
+  const width = { width: RG2.INFO_BAR_WIDTH + 'px' }
+  let info
+  if (props.configOpen) {
+    info =
+      <div id="rg2-config-panel" style={width}>
+<Form className="p-2">
+<Form.Group as={Row} controlId="formSnap">
+    <Col sm={{ span: 10, offset: 2 }}>
+      <Form.Check label="Snap to control when drawing" />
+    </Col>
+  </Form.Group>
 
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+<Form.Group as={Row} controlId="formGPSColor">
+    <Col sm={{ span: 10, offset: 2 }}>
+      <Form.Check label="Show GPS speed colours" />
+    </Col>
+  </Form.Group>
 
-    this.state = {
-      show: false,
-    };
+  <Form.Group as={Row} controlId="formGPSPlusThree">
+    <Col sm={{ span: 10, offset: 2 }}>
+      <Form.Check label="Show +3 time loss for GPS routes" />
+    </Col>
+  </Form.Group>
+</Form>
+      </div >
+  } else {
+    info = null
   }
 
-  handleClose() {
-    this.props.onSaveConfig('Hello')
-    this.setState({ show: false });
+  // place arrow half way down side bar
+  const style = {
+    paddingTop: parseInt(props.height / 2, 10) + 'px'
   }
 
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  render() {
-    return (
-      <>
-        <span className="px-1 align-middle"><FontAwesomeIcon icon={'cog'} color='white' size="lg" onClick={() => this.handleShow()} /></span>
-
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Configuration options</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group as={Row} controlId="configSnap">
-                <Form.Label column sm={8}>
-                  Snap to control when drawing
-                </Form.Label>
-                <Col sm={4}>
-                  <Form.Check />
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} controlId="configPlus3">
-                <Form.Label column sm={8}>
-                  Show +3 time loss for GPS routes
-                </Form.Label>
-                <Col sm={4}>
-                  <Form.Check />
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} controlId="configGPS">
-                <Form.Label column sm={8}>
-                  Show GPS speed colours
-                </Form.Label>
-                <Col sm={4}>
-                  <Form.Check />
-                </Col>
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
-  }
+  return (
+    <>
+      <div id="rg2-config-hider" onClick={props.onToggleConfig} style={style}>
+        <FontAwesomeIcon fixedWidth icon={props.configOpen ? 'caret-right' : 'caret-left'} size={"sm"} />
+      </div>
+      {info}
+    </>
+  )
 }
 export default Config
+

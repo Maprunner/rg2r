@@ -26,6 +26,7 @@ export const START_STOP = 'START_STOP'
 export const TAB_CHANGED = 'TAB_CHANGED'
 export const TIMER_EXPIRED = 'TIMER_EXPIRED'
 export const TOGGLE_INFO = 'TOGGLE_INFO'
+export const TOGGLE_CONFIG = 'TOGGLE_CONFIG'
 export const TOGGLE_CONTROLS = 'TOGGLE_CONTROLS'
 export const ZOOM = 'ZOOM'
 
@@ -266,9 +267,9 @@ export function timerExpired() {
   }
 }
 
-export function toggleInfo() {
+export function toggleConfig() {
   return {
-    type: TOGGLE_INFO
+    type: TOGGLE_CONFIG
   }
 }
 
@@ -278,6 +279,11 @@ export function toggleControls() {
   }
 }
 
+export function toggleInfo() {
+  return {
+    type: TOGGLE_INFO
+  }
+}
 
 export function zoom(zoomIn) {
   return {

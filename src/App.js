@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Header from './containers/Header.js'
 import InfoPanel from './containers/InfoPanel.js'
+import ConfigPanel from './containers/ConfigPanel.js'
 import Canvas from './containers/Canvas.js'
 import './App.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -51,6 +52,7 @@ class App extends Component {
         </div>
         <div id="rg2-container">
           <InfoPanel />
+          <ConfigPanel />
           <Canvas />
         </div>
       </div>

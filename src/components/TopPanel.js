@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Config from './Config.js'
 import Help from './Help.js'
 import logo from '../rg2-logo.png'
 
@@ -13,8 +12,18 @@ class TopPanel extends Component {
           <span className="rg2-title align-middle px-2">{this.props.title}</span>
         </div>
         <div>
-          <span className="px-1 align-middle"><FontAwesomeIcon icon={['far', 'circle']} color='white' size="lg" onClick={() => this.props.onToggleControls()} /></span>
-          <Config onSaveConfig={this.props.onSaveConfig} />
+          <span className="px-1 align-middle"><FontAwesomeIcon
+            icon={['far', 'circle']} 
+            color='white' 
+            size="lg" 
+            onClick={() => this.props.onToggleControls()} />
+          </span>
+          <span className="px-1 align-middle"><FontAwesomeIcon
+            icon={'cog'} 
+            color='white'
+            size="lg" 
+            onClick={() => this.props.onToggleConfig()} />
+          </span>
           <Help />
         </div>
       </div >

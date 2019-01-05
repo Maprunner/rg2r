@@ -4,21 +4,26 @@ const RG2 = {
   NORMAL_EVENT: 1,
   EVENT_WITHOUT_RESULTS: 2,
   SCORE_EVENT: 3,
-  TAB_EVENTS: 0,
-  TAB_COURSES: 1,
-  TAB_RESULTS: 2,
-  TAB_DRAW: 3,
-  TAB_LOGIN: 4,
-  TAB_CREATE: 5,
-  TAB_EDIT: 6,
-  TAB_MAP: 7,
+  TAB_EVENTS: "events",
+  TAB_COURSES: "courses",
+  TAB_RESULTS: "results",
+  TAB_DRAW: "draw",
+  TAB_LOGIN: "login",
+  TAB_CREATE: "create",
+  TAB_EDIT: "edit",
+  TAB_MAP: "map",
   GPS_RESULT_OFFSET: 50000,
-  DISPLAY_ALL_COURSES: 99999,
-  DISPLAY_ALL_ROUTES_FOR_COURSE: 99998,
-  REPLAY_ALL_ROUTES_FOR_COURSE: 99997,
+  ALL_COURSES: 99999,
+  ALL_ROUTES: 99998,
   TIME_NOT_FOUND: 9999,
   ONE_DAY_IN_SECONDS: 86400,
-  COLOURS: ["#ff0000", "#00ff00", "#0000ff", "#800000", "#008000", "#000080", "#ffff00", "#ff00ff", "#00ffff", "#808000", "#800080", "#008080"]
+  COLOURS: ["#ff0000", "#00ff00", "#0000ff", "#800000", "#008000", "#000080", "#ffff00", "#ff00ff", "#00ffff", "#808000", "#800080", "#008080"],
+  TOOLBAR_HEIGHT: 34,
+  INFO_BAR_WIDTH: 400,
+  ROTATION_STEP_IN_DEGREES: 15,
+  //number of drawn routes that can be saved for possible later deletion
+  MAX_DRAWN_ROUTES: 10
+
   /*
   INVALID_MAP_ID: 9999,
   // translated when output so leave as English here
@@ -52,13 +57,8 @@ const RG2 = {
   // values for evt.which
   RIGHT_CLICK : 3,
   DO_NOT_SAVE_COURSE: 9999,
-  FORMAT_NORMAL: 1,
-  FORMAT_NO_RESULTS: 2,
-  FORMAT_SCORE_EVENT: 3,
 
-  //number of drawn routes that can be saved for possible later deletion
-  MAX_DRAWN_ROUTES: 10
   */
-};
+}
 
-export default RG2;
+export default RG2

@@ -1,11 +1,12 @@
-import React , { memo } from 'react'
+import React, { memo } from 'react'
 import { Text } from 'react-konva'
 
-const ControlNumber = ({ x, y, fontSize, color, text }) => (
+const fontScale = 1.5
+const ControlNumber = ({ x, y, radius, color, text }) => (
   <>
     <Text
       text={text}
-      fontSize={fontSize}
+      fontSize={radius * fontScale}
       fontStyle={"bold"}
       x={x}
       y={y}

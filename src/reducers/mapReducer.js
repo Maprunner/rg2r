@@ -10,49 +10,48 @@ const initialState = {
   x: RG2.INFO_BAR_WIDTH,
   y: 0,
   // ratios based on IOF ISOM overprint specification
+  // don't chnage thse names since they are iused in LocalStorage
   opt: {
-    width: 3,
-    radius: getRadius(window.innerHeight - RG2.TOOLBAR_HEIGHT, window.innerWidth),
-    finishInnerRadius: getRadius(window.innerHeight - RG2.TOOLBAR_HEIGHT, window.innerWidth) * (5 / 6),
-    finishOuterRadius: getRadius(window.innerHeight - RG2.TOOLBAR_HEIGHT, window.innerWidth) * (7 / 6),
-    startTriangleLength: getRadius(window.innerHeight - RG2.TOOLBAR_HEIGHT, window.innerWidth) * (7 / 6),
+    alignMap: false,
+    mapIntensity: 1,
+    routeIntensity: 1,
+    circleSize: 20,
+    // TODO? circleSize: getRadius(window.innerHeight - RG2.TOOLBAR_HEIGHT, window.innerWidth),
+    courseWidth: 3,
+    routeWidth: 3,
     color: RG2.PURPLE,
-    fontSize: getRadius(window.innerHeight - RG2.TOOLBAR_HEIGHT, window.innerWidth) * 1.5
+    replayFontSize: 12,
+    snap: true,
+    showGPSSpeed: false,
+    showThreeSeconds: false
   }
 }
 
-function getRadius(height, width) {
-  // attempt to scale overprint depending on map image size
-  // this avoids very small/large circles, or at least makes things a bit more sensible
-  // Empirically derived  so open to suggestions. This is based on a nominal 20px circle
-  // as default. The square root stops things getting too big too quickly.
-  // 1500px is a typical map image maximum size.
-  let scaleFact = Math.pow(Math.min(height, width) / 1500, 0.5)
-  // don't get too carried away, although these would be strange map files
-  scaleFact = Math.min(scaleFact, 5)
-  scaleFact = Math.max(scaleFact, 0.5)
-  //circleSize = Math.round(rg2.options.circleSize * scaleFact)
-  return Math.round(20 * scaleFact)
-}
+// function getRadius(height, width) {
+//   // attempt to scale overprint depending on map image size
+//   // this avoids very small/large circles, or at least makes things a bit more sensible
+//   // Empirically derived  so open to suggestions. This is based on a nominal 20px circle
+//   // as default. The square root stops things getting too big too quickly.
+//   // 1500px is a typical map image maximum size.
+//   let scaleFact = Math.pow(Math.min(height, width) / 1500, 0.5)
+//   // don't get too carried away, although these would be strange map files
+//   scaleFact = Math.min(scaleFact, 5)
+//   scaleFact = Math.max(scaleFact, 0.5)
+//   //circleSize = Math.round(rg2.options.circleSize * scaleFact)
+//   return Math.round(20 * scaleFact)
+// }
 
 const map = (state = initialState, action) => {
   switch (action.type) {
+    case 'EVENT_REQUESTED':
+      return initialState
+    case 'INITIALISE_OPTIONS':
+      return update(state, {
+        opt: { $merge: action.options }
+      })
     case 'MAP_LOADED':
       return update(state, {
         mapImage: { $set: action.image }
-      })
-    case 'EVENT_REQUESTED':
-      return initialState
-    case 'SCREEN_RESIZED':
-      return update(state, {
-        zoom: { $set: { x: 1, y: 1 } },
-        width: { $set: action.width },
-        height: { $set: action.height }
-      })
-    case 'ROTATE_MAP':
-      let angle = rotateMap(state.angle, action.clockwise)
-      return update(state, {
-        angle: { $set: angle }
       })
     case 'RESET_MAP':
       return update(state, {
@@ -61,10 +60,16 @@ const map = (state = initialState, action) => {
         x: { $set: RG2.INFO_BAR_WIDTH },
         y: { $set: 0 }
       })
-    case 'ZOOM':
-      let zoom = doZoom(state.zoom, action.zoomIn)
+    case 'ROTATE_MAP':
+      let angle = rotateMap(state.angle, action.clockwise)
       return update(state, {
-        zoom: { $set: zoom }
+        angle: { $set: angle }
+      })
+    case 'SCREEN_RESIZED':
+      return update(state, {
+        zoom: { $set: { x: 1, y: 1 } },
+        width: { $set: action.width },
+        height: { $set: action.height }
       })
     case 'SCROLL':
       let updated = handleScroll(action.delta, action.mousePos, action.zoom, action.xy)
@@ -77,6 +82,23 @@ const map = (state = initialState, action) => {
       } else {
         return state
       }
+    case 'TOGGLE_GPSCOLOR':
+      return update(state, {
+        opt: { $toggle: ['showGPSSpeed'] }
+      })
+    case 'TOGGLE_GPSTHREESECS':
+      return update(state, {
+        opt: { $toggle: ['showThreeSeconds'] }
+      })
+    case 'TOGGLE_SNAP':
+      return update(state, {
+        opt: { $toggle: ['snap'] }
+      })
+    case 'ZOOM':
+      let zoom = doZoom(state.zoom, action.zoomIn)
+      return update(state, {
+        zoom: { $set: zoom }
+      })
     default:
       return state
   }

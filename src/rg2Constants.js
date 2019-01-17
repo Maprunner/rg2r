@@ -22,7 +22,10 @@ const RG2 = {
   INFO_BAR_WIDTH: 400,
   ROTATION_STEP_IN_DEGREES: 15,
   //number of drawn routes that can be saved for possible later deletion
-  MAX_DRAWN_ROUTES: 10
+  MAX_DRAWN_ROUTES: 10,
+  FINISHOUTERSCALE: 7 / 6,
+  FINISHINNERSCALE: 5 / 6,
+  STARTSCALE: 7 / 6
 
   /*
   INVALID_MAP_ID: 9999,

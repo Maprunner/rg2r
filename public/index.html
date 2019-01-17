@@ -38,6 +38,19 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+  <!-- default config values below are replaced by index.php on server -->
+  <script type='text/javascript'>
+    rg2Config = {
+      json_url: '%RG_JSON_URL%',
+      maps_url: '%RG_MAPS_URL%',
+      lang_url: '//localhost/rg2/lang/',
+      header_colour: '#002bd9',
+      header_text_colour: '#ffffff',
+      enable_splitsbrowser: true,
+      languages: {},
+      start_language: 'en'
+    }
+  </script>
 </body>
 
 </html>

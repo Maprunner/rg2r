@@ -1,10 +1,17 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import EventList from '../components/EventList'
 import SearchBox from './SearchBox'
 import Card from 'react-bootstrap/lib/Card'
 
 function EventDisplay(props) {
-  const { filter, onFilterChange, onSelectEvent, events, } = props
+  const { filter, onFilterChange, onSelectEvent, pendingEvent, events } = props
+
+  useEffect(() => {
+    if (pendingEvent) {
+      onSelectEvent(events[pendingEvent])
+    }
+  })
+
   return (
     <Card body>
       <SearchBox

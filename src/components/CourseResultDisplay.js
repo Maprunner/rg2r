@@ -23,13 +23,13 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
   const caret = isOpen ? 'caret-down' : 'caret-right'
   return (
     <Card style={{ minWidth: RG2.INFO_BAR_WIDTH + 'px' }}>
-      <Card.Header className="clearflex" id={courseIndex} onClick={onShowResults}>
+      <Card.Header className="clearflex" id={courseIndex.toString()} onClick={onShowResults}>
         <div className="float-left">
           <FontAwesomeIcon icon={caret} /> {courseName}
         </div>
         <div className="float-right">
           <Form.Check
-            id={courseIndex}
+            id={courseIndex.toString()}
             value={courseIndex}
             onChange={onSelectCourse}
             checked={courseDisplay[courseIndex]} />

@@ -25,7 +25,7 @@ const courses = (state = initialState, action) => {
       return update(state, {
         data: { $set: processCourses(action.data.courses, action.data.format) },
         controls: { $set: extractControls(action.data.courses) },
-        display: { $set: initialiseDisplay(action.data.courses) },
+        display: { $set: initialiseDisplay(action.data.courses, action.pendingCourses) },
         showResults: { $set: initialiseShowResults(action.data.courses) }
       })
     case 'TOGGLE_CONTROLS':
@@ -39,12 +39,26 @@ const courses = (state = initialState, action) => {
   }
 }
 
-function initialiseDisplay(courses) {
+function initialiseDisplay(courses, pendingCourses) {
   let display = []
   for (let i = 0; i < courses.length; i += 1) {
     display[i] = false
   }
+  for (let i = 0; i < pendingCourses.length; i += 1) {
+    let index = getCourseIndexFromId(courses, pendingCourses[i])
+    if (index !== null) {
+      display[index] = true
+    }
+  }
   return display
+}
+
+function getCourseIndexFromId(courses, courseid) {
+  let index = courses.findIndex(course => course.courseid === courseid)
+  if (index === -1) {
+    index = null
+  }
+  return index
 }
 
 function initialiseShowResults(courses) {

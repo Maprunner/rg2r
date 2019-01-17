@@ -15,6 +15,35 @@ const getShowResultsByCourseIndex = (state, props) => state.courses.showResults[
 export const getResultsDisplay = (state) => state.results.display
 export const getResultsReplay = (state) => state.results.replay
 
+export const getHash = (state) => {
+  let hash = state.ui.hash
+  if (state.courses.display.length !== 0) {
+    let ids = []
+    for (let i = 0; i < state.courses.display.length; i += 1) {
+      if (state.courses.display[i]) {
+        ids.push(state.courses.data[i].courseid)
+      }
+    }
+    if (ids.length > 0) {
+      hash = hash + "&course=" + ids.join(",")
+    }
+  }
+
+  if (state.results.display.length !== 0) {
+    let ids = []
+    for (let i = 0; i < state.results.display.length; i += 1) {
+      if (state.results.display[i]) {
+        ids.push(state.results.data[i].resultid)
+      }
+    }
+    if (ids.length > 0) {
+      hash = hash + "&route=" + ids.join(",")
+    }
+  }
+
+  return hash
+}
+
 // create array of "is course displayed" by course, plus "all courses displayed" at end of array
 export const getCoursesDisplay = (state) => {
   let display = state.courses.display.slice()

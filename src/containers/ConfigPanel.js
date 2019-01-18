@@ -1,6 +1,9 @@
 import { connect } from 'react-redux'
 import ConfigDialog from '../components/ConfigDialog'
-import { toggleConfig, toggleSnap, toggleGPSColor, toggleGPSThreeSecs } from '../actions/actions.js'
+import {
+  setCircleSize, setCourseWidth, setMapIntensity, setRouteIntensity, toggleConfig, toggleSnap,
+  toggleGPSColor, toggleGPSThreeSecs
+} from '../actions/configActions.js'
 
 const mapStateToProps = state => ({
   configOpen: state.ui.configOpen,
@@ -9,6 +12,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  onSetCircleSize: (event) => dispatch(setCircleSize(parseInt(event.target.value, 10))),
+  onSetCourseWidth: (event) => dispatch(setCourseWidth(parseInt(event.target.value, 10))),
+  onSetMapIntensity: (event) => dispatch(setMapIntensity(parseInt(event.target.value, 10))),
+  onSetRouteIntensity: (event) => dispatch(setRouteIntensity(parseInt(event.target.value, 10))),
   onToggleConfig: () => dispatch(toggleConfig()),
   onToggleSnap: () => dispatch(toggleSnap()),
   onToggleGPSColor: () => dispatch(toggleGPSColor()),

@@ -5,6 +5,7 @@ import Start from './Start.js'
 import ControlNumber from './ControlNumber.js'
 import { Line } from 'react-konva'
 import Utils from '../utils/rg2utils.js'
+import RG2 from '../rg2Constants.js';
 
 class CourseOverprint extends Component {
   //  TODO: move all this to a selector
@@ -15,7 +16,7 @@ class CourseOverprint extends Component {
     for (let i = 0; i < (x.length - 1); i += 1) {
       if (i === 0) {
         // push line back over white border of start triangle
-        dist = opt.startTriangleLength - opt.courseWidth
+        dist = (opt.circleSize * RG2.STARTSCALE) - opt.courseWidth
       } else {
         dist = opt.circleSize
       }

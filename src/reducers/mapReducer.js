@@ -10,11 +10,11 @@ const initialState = {
   x: RG2.INFO_BAR_WIDTH,
   y: 0,
   // ratios based on IOF ISOM overprint specification
-  // don't chnage thse names since they are iused in LocalStorage
+  // don't change these names since they are used in LocalStorage
   opt: {
     alignMap: false,
-    mapIntensity: 1,
-    routeIntensity: 1,
+    mapIntensity: 100,
+    routeIntensity: 100,
     circleSize: 20,
     // TODO? circleSize: getRadius(window.innerHeight - RG2.TOOLBAR_HEIGHT, window.innerWidth),
     courseWidth: 3,
@@ -43,8 +43,6 @@ const initialState = {
 
 const map = (state = initialState, action) => {
   switch (action.type) {
-    case 'EVENT_REQUESTED':
-      return initialState
     case 'INITIALISE_OPTIONS':
       return update(state, {
         opt: { $merge: action.options }
@@ -82,6 +80,22 @@ const map = (state = initialState, action) => {
       } else {
         return state
       }
+    case 'SET_CIRCLE_SIZE':
+      return update(state, {
+        opt: { circleSize: { $set: action.size } }
+      })
+    case 'SET_COURSE_WIDTH':
+      return update(state, {
+        opt: { courseWidth: { $set: action.width } }
+      })
+    case 'SET_MAP_INTENSITY':
+      return update(state, {
+        opt: { mapIntensity: { $set: action.intensity } }
+      })
+    case 'SET_ROUTE_INTENSITY':
+      return update(state, {
+        opt: { routeIntensity: { $set: action.intensity } }
+      })
     case 'TOGGLE_GPSCOLOR':
       return update(state, {
         opt: { $toggle: ['showGPSSpeed'] }

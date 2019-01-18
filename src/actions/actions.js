@@ -15,7 +15,6 @@ export const REPLAY_ROUTES_FOR_COURSE = 'REPLAY_ROUTES_FOR_COURSE'
 export const RESET_MAP = 'RESET_MAP'
 export const ROTATE_MAP = 'ROTATE_MAP'
 export const SET_REPLAY_MODE = 'SET_REPLAY_MODE'
-export const SAVE_CONFIG = 'SAVE_CONFIG'
 export const SAVE_COURSES = 'SAVE_COURSES'
 export const SAVE_EVENT = 'SAVE_EVENT'
 export const SAVE_EVENTS = 'SAVE_EVENTS'
@@ -27,12 +26,8 @@ export const SHOW_RESULTS = 'SHOW_RESULTS'
 export const START_STOP = 'START_STOP'
 export const TAB_CHANGED = 'TAB_CHANGED'
 export const TIMER_EXPIRED = 'TIMER_EXPIRED'
-export const TOGGLE_CONFIG = 'TOGGLE_CONFIG'
 export const TOGGLE_CONTROLS = 'TOGGLE_CONTROLS'
 export const TOGGLE_INFO = 'TOGGLE_INFO'
-export const TOGGLE_GPSCOLOR = 'TOGGLE_GPSCOLOR'
-export const TOGGLE_GPSTHREESECS = 'TOGGLE_GPSTHREESECS'
-export const TOGGLE_SNAP = 'TOGGLE_SNAP'
 export const ZOOM = 'ZOOM'
 
 export function displayCourse(event) {
@@ -190,13 +185,6 @@ export function rotateMap(clockwise) {
   }
 }
 
-export function saveConfig(config) {
-  return {
-    type: SAVE_CONFIG,
-    config
-  }
-}
-
 export function saveCourses(courses) {
   return {
     type: SAVE_COURSES,
@@ -293,27 +281,9 @@ export function timerExpired() {
   }
 }
 
-export function toggleConfig() {
-  return {
-    type: TOGGLE_CONFIG
-  }
-}
-
 export function toggleControls() {
   return {
     type: TOGGLE_CONTROLS
-  }
-}
-
-export function toggleGPSColor() {
-  return {
-    type: TOGGLE_GPSCOLOR
-  }
-}
-
-export function toggleGPSThreeSecs() {
-  return {
-    type: TOGGLE_GPSTHREESECS
   }
 }
 
@@ -323,11 +293,6 @@ export function toggleInfo() {
   }
 }
 
-export function toggleSnap() {
-  return {
-    type: TOGGLE_SNAP
-  }
-}
 
 export function zoom(zoomIn) {
   return {

@@ -14,11 +14,14 @@ if (process.env.NODE_ENV !== 'production') {
   whyDidYouUpdate(React)
 }
 const store = configureStore()
+const Language = React.createContext([]);
 
 const rootElement = document.getElementById("root")
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Language.Provider t={store.getState().ui.t}>
+      <App />
+    </Language.Provider>
   </Provider>,
   rootElement
 )

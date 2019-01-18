@@ -2,6 +2,7 @@ import React, { useEffect, memo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Help from './Help.js'
 import logo from '../rg2-logo.png'
+import LanguageContext from '../LanguageContext.js'
 
 function TopPanel(props) {
   const { hash, title, onToggleInfo, onToggleControls, onToggleConfig } = props
@@ -30,27 +31,29 @@ function TopPanel(props) {
   }
 
   return (
-    <div className="d-flex">
-      <div className="flex-grow-1">
-        <img onClick={onToggleInfo} className="pr-2" src={logo} alt="logo" />
-        <span className="rg2-title align-middle px-2">{title}</span>
-      </div>
-      <div>
-        <span className="px-1 align-middle"><FontAwesomeIcon
-          icon={['far', 'circle']}
-          color='white'
-          size="lg"
-          onClick={() => onToggleControls()} />
-        </span>
-        <span className="px-1 align-middle"><FontAwesomeIcon
-          icon={'cog'}
-          color='white'
-          size="lg"
-          onClick={() => onToggleConfig()} />
-        </span>
-        <Help />
-      </div>
-    </div >
+    <LanguageContext.Consumer>
+      <div className="d-flex">
+        <div className="flex-grow-1">
+          <img onClick={onToggleInfo} className="pr-2" src={logo} alt="logo" />
+          <span className="rg2-title align-middle px-2">{title}</span>
+        </div>
+        <div>
+          <span className="px-1 align-middle"><FontAwesomeIcon
+            icon={['far', 'circle']}
+            color='white'
+            size="lg"
+            onClick={() => onToggleControls()} />
+          </span>
+          <span className="px-1 align-middle"><FontAwesomeIcon
+            icon={'cog'}
+            color='white'
+            size="lg"
+            onClick={() => onToggleConfig()} />
+          </span>
+          <Help />
+        </div>
+      </div >
+    </LanguageContext.Consumer>
   )
 }
 

@@ -6,7 +6,8 @@ const initialState = {
   configOpen: false,
   activeTabIndex: RG2.TAB_EVENTS,
   drawEnabled: false,
-  hash: ""
+  hash: "",
+  t: []
 }
 
 const ui = (state = initialState, action) => {

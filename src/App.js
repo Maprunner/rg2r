@@ -7,6 +7,7 @@ import Canvas from './containers/Canvas.js'
 import './App.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { initialiseOptions, loadEvents, navigation, screenResized, timerExpired } from './actions/actions.js'
+import { loadLanguage } from './actions/configActions.js'
 import {
   faCheck, faQuestion, faPause, faPlay, faUsers, faClock, faEye,
   faSearch, faGlobeAmericas, faInfoCircle, faCaretRight, faCaretDown, faPlusSquare, faMinusSquare,
@@ -57,6 +58,9 @@ class App extends Component {
       // TODO: read from rg2-config.php? or a new config.js?
       window.rg2Config.json_url = '//localhost/rg2/rg2api.php'
       window.rg2Config.maps_url = '../rg2-test-data/hh/kartat/'
+    }
+    if (window.rg2Config.start_language !== "en") {
+      this.props.dispatch(loadLanguage(window.rg2Config.start_language))
     }
     // read local storage to get saved config
     try {

@@ -7,18 +7,26 @@ const initialState = {
   activeTabIndex: RG2.TAB_EVENTS,
   drawEnabled: false,
   hash: "",
-  t: []
+  dictionary: {},
+  language: "English",
+  code: "en"
 }
 
 const ui = (state = initialState, action) => {
   switch (action.type) {
-    case 'EVENT_REQUESTED':
-      return initialState
+    // case 'EVENT_REQUESTED':
+    //   return initialState
     case 'SAVE_EVENT':
       const hash = '#' + action.id
       return update(state, {
         activeTabIndex: { $set: RG2.TAB_COURSES },
         hash: { $set: hash }
+      })
+    case 'SAVE_LANGUAGE':
+      return update(state, {
+        dictionary: { $set: action.dictionary },
+        code: { $set: action.code },
+        language: { $set: action.language }
       })
     case 'TAB_CHANGED':
       return update(state, {

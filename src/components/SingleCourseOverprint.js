@@ -4,7 +4,7 @@ import Finish from './Finish.js'
 import Start from './Start.js'
 import ControlNumber from './ControlNumber.js'
 import { Line } from 'react-konva'
-import Utils from '../utils/rg2utils.js'
+import { getDegreesFromRadians } from '../utils/rg2utils.js'
 import RG2 from '../rg2Constants.js';
 
 class CourseOverprint extends Component {
@@ -67,7 +67,7 @@ class CourseOverprint extends Component {
       radius={opt.circleSize}
       width={opt.courseWidth}
       color={opt.color}
-      rotation={Utils.getDegreesFromRadians(course.angle[0] + Math.PI / 3)} />)
+      rotation={getDegreesFromRadians(course.angle[0] + Math.PI / 3)} />)
     for (let i = 1; i < course.codes.length; i += 1) {
       if (i === course.codes.length - 1) {
         controlOverprint.push(<Finish

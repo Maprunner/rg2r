@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import Utils from '../utils/rg2utils.js'
+import { getDistanceBetweenPoints } from '../utils/rg2utils.js'
 import RG2 from '../rg2Constants'
 import he from 'he'
 
@@ -350,7 +350,7 @@ function expandTrack(runner, x, y, time) {
     toy = y[item]
     diffx = tox - fromx
     diffy = toy - fromy
-    dist = dist + (Utils.getDistanceBetweenPoints(tox, toy, fromx, fromy) * metresPerPixel)
+    dist = dist + (getDistanceBetweenPoints(tox, toy, fromx, fromy) * metresPerPixel)
     diffdist = dist - fromdist
     timeatitem = time[item]
     // allow for 0 splits indicating a missed control
@@ -773,7 +773,7 @@ function calculateTrackTimes(result, course) {
     // calculate distance while we are looping through
     x = result.x[i]
     y = result.y[i]
-    dist += Utils.getDistanceBetweenPoints(x, y, oldx, oldy)
+    dist += getDistanceBetweenPoints(x, y, oldx, oldy)
     cumulativeDistance[i] = Math.round(dist)
     oldx = x
     oldy = y
@@ -826,7 +826,7 @@ function calculateTotalTrackLength(x, y) {
   let oldx = x[0]
   let oldy = y[0]
   for (let i = 1; i < x.length; i += 1) {
-    cumulativeDistance[i] = cumulativeDistance[i - 1] + Math.round(Utils.getDistanceBetweenPoints(x[i], y[i], oldx, oldy))
+    cumulativeDistance[i] = cumulativeDistance[i - 1] + Math.round(getDistanceBetweenPoints(x[i], y[i], oldx, oldy))
     oldx = x[i]
     oldy = y[i]
   }

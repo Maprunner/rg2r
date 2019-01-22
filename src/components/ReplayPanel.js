@@ -4,7 +4,7 @@ import ReplayButton from './ReplayButton.js'
 import ReplaySpeed from './ReplaySpeed.js'
 import ReplaySlider from './ReplaySlider.js'
 import ReplayModeButton from './ReplayModeButton.js'
-import Utils from '../utils/rg2utils.js'
+import { formatSecsAsHHMMSS } from '../utils/rg2utils.js'
 
 function ReplayPanel(props) {
   const { animation, runnerCount, onStartStop, onSetReplayMode, onSetTime, onSetSpeed } = props
@@ -27,7 +27,7 @@ function ReplayPanel(props) {
         <ReplayModeButton realTime={animation.realTime} onSetReplayMode={onSetReplayMode} />
         <ReplaySpeed timerIncrement={animation.timerIncrement} onSetSpeed={onSetSpeed} />
         <div className='p-1'>
-          {Utils.formatSecsAsHHMMSS(animation.time)}
+          {formatSecsAsHHMMSS(animation.time)}
         </div>
         <ReplaySlider
           time={animation.time}

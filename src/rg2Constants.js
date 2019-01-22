@@ -25,7 +25,17 @@ const RG2 = {
   MAX_DRAWN_ROUTES: 10,
   FINISHOUTERSCALE: 7 / 6,
   FINISHINNERSCALE: 5 / 6,
-  STARTSCALE: 7 / 6
+  STARTSCALE: 7 / 6,
+  LANGUAGES: [
+    { language: "Deutsch", code: "de" },
+    { language: "English", code: "en" },
+    { language: "Suomi", code: "fi" },
+    { language: "Français", code: "fr" },
+    { language: "Italiano", code: "it" },
+    { language: "日本語", code: "ja" },
+    { language: "Norsk", code: "no" },
+    { language: "Português - Brasil", code: "pt" },
+    { language: "Русский", code: "ru" }]
 
   /*
   INVALID_MAP_ID: 9999,

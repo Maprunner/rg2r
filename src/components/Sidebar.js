@@ -6,8 +6,10 @@ import CourseList from '../containers/CourseList'
 import ResultDisplay from './ResultDisplay'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RG2 from '../rg2Constants'
+import { t } from '../utils/rg2utils.js'
 
 function Sidebar(props) {
+  const { activeTabIndex, onTabChange, dict } = props
   const width = { width: RG2.INFO_BAR_WIDTH + 'px' }
   let info
   if (props.infoOpen) {
@@ -15,21 +17,21 @@ function Sidebar(props) {
       <div id="rg2-info-panel" style={width}>
         < Tab.Container
           id="info"
-          activeKey={props.activeTabIndex}
-          onSelect={key => props.onTabChange({ key })}
+          activeKey={activeTabIndex}
+          onSelect={key => onTabChange({ key })}
         >
           <Nav>
             <Nav.Item>
-              <Nav.Link eventKey="events">Events</Nav.Link>
+              <Nav.Link eventKey="events">{t(dict, "Events")}</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="courses" disabled={!props.courses.length > 0}>Courses</Nav.Link>
+              <Nav.Link eventKey="courses" disabled={!props.courses.length > 0}>{t(dict, "Courses")}</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="results" disabled={!props.hasResults}>Results</Nav.Link>
+              <Nav.Link eventKey="results" disabled={!props.hasResults}>{t(dict, "Results")}</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="draw" disabled>Draw</Nav.Link>
+              <Nav.Link eventKey="draw" disabled>{t(dict, "Draw")}</Nav.Link>
             </Nav.Item>
           </Nav>
           <div id="rg2-info">

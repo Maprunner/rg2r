@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import SingleRunner from './SingleRunner.js'
-import Utils from '../utils/rg2utils.js'
+import { mergeXYArray } from '../utils/rg2utils.js'
 
 class AllRunners extends Component {
   getPoints(runner, animation) {
@@ -18,7 +18,7 @@ class AllRunners extends Component {
       //}
     }
     // TODO: complicated stop at control logic missing
-    xy = Utils.mergeXYArray(
+    xy = mergeXYArray(
       runner.x.slice(animation.tailStartTimeSecs - timeOffset, animation.time - timeOffset),
       runner.y.slice(animation.tailStartTimeSecs - timeOffset, animation.time - timeOffset)
     )

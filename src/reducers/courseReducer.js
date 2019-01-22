@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import Utils from '../utils/rg2utils.js'
+import { isScoreEvent, getAngleBetweenPoints } from '../utils/rg2utils.js'
 import RG2 from '../rg2Constants'
 
 const initialState = {
@@ -89,9 +89,8 @@ function showResults(prevShowResults, index) {
 }
 
 function processCourses(courses, format) {
-  const isScoreEvent = Utils.isScoreEvent(format)
   for (let i = 0; i < courses.length; i += 1) {
-    courses[i].isScoreCourse = isScoreEvent
+    courses[i].isScoreCourse = isScoreEvent(format)
     courses[i].index = i
     courses[i].x = courses[i].xpos
     courses[i].y = courses[i].ypos
@@ -107,7 +106,7 @@ function processCourses(courses, format) {
         courses[i].textAngle[j] = Math.PI * 1.5
       } else {
         // angle of line to next control
-        courses[i].angle[j] = Utils.getAngleBetweenPoints(courses[i].x[j], courses[i].y[j], courses[i].x[j + 1], courses[i].y[j + 1])
+        courses[i].angle[j] = getAngleBetweenPoints(courses[i].x[j], courses[i].y[j], courses[i].x[j + 1], courses[i].y[j + 1])
         if (j > 0) {
           // create bisector of angle to position number
           c1x = Math.sin(courses[i].angle[j - 1])
@@ -116,7 +115,7 @@ function processCourses(courses, format) {
           c2y = Math.cos(courses[i].angle[j]) + c1y
           c3x = c2x / 2
           c3y = c2y / 2
-          courses[i].textAngle[j] = Utils.getAngleBetweenPoints(c3x, c3y, c1x, c1y)
+          courses[i].textAngle[j] = getAngleBetweenPoints(c3x, c3y, c1x, c1y)
         } else {
           courses[i].textAngle[0] = Math.PI * 1.5
         }

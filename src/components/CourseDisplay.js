@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/lib/Table'
 import RG2 from '../rg2Constants'
 
 function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
-  allRoutesDisplayed, allRoutesReplayed, onDisplayAllRoutes, onReplayAllRoutes, display }) {
+  allRoutesDisplayed, allRoutesReplayed, onDisplayAllRoutes, onReplayAllRoutes, display, dict }) {
   const courseItems = courses.map((course, i) =>
     <CourseItem
       key={i.toString()}
@@ -41,7 +41,7 @@ function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,
     <Card body>
       <Table striped hover size="sm">
         <thead>
-          <CourseItemHeader />
+          <CourseItemHeader dict={dict} />
         </thead>
         <tbody>
           {courseItems}

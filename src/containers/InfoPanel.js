@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import Sidebar from '../components/Sidebar'
 import { tabChanged, toggleInfo } from '../actions/actions.js'
+import { getDictionary } from '../selectors/selectors'
 
 const mapStateToProps = state => ({
   infoOpen: state.ui.infoOpen,
@@ -9,7 +10,8 @@ const mapStateToProps = state => ({
   resultDisplay: state.results.display,
   courses: state.courses.data,
   hasResults: state.results.data.length > 0,
-  height: state.map.height
+  height: state.map.height,
+  dict: getDictionary(state)
 })
 
 const mapDispatchToProps = dispatch => ({

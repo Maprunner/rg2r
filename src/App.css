@@ -97,8 +97,10 @@
 
 #replay {
   position: absolute;
-  right: 5px;
+  width: 600px;
+  right: 25px;
   bottom: 5px;
+  background-color: rgba(200, 200, 200, 0.8);
 }
 
 .rg2-title {

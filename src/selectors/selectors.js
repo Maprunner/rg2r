@@ -74,6 +74,13 @@ export const getDisplayedRoutes = (state) => {
   )
 }
 
+export const getDrawState = (state) => {
+  if (state.events.activeEvent !== null) {
+    return !state.events.activeEvent.locked
+  }
+  return false
+}
+
 export const getHash = (state) => {
   let hash = state.ui.hash
   if (state.courses.display.length !== 0) {

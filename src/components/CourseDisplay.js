@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
 import CourseItem from './CourseItem.js'
 import CourseItemHeader from './CourseItemHeader.js'
-import Card from 'react-bootstrap/lib/Card'
-import Table from 'react-bootstrap/lib/Table'
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
 import RG2 from '../rg2Constants'
 
 function CourseDisplay({ courses, resultCount, routeCount, onSelectCourse,

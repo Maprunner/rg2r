@@ -51,9 +51,10 @@ function AllControlsOverprint(props) {
       key={i + 2000}
       radius={opt.circleSize}
       color={opt.color}
-      text={controls[i].code}
-      x={controls[i].x + opt.circleSize + 10}
-      y={controls[i].y - opt.circleSize - 10} />)
+      code={controls[i].code}
+      angle={-1 * Math.PI / 4}
+      x={controls[i].x}
+      y={controls[i].y} />)
   }
 
   return (

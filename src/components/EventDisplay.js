@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react'
 import EventList from '../components/EventList'
 import SearchBox from './SearchBox'
-import Card from 'react-bootstrap/lib/Card'
+import Card from 'react-bootstrap/Card'
 
 function EventDisplay(props) {
   const { filter, onFilterChange, onSelectEvent, pendingEvent, events } = props

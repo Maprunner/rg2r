@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
-import Dropdown from 'react-bootstrap/lib/Dropdown'
-import DropdownButton from 'react-bootstrap/lib/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton'
 import RG2 from '../rg2Constants'
 
 function LanguageSelect(props) {

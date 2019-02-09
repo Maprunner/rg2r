@@ -96,34 +96,35 @@ function processCourses(courses, format) {
     courses[i].y = courses[i].ypos
     delete courses[i].xpos
     delete courses[i].ypos
-    let c1x, c1y, c2x, c2y, c3x, c3y
+    let angle, c1x, c1y, c2x, c2y, c3x, c3y
     courses[i].angle = []
     courses[i].textAngle = []
     for (let j = 0; j < (courses[i].x.length - 1); j += 1) {
       if (courses[i].isScoreCourse) {
         // align score event start triangle and controls upwards
-        courses[i].angle[j] = Math.PI * 1.5
-        courses[i].textAngle[j] = Math.PI * 1.5
+        courses[i].angle[j] = Math.PI * -0.5
+        courses[i].textAngle[j] = Math.PI * -0.5
       } else {
         // angle of line to next control
         courses[i].angle[j] = getAngleBetweenPoints(courses[i].x[j], courses[i].y[j], courses[i].x[j + 1], courses[i].y[j + 1])
         if (j > 0) {
           // create bisector of angle to position number
-          c1x = Math.sin(courses[i].angle[j - 1])
-          c1y = Math.cos(courses[i].angle[j - 1])
-          c2x = Math.sin(courses[i].angle[j]) + c1x
-          c2y = Math.cos(courses[i].angle[j]) + c1y
+          c1x = Math.cos(courses[i].angle[j - 1])
+          c1y = Math.sin(courses[i].angle[j - 1])
+          c2x = Math.cos(courses[i].angle[j]) + c1x
+          c2y = Math.sin(courses[i].angle[j]) + c1y
           c3x = c2x / 2
           c3y = c2y / 2
-          courses[i].textAngle[j] = getAngleBetweenPoints(c3x, c3y, c1x, c1y)
+          angle = getAngleBetweenPoints(c3x, c3y, c1x, c1y)
+          courses[i].textAngle[j] = angle
         } else {
-          courses[i].textAngle[0] = Math.PI * 1.5
+          courses[i].textAngle[0] = Math.PI * -0.5
         }
       }
     }
     // angle for finish aligns to north
-    courses[i].angle[courses[i].x.length - 1] = Math.PI * 1.5
-    courses[i].textAngle[courses[i].x.length - 1] = Math.PI * 1.5
+    courses[i].angle[courses[i].x.length - 1] = Math.PI * -0.5
+    courses[i].textAngle[courses[i].x.length - 1] = Math.PI * -0.5
   }
   return courses
 }

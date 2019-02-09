@@ -1,6 +1,6 @@
 //import React from 'react'
 import React, { memo } from 'react'
-import Form from 'react-bootstrap/lib/Form'
+import Form from 'react-bootstrap/Form'
 
 function ResultItem(props) {
   const { result, display, replay, onSelect, onReplay } = props

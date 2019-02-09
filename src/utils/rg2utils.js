@@ -25,31 +25,24 @@ export function formatSecsAsHHMMSS(secs) {
   return time
 }
 
-// // converts seconds to MM:SS
-// function formatSecsAsMMSS(secs) {
-//   let minutes = Math.floor(secs / 60)
-//   let formattedtime = minutes
-//   let seconds = secs - (minutes * 60)
-//   if (seconds < 10) {
-//     formattedtime += ":0" + seconds
-//   } else {
-//     formattedtime += ":" + seconds
-//   }
-//   return formattedtime
-// }
-
 export function getAngleBetweenPoints(x1, y1, x2, y2) {
-  // returns angle between points in radians relative to X axis
-  let angle = Math.atan2((y2 - y1), (x2 - x1))
+  // returns angle (-PI to PI) between points in radians clockwise relative to x axis
+  // NB y axis has 0 at top of page and increases downwards which is why
+  // values are clockwise rather than the expected anticlockwise from atan2 
+  // 
+  return Math.atan2((y2 - y1), (x2 - x1))
+}
+
+export function reverseAngle(angle) {
   if (angle < 0) {
-    angle = angle + (2 * Math.PI)
+    return angle + Math.PI
   }
-  return angle
+  return angle - Math.PI
 }
 
 export function getDegreesFromRadians(angle) {
   // convert from radians relative to X axis (East is 0)
-  // to degrees relative to Y axis (N is 0)
+  // to degrees relative to Y axis (North is 0)
   return ((angle / Math.PI) * 180) - 90
 }
 

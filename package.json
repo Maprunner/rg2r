@@ -5,19 +5,19 @@
   "homepage": ".",
   "proxy": "http://localhost:80",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.12",
-    "@fortawesome/free-regular-svg-icons": "^5.6.3",
-    "@fortawesome/free-solid-svg-icons": "^5.6.3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.14",
+    "@fortawesome/free-regular-svg-icons": "^5.7.1",
+    "@fortawesome/free-solid-svg-icons": "^5.7.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.2.1",
     "classnames": "^2.2.6",
     "eslint-plugin-react-hooks": "0.0.0",
     "he": "^1.2.0",
-    "immutability-helper": "^2.9.0",
+    "immutability-helper": "^2.9.1",
     "konva": "^2.6.0",
-    "react": "^16.8.0-alpha.1",
-    "react-bootstrap": "^1.0.0-beta.3",
-    "react-dom": "^16.8.0-alpha.1",
+    "react": "^16.8.1",
+    "react-bootstrap": "^1.0.0-beta.5",
+    "react-dom": "^16.8.1",
     "react-konva": "^16.7.1",
     "react-rangeslider": "^2.2.0",
     "react-redux": "^6.0.0",
@@ -44,7 +44,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "redux-devtools-extension": "^2.13.7",
+    "redux-devtools-extension": "^2.13.8",
     "why-did-you-update": "^1.0.6"
   }
 }

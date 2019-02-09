@@ -40,13 +40,13 @@ function TopPanel(props) {
           icon={['far', 'circle']}
           color='white'
           size="lg"
-          onClick={() => onToggleControls()} />
+          onClick={onToggleControls} />
         </span>
         <span className="px-1 align-middle"><FontAwesomeIcon
           icon={'cog'}
           color='white'
           size="lg"
-          onClick={() => onToggleConfig()} />
+          onClick={onToggleConfig} />
         </span>
         <Help />
       </div>

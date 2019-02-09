@@ -11,7 +11,7 @@ import configureStore from './configureStore'
 
 if (process.env.NODE_ENV !== 'production') {
   const { whyDidYouUpdate } = require('why-did-you-update')
-  whyDidYouUpdate(React)
+  //whyDidYouUpdate(React)
 }
 const store = configureStore()
 const Language = React.createContext([]);

@@ -35,7 +35,7 @@ function AllRunners(props) {
   let xy
   for (let i = 0; i < runners.length; i += 1) {
     xy = getPoints(runners[i], animation)
-    allRunners.push(<SingleRunner key={i} points={xy} colour={runners[i].colour} />)
+    allRunners.push(<SingleRunner key={i} points={xy} name={runners[i].name} colour={runners[i].colour} />)
   }
   return (
     <>

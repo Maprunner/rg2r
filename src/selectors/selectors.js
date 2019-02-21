@@ -68,6 +68,12 @@ export const getCoursesDisplay = (state) => {
   return display
 }
 
+export const getCoursesForDraw = (state) => {
+  return state.courses.data.map(
+    course => ({ "text": course.name, "key": course.index })
+  )
+}
+
 export const getDisplayedRoutes = (state) => {
   return state.results.data.filter(
     result => state.results.display[result.index]

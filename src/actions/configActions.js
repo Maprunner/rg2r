@@ -13,7 +13,7 @@ export const TOGGLE_SNAP = 'TOGGLE_SNAP'
 export function loadLanguage(language) {
   return function (dispatch) {
     if (language === "en") {
-      dispatch(saveLanguage({ "Language": "English", "Code": "en", dictionary: {} }))
+      dispatch(saveLanguage({ "language": "English", "code": "en", dictionary: {} }))
       return
     }
     return fetch(process.env.PUBLIC_URL + '/lang/' + language + ".json")

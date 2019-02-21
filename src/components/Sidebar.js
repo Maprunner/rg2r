@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav'
 import VisibleEventList from '../containers/VisibleEventList.js'
 import CourseList from '../containers/CourseList'
 import ResultDisplay from './ResultDisplay'
+import DrawPanel from '../containers/DrawPanel'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RG2 from '../rg2Constants'
 import { t } from '../utils/rg2utils.js'
@@ -46,8 +47,8 @@ function Sidebar(props) {
                 <ResultDisplay courses={courses} />
               </Tab.Pane>
               <Tab.Pane eventKey="draw">
-                Text
-    </Tab.Pane>
+                <DrawPanel />
+              </Tab.Pane>
             </Tab.Content>
           </div>
         </Tab.Container >

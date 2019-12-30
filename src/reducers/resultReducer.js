@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import Utils from '../utils/rg2utils.js'
+import { getDistanceBetweenPoints } from '../utils/rg2utils.js'
 import RG2 from '../rg2Constants'
 import he from 'he'
 
@@ -68,6 +68,12 @@ const results = (state = initialState, action) => {
       return update(state, {
         display: { $set: displayRoutes(state.data, state.display, action.resultIndex, action.courseIndex, action.display) }
       })
+    case 'EVENT_REQUESTED':
+      return initialState
+    case 'FILTER_RESULTS':
+      let filter = state.filter.slice()
+      filter[action.courseIndex] = action.filter
+      return update(state, { filter: { $set: filter } })
     case 'REPLAY_RESULT':
       results = replayResults(state.data, state.runners, state.animation, state.replay, action.resultIndex, action.display, action.course)
       return update(state, {
@@ -89,15 +95,13 @@ const results = (state = initialState, action) => {
         runners: { $set: results.runners },
         replay: { $set: results.replay }
       })
-    case 'START_STOP':
-      animation = handleStartStop(state.animation)
+    case 'SAVE_EVENT':
+      results = processResults(action.data.results, action.data.routes, action.data.courses, action.format, action.pendingRoutes)
       return update(state, {
-        animation: { $set: animation }
-      })
-    case 'TIMER_EXPIRED':
-      animation = handleTimer(state.animation)
-      return update(state, {
-        animation: { $set: animation }
+        data: { $set: results.data },
+        display: { $set: results.display },
+        replay: { $set: results.replay },
+        filter: { $set: results.filter }
       })
     case 'SET_SPEED':
       animation = setAnimationSpeed(state.animation, action.speed)
@@ -114,20 +118,16 @@ const results = (state = initialState, action) => {
       return update(state, {
         animation: { $set: animation }
       })
-    case 'FILTER_RESULTS':
-      let filter = state.filter.slice()
-      filter[action.courseIndex] = action.filter
-      return update(state, { filter: { $set: filter } })
-    case 'SAVE_EVENT':
-      results = processResults(action.data.results, action.data.routes, action.data.courses, action.data.format)
+    case 'START_STOP':
+      animation = handleStartStop(state.animation)
       return update(state, {
-        data: { $set: results.data },
-        display: { $set: results.display },
-        replay: { $set: results.replay },
-        filter: { $set: results.filter }
+        animation: { $set: animation }
       })
-    case 'EVENT_REQUESTED':
-      return initialState
+    case 'TIMER_EXPIRED':
+      animation = handleTimer(state.animation)
+      return update(state, {
+        animation: { $set: animation }
+      })
     default:
       return state
   }
@@ -350,7 +350,7 @@ function expandTrack(runner, x, y, time) {
     toy = y[item]
     diffx = tox - fromx
     diffy = toy - fromy
-    dist = dist + (Utils.getDistanceBetweenPoints(tox, toy, fromx, fromy) * metresPerPixel)
+    dist = dist + (getDistanceBetweenPoints(tox, toy, fromx, fromy) * metresPerPixel)
     diffdist = dist - fromdist
     timeatitem = time[item]
     // allow for 0 splits indicating a missed control
@@ -417,7 +417,7 @@ function setAnimationTime(prevAnimation, time) {
   return animation
 }
 
-function processResults(prevResults, routes, courses, format) {
+function processResults(prevResults, routes, courses, format, pendingRoutes) {
   // TODO Events with no results
   let results = combineResults(prevResults, routes)
   let display = []
@@ -494,6 +494,14 @@ function processResults(prevResults, routes, courses, format) {
     display[i] = false
     replay[i] = false
   }
+
+  for (let i = 0; i < pendingRoutes.length; i += 1) {
+    let index = getResultIndexFromId(results, pendingRoutes[i])
+    if (index !== null) {
+      display[index] = true
+    }
+  }
+
   // setDeletionInfo()
   // sanitiseSplits()
   // generateLegPositions()
@@ -507,8 +515,19 @@ function processResults(prevResults, routes, courses, format) {
   }
 }
 
+function getResultIndexFromId(results, id) {
+  let index = results.findIndex(result => result.resultid === id)
+  if (index === -1) {
+    index = null
+  }
+  return index
+}
+
 function getCourseIndexFromId(courses, courseid) {
-  const index = courses.findIndex(course => course.courseid === courseid)
+  let index = courses.findIndex(course => course.courseid === courseid)
+  if (index === -1) {
+    index = null
+  }
   return index
 }
 
@@ -754,7 +773,7 @@ function calculateTrackTimes(result, course) {
     // calculate distance while we are looping through
     x = result.x[i]
     y = result.y[i]
-    dist += Utils.getDistanceBetweenPoints(x, y, oldx, oldy)
+    dist += getDistanceBetweenPoints(x, y, oldx, oldy)
     cumulativeDistance[i] = Math.round(dist)
     oldx = x
     oldy = y
@@ -807,7 +826,7 @@ function calculateTotalTrackLength(x, y) {
   let oldx = x[0]
   let oldy = y[0]
   for (let i = 1; i < x.length; i += 1) {
-    cumulativeDistance[i] = cumulativeDistance[i - 1] + Math.round(Utils.getDistanceBetweenPoints(x[i], y[i], oldx, oldy))
+    cumulativeDistance[i] = cumulativeDistance[i - 1] + Math.round(getDistanceBetweenPoints(x[i], y[i], oldx, oldy))
     oldx = x[i]
     oldy = y[i]
   }

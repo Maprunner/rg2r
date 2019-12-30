@@ -5,15 +5,16 @@ export const EVENT_REQUESTED = 'EVENT_REQUESTED'
 export const EVENTS_REQUESTED = 'EVENTS_REQUESTED'
 export const FILTER_EVENTS = 'FILTER_EVENTS'
 export const FILTER_RESULTS = 'FILTER_RESULTS'
+export const INITIALISE_OPTIONS = 'INITIALISE_OPTIONS'
 export const LOAD_EVENTS = 'LOAD_EVENTS'
 export const MAP_LOADED = 'MAP_LOADED'
+export const NAVIGATION = 'NAVIGATION'
 export const REPLAY_RESULT = 'REPLAY_RESULT'
 export const REPLAY_ROUTES_FOR_ALL_COURSES = 'REPLAY_ROUTES_FOR_ALL_COURSES'
 export const REPLAY_ROUTES_FOR_COURSE = 'REPLAY_ROUTES_FOR_COURSE'
 export const RESET_MAP = 'RESET_MAP'
 export const ROTATE_MAP = 'ROTATE_MAP'
 export const SET_REPLAY_MODE = 'SET_REPLAY_MODE'
-export const SAVE_CONFIG = 'SAVE_CONFIG'
 export const SAVE_COURSES = 'SAVE_COURSES'
 export const SAVE_EVENT = 'SAVE_EVENT'
 export const SAVE_EVENTS = 'SAVE_EVENTS'
@@ -25,9 +26,8 @@ export const SHOW_RESULTS = 'SHOW_RESULTS'
 export const START_STOP = 'START_STOP'
 export const TAB_CHANGED = 'TAB_CHANGED'
 export const TIMER_EXPIRED = 'TIMER_EXPIRED'
-export const TOGGLE_INFO = 'TOGGLE_INFO'
-export const TOGGLE_CONFIG = 'TOGGLE_CONFIG'
 export const TOGGLE_CONTROLS = 'TOGGLE_CONTROLS'
+export const TOGGLE_INFO = 'TOGGLE_INFO'
 export const ZOOM = 'ZOOM'
 
 export function displayCourse(event) {
@@ -53,7 +53,7 @@ export function displayRoute(event) {
 export function eventRequested(event) {
   return {
     type: EVENT_REQUESTED,
-    event: event
+    event
   }
 }
 
@@ -66,50 +66,60 @@ export function eventsRequested() {
 export function filterEvents(filter) {
   return {
     type: 'FILTER_EVENTS',
-    filter: filter
+    filter
   }
 }
 
 export function filterResults(filter, courseIndex) {
   return {
     type: 'FILTER_RESULTS',
-    filter: filter,
-    courseIndex: courseIndex
+    filter,
+    courseIndex
+  }
+}
+
+export function initialiseOptions(options) {
+  return {
+    type: 'INITIALISE_OPTIONS',
+    options
   }
 }
 
 export function loadEvent(event) {
-  return function (dispatch) {
-    const image = new window.Image()
-
-    if (process.env.NODE_ENV !== 'production') {
-      // assumes development server running on port 80 to deal with api calls locally: see package.json
-      image.src = 'http://localhost:80/rg2-test-data/hh/kartat/' + event.mapfilename
-    } else {
-      image.src = '/kartat/' + event.mapfilename
+  return function (dispatch, getState) {
+    // prevent reloading event if user double clicks on link
+    if (!getState().events.singleEventLoading) {
+      const image = new window.Image()
+      image.src = window.rg2Config.maps_url + event.mapfilename
+      image.onload = () => {
+        dispatch(mapLoaded(image))
+      }
+      dispatch(eventRequested(event))
+      return fetch(window.rg2Config.json_url + '?type=event&id=' + event.id)
+        .then(
+          response => response.json(),
+          error => console.log('Error loading event ' + event.id + ' from API', error)
+        )
+        .then(
+          json => dispatch(saveEvent(
+            event.index,
+            event.id,
+            json.data,
+            event.format,
+            getState().events.pendingRoutes,
+            getState().events.pendingCourses))
+        )
     }
-    image.onload = () => {
-      dispatch(mapLoaded(image))
-    }
-    dispatch(eventRequested(event))
-    return fetch('/rg2/rg2api.php?type=event&id=' + event.id)
-      .then(
-        response => response.json(),
-        error => console.log('An error occurred.', error)
-      )
-      .then(json => dispatch(saveEvent(json.data, event.format))
-      )
   }
 }
 
 export function loadEvents() {
-  // assumes server running on port 80 to deal with api calls: see package.json
   return function (dispatch) {
     dispatch(eventsRequested())
-    return fetch('/rg2/rg2api.php?type=events')
+    return fetch(window.rg2Config.json_url + '?type=events')
       .then(
         response => response.json(),
-        error => console.log('An error occurred.', error)
+        error => console.log('Error loading events from API.', error)
       )
       .then(json => dispatch(saveEvents(json.data.events))
       )
@@ -119,7 +129,14 @@ export function loadEvents() {
 export function mapLoaded(image) {
   return {
     type: MAP_LOADED,
-    image: image
+    image
+  }
+}
+
+export function navigation(hash) {
+  return {
+    type: NAVIGATION,
+    hash
   }
 }
 
@@ -154,7 +171,7 @@ export function replayRoutesForCourse(event) {
   }
 }
 
-export function resetMap(clockwise) {
+export function resetMap() {
   return {
     type: RESET_MAP
   }
@@ -164,36 +181,33 @@ export function resetMap(clockwise) {
 export function rotateMap(clockwise) {
   return {
     type: ROTATE_MAP,
-    clockwise: clockwise
-  }
-}
-
-export function saveConfig(config) {
-  return {
-    type: SAVE_CONFIG,
-    config: config
+    clockwise
   }
 }
 
 export function saveCourses(courses) {
   return {
     type: SAVE_COURSES,
-    courses: courses
+    courses
   }
 }
 
-export function saveEvent(data, format) {
+export function saveEvent(index, id, data, format, pendingRoutes, pendingCourses) {
   return {
     type: SAVE_EVENT,
-    data: data,
-    format: format
+    index,
+    id,
+    data,
+    format,
+    pendingRoutes,
+    pendingCourses
   }
 }
 
 export function saveEvents(events) {
   return {
     type: SAVE_EVENTS,
-    events: events
+    events
   }
 }
 
@@ -210,10 +224,10 @@ export function screenResized() {
 export function scroll(delta, mousePos, zoom, xy) {
   return {
     type: SCROLL,
-    delta: delta,
-    mousePos: mousePos,
-    zoom: zoom,
-    xy: xy
+    delta,
+    mousePos,
+    zoom,
+    xy
   }
 }
 
@@ -233,7 +247,7 @@ export function setSpeed(speed) {
 export function setTime(event) {
   return {
     type: SET_TIME,
-    time: parseInt(event.target.value, 10)
+    time: event
   }
 }
 
@@ -253,7 +267,7 @@ export function startStop() {
 export function tabChanged(index) {
   return {
     type: TAB_CHANGED,
-    index: index
+    index
   }
 }
 
@@ -264,12 +278,6 @@ export function timerExpired() {
         type: TIMER_EXPIRED
       })
     }
-  }
-}
-
-export function toggleConfig() {
-  return {
-    type: TOGGLE_CONFIG
   }
 }
 
@@ -285,9 +293,10 @@ export function toggleInfo() {
   }
 }
 
+
 export function zoom(zoomIn) {
   return {
     type: ZOOM,
-    zoomIn: zoomIn
+    zoomIn
   }
 }

@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-function CourseResultHeaderRow() {
+const CourseResultHeaderRow = () => {
   return (
     <tr>
       <th></th>
@@ -9,7 +9,7 @@ function CourseResultHeaderRow() {
       <th>Time</th>
       <th><FontAwesomeIcon icon={'eye'} /></th>
       <th><FontAwesomeIcon icon={'play'} /></th>
-    </tr>
+    </tr >
   )
 }
 

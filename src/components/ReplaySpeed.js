@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
-import DropdownButton from 'react-bootstrap/lib/DropdownButton'
-import Dropdown from 'react-bootstrap/lib/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 function ReplaySpeed(props) {
   const { timerIncrement, onSetSpeed } = props
@@ -13,22 +13,25 @@ function ReplaySpeed(props) {
     { label: 'x30', value: 3000 },
     { label: 'x60', value: 6000 },
     { label: 'x120', value: 12000 },
-    { label: 'x250', value: 25000 },
-    { label: 'x500', value: 50000 },
-    { label: 'x1000', value: 100000 }
-  ].map(option => (
-    <Dropdown.Item key={option.value} eventKey={option.value}>{option.label}</Dropdown.Item>
-  ))
+    { label: 'x240', value: 24000 }
+  ]
+  let speeds = []
+  for (let i = 0; i < speedOptions.length; i += 1) {
+    if (speedOptions.value === timerIncrement) {
+      speeds.push(< Dropdown.Item key={i} eventKey={speedOptions[i].value} active onSelect={onSetSpeed}> {speedOptions[i].label}</Dropdown.Item >)
+    } else {
+      speeds.push(< Dropdown.Item key={i} eventKey={speedOptions[i].value} onSelect={onSetSpeed}> {speedOptions[i].label}</Dropdown.Item >)
+    }
+  }
   return (
-    <div className='p-1 align-middle'>
+    <div>
       <DropdownButton
         drop="up"
-        id="speed-dropdown"
-        onSelect={onSetSpeed}
+        id="dropdownSpeed"
         title={"x" + (timerIncrement / 100)}
-        variant="Primary"
-        key={timerIncrement} >
-        {speedOptions}
+        variant="info"
+      >
+        {speeds}
       </DropdownButton>
     </div>
   )

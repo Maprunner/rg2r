@@ -11,14 +11,17 @@ import configureStore from './configureStore'
 
 if (process.env.NODE_ENV !== 'production') {
   const { whyDidYouUpdate } = require('why-did-you-update')
-  whyDidYouUpdate(React)
+  //whyDidYouUpdate(React)
 }
 const store = configureStore()
+const Language = React.createContext([]);
 
 const rootElement = document.getElementById("root")
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Language.Provider t={store.getState().ui.t}>
+      <App />
+    </Language.Provider>
   </Provider>,
   rootElement
 )

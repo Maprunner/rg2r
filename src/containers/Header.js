@@ -1,9 +1,12 @@
 import { connect } from 'react-redux'
 import TopPanel from '../components/TopPanel'
-import { toggleInfo, toggleControls, toggleConfig, saveConfig } from '../actions/actions.js'
+import { toggleInfo, toggleControls, } from '../actions/actions.js'
+import { toggleConfig, saveConfig } from '../actions/configActions.js'
+import { getHash } from '../selectors/selectors';
 
 const mapStateToProps = state => ({
   title: state.events.title,
+  hash: getHash(state),
   options: state.map.options
 })
 

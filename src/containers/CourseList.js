@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import CourseDisplay from '../components/CourseDisplay'
 import { displayCourse, displayRoute, replayRoutesForCourse, filterResults } from '../actions/actions.js'
 import {
-  getCourses, getCoursesDisplay, getRouteCountByCourse,
+  getCourses, getCoursesDisplay, getRouteCountByCourse, getDictionary,
   getResultCountByCourse, getAllRoutesDisplayed,
   getAllRoutesReplayed
 } from '../selectors/selectors.js'
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
     resultCount: getResultCountByCourse(state),
     routeCount: getRouteCountByCourse(state),
     allRoutesDisplayed: getAllRoutesDisplayed(state),
-    allRoutesReplayed: getAllRoutesReplayed(state)
+    allRoutesReplayed: getAllRoutesReplayed(state),
+    dict: getDictionary(state)
   }
 }
 

@@ -29,21 +29,22 @@ class Map extends React.Component {
   }
 
   render() {
+    const { x, y, width, height, map, opt } = this.props
     return (
       <div>
         <Stage
           ref={this.stage}
-          width={this.props.width}
-          height={this.props.height}
+          width={width}
+          height={height}
           draggable={true}
-          x={this.props.x}
-          y={this.props.y}
+          x={x}
+          y={y}
           onWheel={this.handleScroll}
           scale={this.props.zoom}
           rotation={this.props.angle}
         >
           <Layer listening={false}>
-            <Image image={this.props.map} />
+            <Image opacity={opt.mapIntensity / 100} image={map} />
             {<Portal>
               <MapButtons
                 onZoom={this.props.onZoom}

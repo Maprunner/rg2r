@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import Form from 'react-bootstrap/lib/Form'
+import Form from 'react-bootstrap/Form'
 import RG2 from '../rg2Constants'
 
 function CourseResultSummaryRow({ onSelect, onReplay, courseIndex, routesChecked, replayChecked, hasRoutes }) {

@@ -1,6 +1,6 @@
 //import React from 'react'
 import React, { memo } from 'react'
-import Form from 'react-bootstrap/lib/Form'
+import Form from 'react-bootstrap/Form'
 
 function ResultItem(props) {
   const { result, display, replay, onSelect, onReplay } = props
@@ -8,7 +8,8 @@ function ResultItem(props) {
   if (result.x.length > 0) {
     displayRoute = <Form.Check
       value={result.courseIndex.toString()}
-      id={result.index}
+      // toString avoids problems with id=0 being ignored
+      id={result.index.toString()}
       onChange={onSelect}
       checked={display} />
   } else {

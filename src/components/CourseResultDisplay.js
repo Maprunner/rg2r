@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
-import Card from 'react-bootstrap/lib/Card'
-import Collapse from 'react-bootstrap/lib/Collapse'
-import Form from 'react-bootstrap/lib/Form'
-import Table from 'react-bootstrap/lib/Table'
+import Card from 'react-bootstrap/Card'
+import Collapse from 'react-bootstrap/Collapse'
+import Form from 'react-bootstrap/Form'
+import Table from 'react-bootstrap/Table'
 import ResultItem from '../components/ResultItem'
 import SearchBox from './SearchBox'
 import CourseResultSummaryRow from '../components/CourseResultSummaryRow'
@@ -23,13 +23,13 @@ function CourseResultDisplay({ results, display, replay, courseIndex, filter, on
   const caret = isOpen ? 'caret-down' : 'caret-right'
   return (
     <Card style={{ minWidth: RG2.INFO_BAR_WIDTH + 'px' }}>
-      <Card.Header className="clearflex" id={courseIndex} onClick={onShowResults}>
+      <Card.Header className="clearflex" id={courseIndex.toString()} onClick={onShowResults}>
         <div className="float-left">
           <FontAwesomeIcon icon={caret} /> {courseName}
         </div>
         <div className="float-right">
           <Form.Check
-            id={courseIndex}
+            id={courseIndex.toString()}
             value={courseIndex}
             onChange={onSelectCourse}
             checked={courseDisplay[courseIndex]} />

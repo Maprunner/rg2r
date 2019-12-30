@@ -1,35 +1,38 @@
-import React from 'react'
-import Tab from 'react-bootstrap/lib/Tab'
-import Nav from 'react-bootstrap/lib/Nav'
+import React, { memo } from 'react'
+import Tab from 'react-bootstrap/Tab'
+import Nav from 'react-bootstrap/Nav'
 import VisibleEventList from '../containers/VisibleEventList.js'
 import CourseList from '../containers/CourseList'
 import ResultDisplay from './ResultDisplay'
+import DrawPanel from '../containers/DrawPanel'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RG2 from '../rg2Constants'
+import { t } from '../utils/rg2utils.js'
 
 function Sidebar(props) {
+  const { activeTabIndex, canDraw, courses, hasResults, height, infoOpen, onTabChange, onToggleInfo, dict } = props
   const width = { width: RG2.INFO_BAR_WIDTH + 'px' }
   let info
-  if (props.infoOpen) {
+  if (infoOpen) {
     info =
       <div id="rg2-info-panel" style={width}>
         < Tab.Container
           id="info"
-          activeKey={props.activeTabIndex}
-          onSelect={key => props.onTabChange({ key })}
+          activeKey={activeTabIndex}
+          onSelect={key => onTabChange({ key })}
         >
           <Nav>
             <Nav.Item>
-              <Nav.Link eventKey="events">Events</Nav.Link>
+              <Nav.Link eventKey="events">{t(dict, "Events")}</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="courses" disabled={!props.courses.length > 0}>Courses</Nav.Link>
+              <Nav.Link eventKey="courses" disabled={!courses.length > 0}>{t(dict, "Courses")}</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="results" disabled={!props.hasResults}>Results</Nav.Link>
+              <Nav.Link eventKey="results" disabled={!hasResults}>{t(dict, "Results")}</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="draw" disabled>Draw</Nav.Link>
+              <Nav.Link eventKey="draw" disabled={!canDraw}>{t(dict, "Draw")}</Nav.Link>
             </Nav.Item>
           </Nav>
           <div id="rg2-info">
@@ -41,11 +44,11 @@ function Sidebar(props) {
                 <CourseList />
               </Tab.Pane>
               <Tab.Pane eventKey="results">
-                <ResultDisplay courses={props.courses} />
+                <ResultDisplay courses={courses} />
               </Tab.Pane>
               <Tab.Pane eventKey="draw">
-                Text
-    </Tab.Pane>
+                <DrawPanel />
+              </Tab.Pane>
             </Tab.Content>
           </div>
         </Tab.Container >
@@ -56,16 +59,16 @@ function Sidebar(props) {
 
   // place arrow half way down side bar
   const style = {
-    paddingTop: parseInt(props.height / 2, 10) + 'px'
+    paddingTop: parseInt(height / 2, 10) + 'px'
   }
 
   return (
     <>
-      <div id="rg2-info-hider" onClick={props.onToggleInfo} style={style}>
-        <FontAwesomeIcon fixedWidth icon={props.infoOpen ? 'caret-left' : 'caret-right'} size={"sm"} />
+      <div id="rg2-info-hider" onClick={onToggleInfo} style={style}>
+        <FontAwesomeIcon fixedWidth icon={infoOpen ? 'caret-left' : 'caret-right'} size={"sm"} />
       </div>
       {info}
     </>
   )
 }
-export default Sidebar
+export default memo(Sidebar)

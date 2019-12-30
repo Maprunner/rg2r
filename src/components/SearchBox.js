@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import Form from 'react-bootstrap/lib/Form'
+import Form from 'react-bootstrap/Form'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function SearchBox({ filter, onFilterChange }) {

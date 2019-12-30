@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import Table from 'react-bootstrap/lib/Table'
+import Table from 'react-bootstrap/Table'
 import EventItem from '../components/EventItem'
 
 function EventList({ events, onClick }) {

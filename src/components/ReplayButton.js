@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 function ReplayButton(props) {
   const { running, onStartStop } = props
   return (
-    <div className='p-1'>
+    <div className='pt-3'>
       <FontAwesomeIcon fixedWidth icon={running ? 'pause' : 'play'} size={"lg"} onClick={onStartStop} />
     </div>
   )

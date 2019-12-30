@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { RegularPolygon } from 'react-konva'
+import RG2 from '../rg2Constants';
 
 const Start = ({ x, y, radius, width, color, rotation }) => (
   <>
@@ -7,7 +8,7 @@ const Start = ({ x, y, radius, width, color, rotation }) => (
       x={x}
       y={y}
       sides={3}
-      radius={radius}
+      radius={radius * RG2.STARTSCALE}
       rotation={rotation}
       stroke={"white"}
       strokeWidth={width + 2}
@@ -16,7 +17,7 @@ const Start = ({ x, y, radius, width, color, rotation }) => (
       x={x}
       y={y}
       sides={3}
-      radius={radius}
+      radius={radius * RG2.STARTSCALE}
       rotation={rotation}
       stroke={color}
       strokeWidth={width}

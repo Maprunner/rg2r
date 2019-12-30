@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import Card from 'react-bootstrap/Card'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function MapButtons(props) {
@@ -6,7 +7,7 @@ function MapButtons(props) {
   let color
   mapLoaded ? color = "black" : color = "gray"
   return (
-    <div id="zoom-controls" className="d-flex flex-column">
+    <Card id="zoom-controls" className="d-flex flex-column">
       <div className="d-flex justify-content-center">
         <span className="p-1"><FontAwesomeIcon icon={'plus-square'} size="sm" color={color} onClick={() => onZoom(true)} /></span>
       </div>
@@ -19,7 +20,7 @@ function MapButtons(props) {
         <span className="p-1"><FontAwesomeIcon icon={'minus-square'} size="sm" color={color} onClick={() => onZoom(false)} /></span>
       </div>
 
-    </div>
+    </Card>
   )
 }
 

@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import Form from 'react-bootstrap/lib/Form'
+import Form from 'react-bootstrap/Form'
 import RG2 from '../rg2Constants'
 
 const CourseItem = (props) => {
@@ -14,8 +14,8 @@ const CourseItem = (props) => {
         onChange={onSelectCourse}
         checked={checked} />
       </td>
-      <td className="center-text">{resultCount}</td>
-      <td className="center-text">{routeCount}</td>
+      <td className="text-center">{resultCount}</td>
+      <td className="text-center">{routeCount}</td>
       <td>{routeCount > 0 ?
         <Form.Check
           id={RG2.ALL_ROUTES}

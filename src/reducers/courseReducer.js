@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import Utils from '../utils/rg2utils.js'
+import { isScoreEvent, getAngleBetweenPoints } from '../utils/rg2utils.js'
 import RG2 from '../rg2Constants'
 
 const initialState = {
@@ -25,7 +25,7 @@ const courses = (state = initialState, action) => {
       return update(state, {
         data: { $set: processCourses(action.data.courses, action.data.format) },
         controls: { $set: extractControls(action.data.courses) },
-        display: { $set: initialiseDisplay(action.data.courses) },
+        display: { $set: initialiseDisplay(action.data.courses, action.pendingCourses) },
         showResults: { $set: initialiseShowResults(action.data.courses) }
       })
     case 'TOGGLE_CONTROLS':
@@ -39,12 +39,26 @@ const courses = (state = initialState, action) => {
   }
 }
 
-function initialiseDisplay(courses) {
+function initialiseDisplay(courses, pendingCourses) {
   let display = []
   for (let i = 0; i < courses.length; i += 1) {
     display[i] = false
   }
+  for (let i = 0; i < pendingCourses.length; i += 1) {
+    let index = getCourseIndexFromId(courses, pendingCourses[i])
+    if (index !== null) {
+      display[index] = true
+    }
+  }
   return display
+}
+
+function getCourseIndexFromId(courses, courseid) {
+  let index = courses.findIndex(course => course.courseid === courseid)
+  if (index === -1) {
+    index = null
+  }
+  return index
 }
 
 function initialiseShowResults(courses) {
@@ -75,42 +89,42 @@ function showResults(prevShowResults, index) {
 }
 
 function processCourses(courses, format) {
-  const isScoreEvent = Utils.isScoreEvent(format)
   for (let i = 0; i < courses.length; i += 1) {
-    courses[i].isScoreCourse = isScoreEvent
+    courses[i].isScoreCourse = isScoreEvent(format)
     courses[i].index = i
     courses[i].x = courses[i].xpos
     courses[i].y = courses[i].ypos
     delete courses[i].xpos
     delete courses[i].ypos
-    let c1x, c1y, c2x, c2y, c3x, c3y
+    let angle, c1x, c1y, c2x, c2y, c3x, c3y
     courses[i].angle = []
     courses[i].textAngle = []
     for (let j = 0; j < (courses[i].x.length - 1); j += 1) {
       if (courses[i].isScoreCourse) {
         // align score event start triangle and controls upwards
-        courses[i].angle[j] = Math.PI * 1.5
-        courses[i].textAngle[j] = Math.PI * 1.5
+        courses[i].angle[j] = Math.PI * -0.5
+        courses[i].textAngle[j] = Math.PI * -0.5
       } else {
         // angle of line to next control
-        courses[i].angle[j] = Utils.getAngleBetweenPoints(courses[i].x[j], courses[i].y[j], courses[i].x[j + 1], courses[i].y[j + 1])
+        courses[i].angle[j] = getAngleBetweenPoints(courses[i].x[j], courses[i].y[j], courses[i].x[j + 1], courses[i].y[j + 1])
         if (j > 0) {
           // create bisector of angle to position number
-          c1x = Math.sin(courses[i].angle[j - 1])
-          c1y = Math.cos(courses[i].angle[j - 1])
-          c2x = Math.sin(courses[i].angle[j]) + c1x
-          c2y = Math.cos(courses[i].angle[j]) + c1y
+          c1x = Math.cos(courses[i].angle[j - 1])
+          c1y = Math.sin(courses[i].angle[j - 1])
+          c2x = Math.cos(courses[i].angle[j]) + c1x
+          c2y = Math.sin(courses[i].angle[j]) + c1y
           c3x = c2x / 2
           c3y = c2y / 2
-          courses[i].textAngle[j] = Utils.getAngleBetweenPoints(c3x, c3y, c1x, c1y)
+          angle = getAngleBetweenPoints(c3x, c3y, c1x, c1y)
+          courses[i].textAngle[j] = angle
         } else {
-          courses[i].textAngle[0] = Math.PI * 1.5
+          courses[i].textAngle[0] = Math.PI * -0.5
         }
       }
     }
     // angle for finish aligns to north
-    courses[i].angle[courses[i].x.length - 1] = Math.PI * 1.5
-    courses[i].textAngle[courses[i].x.length - 1] = Math.PI * 1.5
+    courses[i].angle[courses[i].x.length - 1] = Math.PI * -0.5
+    courses[i].textAngle[courses[i].x.length - 1] = Math.PI * -0.5
   }
   return courses
 }

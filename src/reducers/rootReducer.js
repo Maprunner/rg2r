@@ -4,6 +4,7 @@ import courses from './courseReducer.js'
 import results from './resultReducer.js'
 import ui from './uiReducer.js'
 import map from './mapReducer.js'
+import draw from './drawReducer.js'
 
 // Root reducer
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   courses,
   results,
   ui,
-  map
+  map,
+  draw
 })
 
 export default rootReducer

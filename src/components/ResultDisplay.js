@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import CardGroup from 'react-bootstrap/lib/CardGroup'
+import CardGroup from 'react-bootstrap/CardGroup'
 import VisibleCourseResultList from '../containers/VisibleCourseResultList'
 
 function ResultDisplay({ courses }) {

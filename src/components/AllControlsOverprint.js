@@ -17,10 +17,9 @@ function AllControlsOverprint(props) {
         key={i}
         x={controls[i].x}
         y={controls[i].y}
-        width={opt.width}
+        width={opt.courseWidth}
         color={opt.color}
-        finishOuterRadius={opt.finishOuterRadius}
-        finishInnerRadius={opt.finishInnerRadius}
+        radius={opt.circleSize}
       />)
     } else {
       // Assume things starting with 'S' are a Start
@@ -29,8 +28,8 @@ function AllControlsOverprint(props) {
           key={i}
           x={controls[i].x}
           y={controls[i].y}
-          radius={opt.radius}
-          width={opt.width}
+          radius={opt.circleSize}
+          width={opt.courseWidth}
           color={opt.color}
           rotation={0} />)
       } else {
@@ -39,8 +38,8 @@ function AllControlsOverprint(props) {
           key={i}
           x={controls[i].x}
           y={controls[i].y}
-          radius={opt.radius}
-          width={opt.width}
+          radius={opt.circleSize}
+          width={opt.courseWidth}
           color={opt.color} />)
         // TODO Draw dots
         //if (drawDot) {
@@ -50,11 +49,12 @@ function AllControlsOverprint(props) {
     }
     controlsOverprint.push(<ControlNumber
       key={i + 2000}
-      fontSize={opt.fontSize}
+      radius={opt.circleSize}
       color={opt.color}
-      text={controls[i].code}
-      x={controls[i].x + opt.radius + 10}
-      y={controls[i].y - opt.radius - 10} />)
+      code={controls[i].code}
+      angle={-1 * Math.PI / 4}
+      x={controls[i].x}
+      y={controls[i].y} />)
   }
 
   return (

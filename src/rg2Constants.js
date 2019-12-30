@@ -22,7 +22,20 @@ const RG2 = {
   INFO_BAR_WIDTH: 400,
   ROTATION_STEP_IN_DEGREES: 15,
   //number of drawn routes that can be saved for possible later deletion
-  MAX_DRAWN_ROUTES: 10
+  MAX_DRAWN_ROUTES: 10,
+  FINISHOUTERSCALE: 7 / 6,
+  FINISHINNERSCALE: 5 / 6,
+  STARTSCALE: 7 / 6,
+  LANGUAGES: [
+    { language: "Deutsch", code: "de" },
+    { language: "English", code: "en" },
+    { language: "Suomi", code: "fi" },
+    { language: "Français", code: "fr" },
+    { language: "Italiano", code: "it" },
+    { language: "日本語", code: "ja" },
+    { language: "Norsk", code: "no" },
+    { language: "Português - Brasil", code: "pt" },
+    { language: "Русский", code: "ru" }]
 
   /*
   INVALID_MAP_ID: 9999,

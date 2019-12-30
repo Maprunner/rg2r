@@ -5,7 +5,8 @@ import { getVisibleEvents } from '../selectors/selectors.js'
 
 const mapStateToProps = state => ({
   events: getVisibleEvents(state),
-  filter: state.events.filter
+  filter: state.events.filter,
+  pendingEvent: state.events.pendingEvent
 })
 
 const mapDispatchToProps = dispatch => ({

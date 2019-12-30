@@ -96,7 +96,7 @@ const results = (state = initialState, action) => {
         replay: { $set: results.replay }
       })
     case 'SAVE_EVENT':
-      results = processResults(action.data.results, action.data.routes, action.data.courses, action.data.format, action.pendingRoutes)
+      results = processResults(action.data.results, action.data.routes, action.data.courses, action.format, action.pendingRoutes)
       return update(state, {
         data: { $set: results.data },
         display: { $set: results.display },

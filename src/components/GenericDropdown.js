@@ -6,7 +6,7 @@ function GenericDropdown(props) {
   // values is an array of {"text": text-for-dropdown, "key": value-to-pass}
   const { id, values, active, onSelect } = props
   const dropdown = []
-  let title
+  let title = ""
   for (let i = 0; i < values.length; i += 1) {
     if (values[i].key === active) {
       dropdown.push(< Dropdown.Item key={i} eventKey={values[i].key} active onSelect={onSelect}>{values[i].text}</Dropdown.Item >)

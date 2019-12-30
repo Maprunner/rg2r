@@ -56,7 +56,7 @@ class App extends Component {
       // production environment uses index.php to set configuration
       // so need to set up equivalent config for localhost test environment
       // TODO: read from rg2-config.php? or a new config.js?
-      window.rg2Config.json_url = '//localhost/rg2/rg2api.php'
+      window.rg2Config.json_url = '//localhost:3000/rg2/rg2api.php'
       window.rg2Config.maps_url = '../rg2-test-data/hh/kartat/'
     }
     if (window.rg2Config.start_language !== "en") {
